@@ -138,6 +138,41 @@ export const GAMES_CATALOG: Game[] = [
     releaseYear: 2024
   },
   {
+    id: 'shell-shockers',
+    title: 'Shell Shockers',
+    category: 'action',
+    description: 'The world\'s top egg-based 3D multiplayer first-person shooter with eggstraordinary arenas and weapons.',
+    longDescription: 'Shell Shockers (Shellshock.io) is the smash-hit 3D multiplayer first-person shooter where you play as armed eggs battling across intense 3D maps. Crack your opponents with EggK-47s, Scramblers, and RPEGGs!',
+    src: 'https://shellshock.io/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Move / Strafe' },
+      { key: 'Mouse Aim & Left Click', action: 'Aim & Fire Weapon' },
+      { key: 'Spacebar', action: 'Jump' },
+      { key: 'R', action: 'Reload Magazine' },
+      { key: 'E / Q', action: 'Switch Weapons' },
+      { key: 'Shift', action: 'Aim Down Sights' }
+    ],
+    instructions: [
+      'Choose your loadout (EggK-47 assault rifle, CSG-1 shotgun, Crackshot sniper, or RPEGG launcher).',
+      'Jump into Free-For-All, Teams, or King of the Coop match types.',
+      'Aim for headshots (the top of the egg shell) for instant crack critical damage!',
+      'Collect grenade pickups and ammo boxes scattered across the arena.'
+    ],
+    tips: [
+      'Constantly bunny-hop and strafe to make your egg hitbox elusive to enemy snipers.',
+      'Reload behind cover before pushing into high-traffic arena corridors.',
+      'Throw grenades into doorways where opponents are grouping up.'
+    ],
+    plays: 245000,
+    rating: 4.96,
+    ratingCount: 7850,
+    badge: 'Shell Shockers',
+    iconName: 'Crosshair',
+    accentColor: '#eab308',
+    releaseYear: 2024
+  },
+  {
     id: 'dig-out-of-prison',
     title: 'Dig Out of Prison',
     category: 'puzzle',
@@ -169,5 +204,337 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Compass',
     accentColor: '#8b5cf6',
     releaseYear: 2023
+  },
+  {
+    id: 'fmovies',
+    title: 'FMovies Cinema',
+    category: 'arcade',
+    description: 'Direct streaming cinema player with movies, TV shows, and full player controls in an unblocked sandbox.',
+    longDescription: 'FMovies Cinema provides access to movies and shows directly in an unblocked sandboxed player. Features full audio, popout playback, and fullscreen video support.',
+    src: 'https://ww4.fmovies.co/23/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Left Click', action: 'Select Movie / Play Video' },
+      { key: 'Spacebar', action: 'Play / Pause Video' },
+      { key: 'F', action: 'Toggle Cinema Fullscreen' },
+      { key: 'M', action: 'Mute / Unmute Audio' }
+    ],
+    instructions: [
+      'Browse or search the cinema library to find movies or series.',
+      'Click on any title to open the streaming player.',
+      'Use the Nova Arcade fullscreen button for cinema-style full-display playback.',
+      'If playback issues occur, click Reload in the toolbar or open in a stealth tab.'
+    ],
+    tips: [
+      'Use the Fullscreen mode for an uninterrupted theater viewing experience.',
+      'Hit the stealth Panic button (\']\') if you need to instantly disguise the screen as Google Classroom.'
+    ],
+    plays: 182400,
+    rating: 4.9,
+    ratingCount: 5600,
+    badge: 'Cinema Player',
+    iconName: 'Film',
+    accentColor: '#ec4899',
+    releaseYear: 2024
+  },
+  {
+    id: 'interstellar-proxy',
+    title: 'Interstellar Proxy',
+    category: 'arcade',
+    description: 'Next-generation stealth web proxy and privacy browser for bypassing web filters seamlessly.',
+    longDescription: 'Interstellar is a modern, ultra-fast web proxy and unblocker service with built-in tab cloaking, custom search engines, tab masking, and unrestricted web navigation directly within an unblocked sandbox.',
+    src: 'https://gointerstellar.app/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Address Bar', action: 'Search or Enter Web URL' },
+      { key: 'Enter', action: 'Navigate to Destination' },
+      { key: 'F', action: 'Fullscreen Browser' },
+      { key: 'Esc', action: 'Return / Exit' }
+    ],
+    instructions: [
+      'Enter any website URL or search term in the Interstellar navigation bar.',
+      'Browse with accelerated speeds and evasion protocols.',
+      'Use fullscreen mode for a full desktop browser experience.',
+      'Hit the panic key (\']\') at any time to instantly mask with Google Classroom.'
+    ],
+    tips: [
+      'Interstellar provides built-in stealth evasion and tab masquerading.',
+      'Open links in popout mode or stealth about:blank for maximum bypass reliability.'
+    ],
+    plays: 312000,
+    rating: 4.97,
+    ratingCount: 8900,
+    badge: 'Web Proxy',
+    iconName: 'Globe',
+    accentColor: '#38bdf8',
+    releaseYear: 2024
+  },
+  {
+    id: '1v1-lol',
+    title: '1v1.LOL Reloaded',
+    category: 'action',
+    description: 'Fast-paced 3D competitive third-person shooter and building simulator battle royale.',
+    longDescription: '1v1.LOL Reloaded is the premier competitive 3D building and shooting game. Practice box fights, edit walls, place ramps, duel opponents in 1v1 arenas, and out-build your rivals in high-speed tactical combat.',
+    src: 'https://1v1lolreloaded.com/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Move Character' },
+      { key: 'Mouse Left Click', action: 'Shoot Weapon / Place Build' },
+      { key: 'Spacebar', action: 'Jump' },
+      { key: 'Z / X / C / V', action: 'Wall / Floor / Ramp / Cone' },
+      { key: 'R', action: 'Reload / Rotate Build' },
+      { key: 'F / E', action: 'Edit Building Structure' }
+    ],
+    instructions: [
+      'Choose your game mode: 1v1 Box Fights, Free Build Practice, Battle Royale, or Zone Wars.',
+      'Swap between weapons (shotgun, assault rifle, sniper) and building mode rapidly.',
+      'Erect walls and ramps to gain the high ground on opponents before taking your shot.',
+      'Practice editing openings in walls for swift counter-attacks.'
+    ],
+    tips: [
+      'High ground grants superior angles and headshot multiplier damage.',
+      'Place a ramp immediately after shooting to protect yourself from return fire.',
+      'Keep your crosshair centered on the enemy head when aiming through edit peeks.'
+    ],
+    plays: 289400,
+    rating: 4.94,
+    ratingCount: 6840,
+    badge: '1v1.LOL',
+    iconName: 'Crosshair',
+    accentColor: '#3b82f6',
+    releaseYear: 2024
+  },
+  {
+    id: 'infinite-craft',
+    title: 'Infinite Craft',
+    category: 'puzzle',
+    description: 'Synthesize elements starting with Water, Fire, Wind, and Earth to discover endless items, people, and universes.',
+    longDescription: 'Infinite Craft is the viral sandbox alchemy game where four basic elements expand into an infinite universe of concepts, pop culture, technologies, and wonders. Drag and combine elements to unlock new discoveries.',
+    src: '/infinite-craft/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Left Click Drag', action: 'Drag Element onto Canvas' },
+      { key: 'Drop on Element', action: 'Synthesize / Combine Elements' },
+      { key: 'Search Bar', action: 'Filter Discovered Elements' },
+      { key: 'Clear Board', action: 'Wipe Canvas Clean' }
+    ],
+    instructions: [
+      'Start with the four primordial elements: Water, Fire, Wind, and Earth.',
+      'Drag elements onto the canvas from the inventory sidebar.',
+      'Drop an element directly over another to synthesize a brand-new creation.',
+      'Every new item you synthesize is permanently added to your personal discovery almanac!'
+    ],
+    tips: [
+      'Combine elemental opposites like Fire + Water to create Steam, or Earth + Water for Mud.',
+      'Combine Life with human concepts like Tools to discover Professions and Civilizations.',
+      'Click "Live Server" at the top right inside the game if you want to connect to Neal.fun\'s live AI model.'
+    ],
+    plays: 198000,
+    rating: 4.98,
+    ratingCount: 9420,
+    badge: 'Infinite Craft',
+    iconName: 'Sparkles',
+    accentColor: '#a855f7',
+    releaseYear: 2024
+  },
+  {
+    id: 'eaglercraft-1-8',
+    title: 'Eaglercraft 1.8.8',
+    category: 'retro',
+    description: 'Full unblocked Minecraft 1.8.8 in the browser with survival, creative mode, and multiplayer servers.',
+    longDescription: 'Eaglercraft 1.8.8 brings the complete Minecraft 1.8.8 experience straight to the web. Mine resources, craft tools, build massive architectural creations, explore caves and the Nether, and connect to live multiplayer servers directly from your browser without any installation.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Eaglercraft/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Move / Walk' },
+      { key: 'Mouse Left Click', action: 'Mine / Attack / Destroy Block' },
+      { key: 'Mouse Right Click', action: 'Place Block / Use Item' },
+      { key: 'Spacebar', action: 'Jump / Swim Up' },
+      { key: 'Shift', action: 'Sneak / Crouch' },
+      { key: 'E', action: 'Open Inventory' },
+      { key: '1 - 9', action: 'Select Hotbar Slot' },
+      { key: 'Esc', action: 'Pause Menu / Release Pointer Lock' }
+    ],
+    instructions: [
+      'Click into the game frame to activate mouse pointer lock for full 3D camera control.',
+      'Gather wood by punching trees, craft a crafting table, and forge your first wooden pickaxe.',
+      'Mine stone to upgrade to stone tools, discover coal for torches, and find iron ore.',
+      'Build a shelter before nightfall to survive against zombies, skeletons, and creepers!'
+    ],
+    tips: [
+      'Use Fullscreen mode for the best immersive desktop experience and smoother mouse locking.',
+      'Press F11 or Nova Arcade\'s Fullscreen button for true edge-to-edge Minecraft gameplay.',
+      'Save your singleplayer worlds by exporting them from the world selection screen.'
+    ],
+    plays: 340000,
+    rating: 4.99,
+    ratingCount: 14500,
+    badge: 'Minecraft 1.8',
+    iconName: 'Pickaxe',
+    accentColor: '#22c55e',
+    releaseYear: 2024
+  },
+  {
+    id: 'raft-survival',
+    title: 'Raft',
+    category: 'skill',
+    description: 'Oceanic survival adventure: throw your hook, gather floating materials, craft tools, expand your raft, and survive against the great white shark.',
+    longDescription: 'Trapped on an oceanic raft with nothing but a hook made of old plastic, you awake on an endless blue sea. Hook floating flotsam, scavenge barrels, craft spears, purify seawater, cook fish, build multi-story floating fortresses, and defend against the relentless man-eating shark circling your raft.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Raft/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Move / Swim' },
+      { key: 'Mouse Left Click', action: 'Throw Hook / Attack / Build' },
+      { key: 'Mouse Right Click', action: 'Cancel Hook / Rotate Block' },
+      { key: 'Spacebar', action: 'Jump' },
+      { key: 'E', action: 'Interact / Pickup Item' },
+      { key: 'Tab', action: 'Crafting & Inventory' },
+      { key: '1 - 8', action: 'Hotbar Selection' },
+      { key: 'Esc', action: 'Pause / Menu' }
+    ],
+    instructions: [
+      'Click inside the frame to lock mouse pointer into the 3D marine environment.',
+      'Aim your hook at floating barrels, wood planks, and leaves to pull supplies toward your raft.',
+      'Purify seawater using the simple purifier to keep your hydration bar full.',
+      'Forge a wooden spear quickly to fend off the shark whenever it bites your raft foundations.'
+    ],
+    tips: [
+      'Never swim into the open water when the shark is circling close to your raft.',
+      'Craft net collectors along the front perimeter to automatically collect floating debris while you build.'
+    ],
+    plays: 245000,
+    rating: 4.96,
+    ratingCount: 8120,
+    badge: 'Ocean Survival',
+    iconName: 'Anchor',
+    accentColor: '#0ea5e9',
+    releaseYear: 2024
+  },
+  {
+    id: 'cuphead',
+    title: 'Cuphead',
+    category: 'action',
+    description: 'Legendary 1930s cartoon run-and-gun platformer featuring intense multi-phase boss battles and original jazz.',
+    longDescription: 'Cuphead is the acclaimed run-and-gun action game celebrated for its hand-drawn cel animation, watercolor backgrounds, and original jazz recordings. Play as Cuphead or Mugman as you traverse strange worlds, acquire new weapons, learn powerful super moves, and battle gargantuan bosses to repay your debt to the devil!',
+    src: 'https://ubghyper.github.io/GameList.github.io/Cuphead/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Arrow Keys / WASD', action: 'Move & Aim Direction' },
+      { key: 'Z', action: 'Jump / Parry Pink Objects' },
+      { key: 'X', action: 'Shoot Peashooter / Spread' },
+      { key: 'C', action: 'Dash Dodge' },
+      { key: 'V', action: 'EX Move / Super Blast' },
+      { key: 'Tab / Shift', action: 'Switch Weapon' }
+    ],
+    instructions: [
+      'Dodge bullets, projectiles, and incoming hazards by constantly jumping and dashing.',
+      'Slap any bright pink projectile or enemy by pressing Jump again mid-air to execute a Parry and build up your Super meter card deck.',
+      'Memorize boss attack phases and patterns to time your offensive blasts.'
+    ],
+    tips: [
+      'Master the jump parry on pink objects — it charges your super meter rapidly and resets your mid-air jump.',
+      'Smoke bomb dash gives you invulnerability frames to phase straight through boss attacks.'
+    ],
+    plays: 382000,
+    rating: 4.98,
+    ratingCount: 12400,
+    badge: 'Boss Rush',
+    iconName: 'Coffee',
+    accentColor: '#ef4444',
+    releaseYear: 2024
+  },
+  {
+    id: 'level-devil',
+    title: 'Level Devil',
+    category: 'puzzle',
+    description: 'Hilarious and infuriating troll platformer where the floor vanishes, spikes fly, and doors move when you approach.',
+    longDescription: 'Level Devil is a deceptively simple platformer with a sinister twist: the game is actively trolling you! Navigate each level toward the exit door while dodging disappearing platforms, surprise crushing ceilings, shifting gravity, flying spikes, and inverted controls.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Level-Devil/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'A / D or Left / Right', action: 'Move Left / Right' },
+      { key: 'W / Space / Up', action: 'Jump' },
+      { key: 'R', action: 'Quick Restart Room' },
+      { key: 'Esc', action: 'Level Select Menu' }
+    ],
+    instructions: [
+      'Run toward the golden door at the end of each room.',
+      'Expect the unexpected: steps will crumble, ceilings will drop, and doors will run away from you.',
+      'Learn from each trap and find the secret alternate route to triumph over the devil\'s trickery.'
+    ],
+    tips: [
+      'Don\'t rush blindly; pause for a split second before stepping on suspicious floor tiles.',
+      'Watch out for reversed controls on later stages where right moves left!'
+    ],
+    plays: 290000,
+    rating: 4.95,
+    ratingCount: 7600,
+    badge: 'Troll Platformer',
+    iconName: 'Flame',
+    accentColor: '#f97316',
+    releaseYear: 2024
+  },
+  {
+    id: 'idle-mining-empire',
+    title: 'Idle Mining Empire',
+    category: 'arcade',
+    description: 'Addictive management simulation: dig shafts, hire elevator operators, automate transports, and mine rare gems.',
+    longDescription: 'Idle Mining Empire is a deep incremental tycoon simulator where you start with a single underground mining shaft and scale up to an automated subterranean empire. Hire specialized managers to automate digging, upgrade elevators to haul ore to the surface, and warehouse collectors to maximize profits.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Idle-Mining-Empire/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Click to Dig / Collect Ore / Upgrade' },
+      { key: 'Scroll Wheel', action: 'Pan Up / Down Deep Shafts' },
+      { key: 'Spacebar', action: 'Fast Forward / Quick Collect' }
+    ],
+    instructions: [
+      'Click on your miners to manually dig coal and minerals from underground shafts.',
+      'Click the elevator operator to lift the mined ore up to the surface facility.',
+      'Direct warehouse workers to transport ore to the distribution bank for instant cash.',
+      'Hire managers for each station to fully automate the production line even while idle!'
+    ],
+    tips: [
+      'Keep your elevator capacity and warehouse transport balanced with your shaft extraction rate to prevent bottlenecks.',
+      'Unlock deeper mine shafts to discover high-value minerals like Gold, Rubies, and Diamonds.'
+    ],
+    plays: 215000,
+    rating: 4.92,
+    ratingCount: 5400,
+    badge: 'Tycoon',
+    iconName: 'Coins',
+    accentColor: '#eab308',
+    releaseYear: 2024
+  },
+  {
+    id: 'super-smash-flash',
+    title: 'Super Smash Flash',
+    category: 'action',
+    description: 'The legendary browser crossover fighting game: battle with Mario, Sonic, Mega Man, Goku, Naruto, and Link!',
+    longDescription: 'Super Smash Flash is the iconic platform brawler that brings together characters from Nintendo, anime, and classic gaming history. Pick your favorite fighter, jump into frantic 4-player melees, unleash signature specials, smash opponents off the stage, and climb the classic arcade ladder.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Super-Smash-Flash/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Movement / Crouch / Up-Jump' },
+      { key: 'O', action: 'Standard Attack / Jab / Smash' },
+      { key: 'P', action: 'Special Attack (Hadoken, Kamehameha, Spin)' },
+      { key: 'Spacebar', action: 'Jump / Double Jump' },
+      { key: 'Backspace', action: 'Pause Match' }
+    ],
+    instructions: [
+      'Pick your hero from legendary rosters including Mario, Sonic, Goku, Naruto, Link, Kirby, and Fox.',
+      'Deal damage to build up enemy damage percentages — the higher their %, the farther they fly when hit.',
+      'Land a powerful smash attack to launch enemies beyond the screen blast zones for KOs.'
+    ],
+    tips: [
+      'Combine Up + Special (W + P) as your primary recovery move to get back onto the platform when knocked off-stage.',
+      'Use shields and rolling dodges to slip behind heavy attacks and counter-strike.'
+    ],
+    plays: 360000,
+    rating: 4.98,
+    ratingCount: 11200,
+    badge: 'Smash Brawler',
+    iconName: 'Swords',
+    accentColor: '#8b5cf6',
+    releaseYear: 2024
   }
 ];
