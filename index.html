@@ -398,16 +398,26 @@
 
       <!-- Main Arcade Game View -->
       <main class="main-content">
+        <!-- Game Switcher Bar -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 4px;">
+          <button id="tab-openttd" class="btn btn-primary" style="font-weight: 700;">
+            <span>🚂 OpenTTD Online</span>
+          </button>
+          <button id="tab-atari" class="btn btn-secondary" style="font-weight: 700;">
+            <span>🕹️ Atari Breakout</span>
+          </button>
+        </div>
+
         <div class="player-card">
           <div class="player-header">
             <div class="game-meta">
-              <div class="game-avatar">🚂</div>
+              <div id="game-avatar" class="game-avatar">🚂</div>
               <div>
-                <h1 class="game-name">OpenTTD Online</h1>
+                <h1 id="game-title" class="game-name">OpenTTD Online</h1>
                 <div class="game-sub">
-                  <span>Transport Tycoon Simulation</span>
+                  <span id="game-genre">Transport Tycoon Simulation</span>
                   <span>•</span>
-                  <span class="rating-tag">★ 5.0 (1,250 reviews)</span>
+                  <span id="game-rating" class="rating-tag">★ 5.0 (1,250 reviews)</span>
                   <span>•</span>
                   <span style="color: #38bdf8;">Unblocked Iframe</span>
                 </div>
@@ -432,7 +442,7 @@
               loading="lazy"
               allowfullscreen="true"
               allow="autoplay; fullscreen; gamepad; clipboard-write; cross-origin-isolated"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups allow-modals allow-downloads"
+              sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-popups-to-escape-sandbox allow-downloads allow-storage-access-by-user-activation"
               data-lang="en">
             </iframe>
           </div>
@@ -525,6 +535,37 @@
         const panicDisguise = document.getElementById('panic-disguise');
         const embedForm = document.getElementById('custom-embed-form');
         const embedInput = document.getElementById('embed-url-input');
+        const tabOpenTTD = document.getElementById('tab-openttd');
+        const tabAtari = document.getElementById('tab-atari');
+        const gameAvatar = document.getElementById('game-avatar');
+        const gameTitle = document.getElementById('game-title');
+        const gameGenre = document.getElementById('game-genre');
+        const gameRating = document.getElementById('game-rating');
+
+        const ATARI_SRC = "https://1600512085-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.gh7qIZtzO5w.O%2Fd%3D1%2Frs%3DAHpOoo84YKT1RVy0T6hcXi5rH3LooB1WCw%2Fm%3D__features__";
+        const OPENTTD_SRC = "https://openttdonline.com/play";
+
+        if (tabOpenTTD && tabAtari && iframe) {
+          tabOpenTTD.addEventListener('click', function() {
+            iframe.src = OPENTTD_SRC;
+            tabOpenTTD.className = 'btn btn-primary';
+            tabAtari.className = 'btn btn-secondary';
+            if (gameAvatar) gameAvatar.textContent = '🚂';
+            if (gameTitle) gameTitle.textContent = 'OpenTTD Online';
+            if (gameGenre) gameGenre.textContent = 'Transport Tycoon Simulation';
+            if (gameRating) gameRating.textContent = '★ 5.0 (1,250 reviews)';
+          });
+
+          tabAtari.addEventListener('click', function() {
+            iframe.src = ATARI_SRC;
+            tabAtari.className = 'btn btn-primary';
+            tabOpenTTD.className = 'btn btn-secondary';
+            if (gameAvatar) gameAvatar.textContent = '🕹️';
+            if (gameTitle) gameTitle.textContent = 'Atari Breakout';
+            if (gameGenre) gameGenre.textContent = 'Arcade Classic';
+            if (gameRating) gameRating.textContent = '★ 4.9 (1,840 reviews)';
+          });
+        }
 
         // Fullscreen Toggle
         if (btnFullscreen && viewportWrap) {

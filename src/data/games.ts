@@ -37,5 +37,37 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Train',
     accentColor: '#10b981',
     releaseYear: 1994
+  },
+  {
+    id: 'atari-breakout',
+    title: 'Atari Breakout',
+    category: 'arcade',
+    description: 'The legendary Atari arcade classic. Deflect the energy ball with your paddle to smash through multi-colored brick walls.',
+    longDescription: 'Atari Breakout is one of the most influential arcade games in computing history. Control the bottom paddle, angle each ricochet, and clear all brick layers while the ball progressively speeds up! Embedded with full sandbox permissions and fluid canvas rendering.',
+    src: 'https://1600512085-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.gh7qIZtzO5w.O%2Fd%3D1%2Frs%3DAHpOoo84YKT1RVy0T6hcXi5rH3LooB1WCw%2Fm%3D__features__',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse / Arrow Keys', action: 'Move Paddle Left & Right' },
+      { key: 'Spacebar / Left Click', action: 'Launch Ball / Serve' },
+      { key: 'P', action: 'Pause / Resume Game' }
+    ],
+    instructions: [
+      'Position your paddle underneath the bouncing ball to keep it in play.',
+      'Smash all the bricks at the top of the screen to advance.',
+      'Hitting bricks near the sides or corners angles the ball into deep wall ricochets.',
+      'Break a pathway through to the top ceiling to let the ball bounce rapidly behind the brick layer!'
+    ],
+    tips: [
+      'The ball speeds up each time it strikes the higher orange and red brick tiers.',
+      'Paddle size shrinks when the ball hits the top wall—focus on sharp precision movements.',
+      'Hitting the ball with the outer edges of the paddle creates steep deflection angles.'
+    ],
+    plays: 68430,
+    rating: 4.9,
+    ratingCount: 1840,
+    badge: 'Atari Classic',
+    iconName: 'Gamepad2',
+    accentColor: '#f59e0b',
+    releaseYear: 1976
   }
 ];
