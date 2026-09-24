@@ -1,0 +1,6 @@
+{
+  "name": "Nova Arcade - Unblocked Games Hub",
+  "description": "Play high performance unblocked HTML5 arcade, puzzle, retro, and action games in responsive iframes with fullscreen, stealth panic mode, and custom game embeds.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

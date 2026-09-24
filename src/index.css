@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.wh-full {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.force-focus {
+  outline: none;
+}
