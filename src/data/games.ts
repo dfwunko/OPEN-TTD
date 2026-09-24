@@ -13,7 +13,7 @@ export const GAMES_CATALOG: Game[] = [
       { key: 'Left Click', action: 'Select Tool / Place Tracks & Depots' },
       { key: 'Right Click / Drag', action: 'Pan Map / Cancel Placement' },
       { key: 'Mouse Wheel', action: 'Zoom Map In / Out' },
-      { key: 'Space', action: 'Pause / Resume Simulation' },
+      { key: 'Spacebar', action: 'Pause / Resume Simulation' },
       { key: 'Esc', action: 'Close Active Window' },
       { key: 'F1 - F12', action: 'Toolbar Shortcuts & Financials' }
     ],
@@ -39,35 +39,135 @@ export const GAMES_CATALOG: Game[] = [
     releaseYear: 1994
   },
   {
-    id: 'atari-breakout',
-    title: 'Atari Breakout',
-    category: 'arcade',
-    description: 'The legendary Atari arcade classic. Deflect the energy ball with your paddle to smash through multi-colored brick walls.',
-    longDescription: 'Atari Breakout is one of the most influential arcade games in computing history. Control the bottom paddle, angle each ricochet, and clear all brick layers while the ball progressively speeds up! Embedded with full sandbox permissions and fluid canvas rendering.',
-    src: 'https://1600512085-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.gh7qIZtzO5w.O%2Fd%3D1%2Frs%3DAHpOoo84YKT1RVy0T6hcXi5rH3LooB1WCw%2Fm%3D__features__',
+    id: 'football-bros',
+    title: 'Football Bros',
+    category: 'action',
+    description: 'Fast-paced multiplayer American football with touchdowns, spin moves, deep passes, and field goals.',
+    longDescription: 'Football Bros is a fast-paced unblocked football game by Blue Wizard Digital. Play quick matches, call offensive routes, dodge defensive tackles with jukes, and throw deep passes into the end zone for thrilling touchdowns!',
+    src: 'https://footballbros.io/',
     aspectRatio: '16/9',
     controls: [
-      { key: 'Mouse / Arrow Keys', action: 'Move Paddle Left & Right' },
-      { key: 'Spacebar / Left Click', action: 'Launch Ball / Serve' },
-      { key: 'P', action: 'Pause / Resume Game' }
+      { key: 'WASD / Arrow Keys', action: 'Move Quarterback / Runner' },
+      { key: 'Spacebar', action: 'Snap Ball / Throw Pass / Tackle' },
+      { key: 'Left Click', action: 'Select Play / Juke' },
+      { key: 'Esc', action: 'Pause Menu' }
     ],
     instructions: [
-      'Position your paddle underneath the bouncing ball to keep it in play.',
-      'Smash all the bricks at the top of the screen to advance.',
-      'Hitting bricks near the sides or corners angles the ball into deep wall ricochets.',
-      'Break a pathway through to the top ceiling to let the ball bounce rapidly behind the brick layer!'
+      'Choose your offensive or defensive playbook before each down.',
+      'On offense: Press Spacebar to snap the ball to the QB, move to avoid the blitz, and press Space again to throw to an open receiver.',
+      'On defense: Switch to the closest defender and dive/tackle the ball carrier before they gain first down yardage.',
+      'Score touchdowns and kick extra points to lead your team to victory!'
     ],
     tips: [
-      'The ball speeds up each time it strikes the higher orange and red brick tiers.',
-      'Paddle size shrinks when the ball hits the top wall—focus on sharp precision movements.',
-      'Hitting the ball with the outer edges of the paddle creates steep deflection angles.'
+      'Watch your receivers\' routes on the field before throwing to lead them into open grass.',
+      'Pumping the throw meter gives you bullet passes that pierce tight coverage.',
+      'Use spin and juke moves when one-on-one with the safety for breakaway touchdowns.'
     ],
-    plays: 68430,
-    rating: 4.9,
-    ratingCount: 1840,
-    badge: 'Atari Classic',
-    iconName: 'Gamepad2',
+    plays: 95400,
+    rating: 4.95,
+    ratingCount: 3120,
+    badge: 'Football Bros',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2024
+  },
+  {
+    id: 'basket-bros',
+    title: 'Basket Bros',
+    category: 'action',
+    description: 'High-flying arcade basketball action with monster dunks, three-pointers, steals, and intense 1v1 matchups.',
+    longDescription: 'Basket Bros is an explosive arcade basketball game by Blue Wizard Digital. Customize your hooper, unlock gear, unleash slam dunks, swat opponent shots, and drain buzzer-beaters from deep behind the arc.',
+    src: 'https://basketbros.io/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Dribble / Jump' },
+      { key: 'Spacebar / L', action: 'Shoot Basketball / Steal' },
+      { key: 'Shift / K', action: 'Sprint / Turbo Dunk' },
+      { key: 'Esc', action: 'Pause Menu' }
+    ],
+    instructions: [
+      'Pick your favorite basketball character and arena.',
+      'Hold the shoot key to jump, then release at the peak of your elevation for high shooting accuracy.',
+      'Time your jump near the rim while holding turbo to trigger a backboard-shattering slam dunk!',
+      'Play defense by staying in front of the ball-handler and swiping for the steal when they cross over.'
+    ],
+    tips: [
+      'Release the shoot button right when your player reaches maximum jump height for green shot releases.',
+      'Save your turbo meter for fast-break transition dunks and defensive chase-down blocks.',
+      'Step-back jumpers create massive separation from aggressive defenders.'
+    ],
+    plays: 114200,
+    rating: 4.92,
+    ratingCount: 4210,
+    badge: 'Basket Bros',
+    iconName: 'Flame',
     accentColor: '#f59e0b',
-    releaseYear: 1976
+    releaseYear: 2023
+  },
+  {
+    id: 'baseball-bros',
+    title: 'Baseball Bros',
+    category: 'action',
+    description: 'Classic arcade baseball with moonshot home runs, curveballs, blazing fastballs, and stellar fielding.',
+    longDescription: 'Baseball Bros brings retro arcade baseball to life. Step up to the plate, time the pitch to hit grand slams over the fences, pitch nasty breaking balls with full control, and turn double plays on defense.',
+    src: 'https://baseballbros.io/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse / Left Click', action: 'Swing Bat / Aim & Throw Pitch' },
+      { key: 'Spacebar', action: 'Power Swing / Pitch Release' },
+      { key: 'WASD / Arrow Keys', action: 'Base Running / Move Fielder' },
+      { key: 'Esc', action: 'Pause Game' }
+    ],
+    instructions: [
+      'When batting, watch the ball release from the pitcher\'s hand and swing when it reaches the strike zone.',
+      'When pitching, select your pitch type (fastball, curveball, changeup) and click the target location.',
+      'Command your fielders to field ground balls and throw to the correct base to force out runners.',
+      'Score runs by knocking line drives into the gaps and clearing the bases with home runs.'
+    ],
+    tips: [
+      'Timing is everything—swing slightly earlier on fastballs and wait patiently on off-speed curveballs.',
+      'Mix up your pitch locations between high fastballs and low-and-away sliders to keep batters guessing.',
+      'Send aggressive runners home on fly balls with tag-up plays.'
+    ],
+    plays: 86500,
+    rating: 4.88,
+    ratingCount: 2470,
+    badge: 'Baseball Bros',
+    iconName: 'Activity',
+    accentColor: '#ef4444',
+    releaseYear: 2024
+  },
+  {
+    id: 'dig-out-of-prison',
+    title: 'Dig Out of Prison',
+    category: 'puzzle',
+    description: 'Excavate escape tunnels, avoid guards, overcome obstacles, and dig your way to freedom.',
+    longDescription: 'Dig Out of Prison is an addictive puzzle and skill arcade challenge. Plan your digging path underground, dodge searchlights, dismantle security obstacles, collect valuable hidden contraband, and guide your inmate to the getaway vehicle.',
+    src: 'https://html5.gamedistribution.com/6b91889aa08e40ffbc1c09be1a8e81ce/?gd_sdk_referrer_url=https://www.onlinegames.io/dig-out-of-prison/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Left Click / Drag', action: 'Dig Soil & Carve Escape Path' },
+      { key: 'WASD / Arrow Keys', action: 'Move Character / Steer Cart' },
+      { key: 'Spacebar', action: 'Interact / Dig / Boost' },
+      { key: 'Esc', action: 'Pause / Restart Level' }
+    ],
+    instructions: [
+      'Study the prison underground map to identify guards, stone barriers, and the getaway route.',
+      'Drag your cursor or use controls to dig tunnels through soft dirt while bypassing hard bedrock.',
+      'Avoid triggering motion sensors, underground security lasers, and guard patrol zones.',
+      'Reach the surface extraction point safely to complete each prison breakout level!'
+    ],
+    tips: [
+      'Always look ahead before digging to avoid trapping yourself in a dead end.',
+      'Collect keys and golden lockpicks scattered underground to unlock shortcut gates.',
+      'Trigger environmental traps to distract guards while slipping through unnoticed.'
+    ],
+    plays: 67300,
+    rating: 4.85,
+    ratingCount: 1840,
+    badge: 'Dig Out of Prison',
+    iconName: 'Compass',
+    accentColor: '#8b5cf6',
+    releaseYear: 2023
   }
 ];

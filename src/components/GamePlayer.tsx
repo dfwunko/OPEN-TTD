@@ -37,6 +37,9 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isCssFullscreen, setIsCssFullscreen] = useState(false);
+  const activeFullscreen = isFullscreen || isCssFullscreen;
+
   const [isTheater, setIsTheater] = useState(false);
   const [aspectRatio, setAspectRatio] = useState<'16/9' | '4/3' | '1/1' | 'fill'>(
     game.aspectRatio === '1/1' ? '1/1' : game.aspectRatio === '4/3' ? '4/3' : '16/9'
@@ -62,18 +65,62 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   // Fullscreen change listener
   useEffect(() => {
     const handleFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const isNative = !!(document.fullscreenElement || (document as any).webkitFullscreenElement);
+      setIsFullscreen(isNative);
+      if (!isNative) {
+        setIsCssFullscreen(false);
+      }
     };
     document.addEventListener('fullscreenchange', handleFsChange);
-    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFsChange);
+      document.removeEventListener('webkitfullscreenchange', handleFsChange);
+    };
   }, []);
+
+  // Escape key listener for CSS fallback fullscreen
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isCssFullscreen) {
+        setIsCssFullscreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCssFullscreen]);
 
   const handleToggleFullscreen = () => {
     if (!wrapperRef.current) return;
-    if (!document.fullscreenElement) {
-      wrapperRef.current.requestFullscreen().catch(() => {});
+    if (!activeFullscreen) {
+      const el = wrapperRef.current as any;
+      const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if (req) {
+        try {
+          const res = req.call(el);
+          if (res && res.catch) {
+            res.catch(() => {
+              setIsCssFullscreen(true);
+            });
+          }
+        } catch {
+          setIsCssFullscreen(true);
+        }
+      } else {
+        setIsCssFullscreen(true);
+      }
     } else {
-      document.exitFullscreen().catch(() => {});
+      if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+        const exit = document.exitFullscreen || (document as any).webkitExitFullscreen;
+        if (exit) {
+          try {
+            const res = exit.call(document);
+            if (res && res.catch) res.catch(() => {});
+          } catch {}
+        }
+      }
+      setIsCssFullscreen(false);
+      setIsFullscreen(false);
     }
   };
 
@@ -163,15 +210,29 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
       {/* Main Iframe Player Wrapper */}
       <div
         ref={wrapperRef}
-        className={`relative bg-black rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col ${
-          isFullscreen ? 'w-screen h-screen rounded-none border-0' : ''
+        className={`relative bg-black overflow-hidden border border-slate-800 shadow-2xl flex flex-col ${
+          activeFullscreen
+            ? '!fixed !inset-0 !w-screen !h-screen !max-h-screen !z-[999999] !rounded-none !border-0 !m-0 !p-0'
+            : 'rounded-xl'
         }`}
       >
+        {/* Floating Exit Fullscreen Button */}
+        {activeFullscreen && (
+          <button
+            onClick={handleToggleFullscreen}
+            className="absolute top-4 right-4 z-[1000000] flex items-center gap-1.5 bg-black/85 hover:bg-black text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-md border border-white/20 shadow-2xl transition-all cursor-pointer group"
+            title="Exit Fullscreen (Esc)"
+          >
+            <Minimize2 className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+            <span>Exit Fullscreen</span>
+          </button>
+        )}
+
         {/* Iframe Viewport */}
         <div
           className={`relative w-full bg-slate-950 flex items-center justify-center transition-all ${
-            isFullscreen
-              ? 'flex-1'
+            activeFullscreen
+              ? 'flex-1 h-full'
               : aspectRatio === '16/9'
               ? 'h-[720px] max-h-[85vh]'
               : aspectRatio === '4/3'
@@ -189,15 +250,15 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             className="force-focus wh-full w-full h-full border-0 block"
             style={{
               width: '100%',
-              height: isFullscreen ? '100%' : '720px',
+              height: activeFullscreen ? '100%' : '720px',
               border: 0,
-              borderRadius: isFullscreen ? '0' : '12px'
+              borderRadius: activeFullscreen ? '0' : '12px'
             }}
             loading="lazy"
             allowFullScreen
             data-lang="en"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups allow-modals allow-downloads"
-            allow="autoplay; fullscreen; gamepad; clipboard-write; cross-origin-isolated"
+            sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-storage-access-by-user-activation allow-pointer-lock"
+            allow="accelerometer *; autoplay *; camera *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *; geolocation *; gyroscope *; local-network-access *; magnetometer *; microphone *; midi *; payment *; picture-in-picture *; screen-wake-lock *; sync-xhr *; usb *; web-share *"
           />
         </div>
 
@@ -217,7 +278,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
           {/* Right player controls */}
           <div className="flex items-center gap-1.5 sm:gap-2">
             {/* Aspect ratio selector */}
-            {!isFullscreen && (
+            {!activeFullscreen && (
               <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-[11px]">
                 <button
                   onClick={() => setAspectRatio('16/9')}
@@ -259,7 +320,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             </button>
 
             {/* Theater Mode toggle */}
-            {!isFullscreen && (
+            {!activeFullscreen && (
               <button
                 onClick={() => setIsTheater(!isTheater)}
                 title={isTheater ? 'Exit Theater Mode' : 'Theater Mode (Expand View)'}
@@ -308,12 +369,12 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             {/* Fullscreen button */}
             <button
               onClick={handleToggleFullscreen}
-              title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+              title={activeFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition-colors cursor-pointer"
             >
-              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              {activeFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               <span className="hidden sm:inline-block">
-                {isFullscreen ? 'Exit' : 'Fullscreen'}
+                {activeFullscreen ? 'Exit' : 'Fullscreen'}
               </span>
             </button>
           </div>

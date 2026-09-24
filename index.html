@@ -3,337 +3,436 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nova Arcade - Unblocked Games Hub</title>
-    <meta name="description" content="Play OpenTTD Online and unblocked HTML5 arcade, puzzle, retro, and action games in responsive iframes with fullscreen, stealth panic mode, and custom game embeds." />
-    <meta property="og:title" content="Nova Arcade - Unblocked Games Hub" />
-    <meta property="og:description" content="Play OpenTTD Online and unblocked HTML5 arcade, puzzle, retro, and action games in responsive iframes with fullscreen, stealth panic mode, and custom game embeds." />
+    <title>Nova Arcade • Unblocked Gaming Hub</title>
+    <meta name="description" content="Play OpenTTD, Football Bros, Basket Bros, Baseball Bros, and Dig Out of Prison unblocked with flawless fullscreen mode and instant stealth disguise." />
+    <meta property="og:title" content="Nova Arcade • Unblocked Gaming Hub" />
+    <meta property="og:description" content="Play OpenTTD, Football Bros, Basket Bros, Baseball Bros, and Dig Out of Prison unblocked with flawless fullscreen mode and instant stealth disguise." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2306b6d4'><path d='M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'/></svg>" />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg-main: #06090f;
+        --bg-panel: #0b0f19;
+        --bg-elevated: #111827;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.16);
+        --accent-cyan: #06b6d4;
+        --accent-glow: rgba(6, 182, 212, 0.25);
+        --text-primary: #f8fafc;
+        --text-muted: #94a3b8;
+      }
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #080b12;
-        color: #f1f5f9;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-primary);
         min-height: 100vh;
         overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
       }
       a { color: inherit; text-decoration: none; }
       button { font-family: inherit; cursor: pointer; border: none; outline: none; }
-      .app-nav {
-        background: rgba(15, 20, 34, 0.85);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+
+      /* Sleek Topbar */
+      .topbar {
         position: sticky;
         top: 0;
-        z-index: 40;
+        z-index: 50;
+        background: rgba(6, 9, 15, 0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-subtle);
       }
-      .nav-container {
-        max-width: 1280px;
+      .topbar-container {
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 0.75rem 1.25rem;
+        padding: 0.65rem 1.25rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 0.75rem;
       }
-      .brand {
+      .brand-group {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        flex-shrink: 0;
       }
-      .brand-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #06b6d4, #3b82f6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
+      .brand-badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 10px #10b981;
+        display: inline-block;
       }
       .brand-title {
         font-weight: 800;
-        font-size: 1.15rem;
+        font-size: 1.05rem;
         letter-spacing: -0.02em;
-        background: linear-gradient(to right, #ffffff, #93c5fd);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #ffffff;
       }
-      .brand-badge {
-        font-size: 0.65rem;
-        font-weight: 700;
-        background: rgba(6, 182, 212, 0.15);
-        color: #22d3ee;
-        border: 1px solid rgba(6, 182, 212, 0.3);
-        padding: 2px 6px;
-        border-radius: 6px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+
+      /* Segmented Game Switcher */
+      .game-switcher-pill {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-subtle);
+        border-radius: 9999px;
+        padding: 3px;
+        gap: 2px;
+        overflow-x: auto;
+        max-width: 100%;
+        scrollbar-width: none;
       }
-      .nav-actions {
+      .game-switcher-pill::-webkit-scrollbar { display: none; }
+      .switch-btn {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: transparent;
+        white-space: nowrap;
+        transition: all 0.18s ease;
+      }
+      .switch-btn:hover {
+        color: #ffffff;
+      }
+      .switch-btn.active {
+        background: #1e293b;
+        color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Sleek Action Controls */
+      .action-group {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-shrink: 0;
       }
       .btn {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        padding: 0.45rem 0.85rem;
+        padding: 0.4rem 0.75rem;
         border-radius: 8px;
-        font-size: 0.8rem;
+        font-size: 0.76rem;
         font-weight: 600;
         transition: all 0.15s ease;
       }
-      .btn-secondary {
-        background: #1e293b;
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.04);
         color: #cbd5e1;
-        border: 1px solid rgba(71, 85, 105, 0.5);
+        border: 1px solid var(--border-subtle);
       }
-      .btn-secondary:hover {
-        background: #334155;
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.09);
         color: #ffffff;
+        border-color: var(--border-hover);
       }
-      .btn-panic {
-        background: rgba(239, 68, 68, 0.15);
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.12);
         color: #f87171;
-        border: 1px solid rgba(239, 68, 68, 0.35);
+        border: 1px solid rgba(239, 68, 68, 0.25);
       }
-      .btn-panic:hover {
-        background: rgba(239, 68, 68, 0.25);
-        color: #ffffff;
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.22);
+        color: #fca5a5;
       }
-      .btn-primary {
-        background: #06b6d4;
-        color: #090d16;
+      .btn-accent {
+        background: var(--accent-cyan);
+        color: #040810;
+        font-weight: 700;
       }
-      .btn-primary:hover {
+      .btn-accent:hover {
         background: #22d3ee;
       }
-      .main-content {
-        max-width: 1280px;
+
+      /* Viewport Stage */
+      .stage-wrapper {
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 1.5rem 1.25rem 4rem;
+        padding: 1rem 1.25rem 3rem;
       }
-      .player-card {
-        background: #0d121f;
-        border: 1px solid rgba(51, 65, 85, 0.5);
-        border-radius: 16px;
+      .viewport-card {
+        background: var(--bg-panel);
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
       }
-      .player-header {
-        padding: 1rem 1.25rem;
-        background: #0f1626;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+      .viewport-header {
+        padding: 0.75rem 1.25rem;
+        background: rgba(11, 15, 25, 0.95);
+        border-bottom: 1px solid var(--border-subtle);
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 0.75rem;
+        gap: 1rem;
+        flex-wrap: wrap;
       }
-      .game-meta {
+      .meta-left {
         display: flex;
         align-items: center;
-        gap: 0.85rem;
+        gap: 0.75rem;
       }
-      .game-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
+      .game-icon-box {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
         background: #10b981;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
+        font-size: 20px;
+        transition: background 0.2s ease;
       }
-      .game-name {
-        font-size: 1.15rem;
+      .game-title-text {
+        font-size: 1.05rem;
         font-weight: 800;
         color: #ffffff;
       }
-      .game-sub {
-        font-size: 0.75rem;
-        color: #94a3b8;
+      .game-sub-text {
+        font-size: 0.74rem;
+        color: var(--text-muted);
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-      .rating-tag {
+      .meta-rating {
         color: #fbbf24;
-        font-weight: 700;
+        font-weight: 600;
       }
-      .player-toolbar {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .iframe-viewport {
+
+      /* The Iframe Stage & Rock-solid Fullscreen */
+      .iframe-container {
+        position: relative;
         background: #000000;
         width: 100%;
-        position: relative;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
       }
-      .iframe-viewport iframe {
+      .game-iframe {
         width: 100%;
-        height: 720px;
-        max-height: 85vh;
-        border: 0;
-        border-radius: 0;
+        height: 76vh;
+        min-height: 640px;
+        max-height: 860px;
+        border: none;
         display: block;
       }
-      .fullscreen-mode {
+
+      /* Native HTML5 Fullscreen & CSS Full-window Theater Overlay */
+      #viewport-stage:fullscreen,
+      #viewport-stage:-webkit-full-screen,
+      #viewport-stage.is-fullscreen {
         position: fixed !important;
         inset: 0 !important;
-        z-index: 9999 !important;
+        top: 0 !important;
+        left: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
         max-height: 100vh !important;
+        z-index: 999999 !important;
+        background: #000000 !important;
         border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
       }
-      .player-info-grid {
+      #viewport-stage:fullscreen .game-iframe,
+      #viewport-stage:-webkit-full-screen .game-iframe,
+      #viewport-stage.is-fullscreen .game-iframe {
+        position: absolute !important;
+        inset: 0 !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        border: none !important;
+        border-radius: 0 !important;
+        display: block !important;
+      }
+
+      /* Floating Exit Fullscreen Button */
+      .floating-exit-fs {
+        display: none;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1000000;
+        background: rgba(0, 0, 0, 0.85);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 8px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        align-items: center;
+        gap: 0.45rem;
+        cursor: pointer;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        transition: all 0.15s ease;
+      }
+      .floating-exit-fs:hover {
+        background: #000000;
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.02);
+      }
+      #viewport-stage:fullscreen .floating-exit-fs,
+      #viewport-stage:-webkit-full-screen .floating-exit-fs,
+      #viewport-stage.is-fullscreen .floating-exit-fs {
+        display: inline-flex !important;
+      }
+
+      /* Streamlined Info Strip */
+      .hud-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 1.25rem;
-        padding: 1.5rem;
-        background: #0b101c;
-        border-top: 1px solid rgba(51, 65, 85, 0.4);
+        gap: 1rem;
+        padding: 1.25rem;
+        background: rgba(11, 15, 25, 0.7);
+        border-top: 1px solid var(--border-subtle);
       }
       @media (min-width: 768px) {
-        .player-info-grid { grid-template-columns: 1fr 1fr; }
+        .hud-grid {
+          grid-template-columns: 1fr 1fr;
+        }
       }
-      .info-box {
-        background: #0f1626;
-        border: 1px solid rgba(51, 65, 85, 0.4);
-        border-radius: 12px;
-        padding: 1.25rem;
+      .hud-panel {
+        background: rgba(17, 24, 39, 0.4);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        padding: 1rem;
       }
-      .info-box-title {
-        font-size: 0.9rem;
+      .hud-title {
+        font-size: 0.82rem;
         font-weight: 700;
         color: #e2e8f0;
-        margin-bottom: 0.85rem;
+        margin-bottom: 0.75rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.45rem;
       }
-      .key-list {
+      .key-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+        gap: 0.4rem;
         list-style: none;
       }
-      .key-item {
+      .key-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: #090e18;
-        padding: 0.45rem 0.75rem;
-        border-radius: 8px;
-        font-size: 0.75rem;
-        border: 1px solid rgba(51, 65, 85, 0.3);
+        background: rgba(9, 13, 22, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 6px;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.74rem;
       }
-      .kbd {
+      .kbd-chip {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.68rem;
+        font-weight: 700;
         background: #1e293b;
         color: #38bdf8;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
-        font-size: 0.7rem;
-        font-weight: 700;
         border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 4px;
+        padding: 2px 6px;
       }
-      .step-list {
-        list-style: decimal inside;
-        font-size: 0.8rem;
-        color: #cbd5e1;
+      .tip-list {
+        list-style: inside decimal;
+        font-size: 0.78rem;
         line-height: 1.6;
+        color: #cbd5e1;
         display: flex;
         flex-direction: column;
-        gap: 0.45rem;
+        gap: 0.35rem;
       }
-      .embed-section {
-        margin-top: 2rem;
-        background: #0d121f;
-        border: 1px solid rgba(51, 65, 85, 0.5);
-        border-radius: 16px;
-        padding: 1.5rem;
-      }
-      .embed-section h3 {
-        font-size: 1.05rem;
-        font-weight: 800;
-        margin-bottom: 0.35rem;
-      }
-      .embed-section p {
-        font-size: 0.8rem;
-        color: #94a3b8;
-        margin-bottom: 1rem;
+
+      /* Compact Embed Bar */
+      .embed-bar {
+        margin-top: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--bg-panel);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
       }
       .embed-form {
         display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      @media (min-width: 640px) {
-        .embed-form { flex-direction: row; }
+        gap: 0.5rem;
+        flex: 1;
+        max-width: 600px;
       }
       .embed-input {
         flex: 1;
-        background: #090e18;
-        border: 1px solid #334155;
+        background: #06090f;
+        border: 1px solid var(--border-subtle);
         border-radius: 8px;
-        padding: 0.6rem 0.85rem;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.78rem;
         color: #ffffff;
-        font-size: 0.85rem;
         outline: none;
       }
       .embed-input:focus {
-        border-color: #06b6d4;
+        border-color: var(--accent-cyan);
       }
-      .disguise-overlay {
+
+      /* Panic Screen Overlay */
+      .panic-cloak-screen {
+        display: none;
         position: fixed;
         inset: 0;
         background: #ffffff;
-        color: #1f2937;
-        z-index: 10000;
-        display: none;
+        color: #202124;
+        z-index: 100000;
         flex-direction: column;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       }
-      .disguise-header {
+      .classroom-bar {
         background: #1a73e8;
         color: #ffffff;
         padding: 0.75rem 1.25rem;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
       }
-      .disguise-body {
-        padding: 2rem;
+      .classroom-body {
         max-width: 900px;
-        margin: 0 auto;
+        margin: 2rem auto;
+        padding: 0 1rem;
         width: 100%;
       }
-      .classroom-card {
-        border: 1px solid #e5e7eb;
+      .class-card {
+        border: 1px solid #dadce0;
         border-radius: 8px;
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
         overflow: hidden;
       }
-      .classroom-banner {
+      .class-head {
         background: #1967d2;
-        color: white;
-        padding: 1rem;
+        color: #ffffff;
+        padding: 1.25rem;
       }
-      .classroom-content {
-        padding: 1rem;
+      .class-info {
+        padding: 1rem 1.25rem;
         font-size: 0.85rem;
-        color: #4b5563;
+        color: #3c4043;
       }
     </style>
   </head>
@@ -341,193 +440,202 @@
     <!-- Fallback & Standalone Entry Point -->
     <div id="root">
       <!-- Panic Disguise Screen (Google Classroom) -->
-      <div id="panic-disguise" class="disguise-overlay">
-        <div class="disguise-header">
+      <div id="panic-disguise" class="panic-cloak-screen">
+        <div class="classroom-bar">
           <div style="font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
             <span>📚 Google Classroom</span>
           </div>
-          <button id="btn-exit-panic" style="background: rgba(255,255,255,0.2); color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">
+          <button id="btn-exit-panic" style="background: rgba(255,255,255,0.2); color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; border: none; cursor: pointer;">
             Press ']' to exit
           </button>
         </div>
-        <div class="disguise-body">
-          <div class="classroom-card">
-            <div class="classroom-banner">
+        <div class="classroom-body">
+          <div class="class-card">
+            <div class="class-head">
               <h2>AP U.S. History — Period 3</h2>
-              <p style="font-size: 0.8rem; opacity: 0.85;">Mr. Davis • Fall Semester</p>
+              <p style="font-size: 0.82rem; opacity: 0.85;">Mr. Davis • Fall Semester</p>
             </div>
-            <div class="classroom-content">
+            <div class="class-info">
               <strong>Upcoming Assignment:</strong> Chapter 14 Synthesis Document & DBQ outline due Friday, 11:59 PM.
             </div>
           </div>
-          <div class="classroom-card">
-            <div class="classroom-banner" style="background: #137333;">
+          <div class="class-card">
+            <div class="class-head" style="background: #137333;">
               <h2>AP Calculus BC — Period 5</h2>
-              <p style="font-size: 0.8rem; opacity: 0.85;">Dr. Patterson • Room 204</p>
+              <p style="font-size: 0.82rem; opacity: 0.85;">Dr. Patterson • Room 204</p>
             </div>
-            <div class="classroom-content">
+            <div class="class-info">
               <strong>Material:</strong> Taylor Series Convergence & Power Series worksheets posted.
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Navigation -->
-      <nav class="app-nav">
-        <div class="nav-container">
-          <div class="brand">
-            <div class="brand-icon">🎮</div>
-            <div>
-              <div class="brand-title">Nova Arcade</div>
-            </div>
-            <span class="brand-badge">Unblocked Hub</span>
+      <!-- Sleek Topbar -->
+      <header class="topbar">
+        <div class="topbar-container">
+          <div class="brand-group">
+            <span class="brand-badge-dot" title="Online & Unblocked"></span>
+            <span class="brand-title">Nova Arcade</span>
           </div>
-          <div class="nav-actions">
-            <button id="btn-panic-nav" class="btn btn-panic" title="Panic Cloak (Press ']')">
+
+          <!-- Streamlined Segmented Switcher for All 5 Games -->
+          <nav class="game-switcher-pill" aria-label="Game Switcher">
+            <button id="tab-openttd" class="switch-btn active" title="Switch to OpenTTD Online">
+              <span>🚂 OpenTTD</span>
+            </button>
+            <button id="tab-football" class="switch-btn" title="Switch to Football Bros">
+              <span>🏈 Football Bros</span>
+            </button>
+            <button id="tab-basket" class="switch-btn" title="Switch to Basket Bros">
+              <span>🏀 Basket Bros</span>
+            </button>
+            <button id="tab-baseball" class="switch-btn" title="Switch to Baseball Bros">
+              <span>⚾ Baseball Bros</span>
+            </button>
+            <button id="tab-digout" class="switch-btn" title="Switch to Dig Out of Prison">
+              <span>⛏️ Dig Out</span>
+            </button>
+          </nav>
+
+          <!-- Sleek Action Controls -->
+          <div class="action-group">
+            <button id="btn-panic-nav" class="btn btn-danger" title="Instant Stealth Cloak (Hotkey: ']')">
               <span>🛡️ Panic ( ] )</span>
             </button>
-            <button id="btn-blank-tab" class="btn btn-secondary" title="Open in stealth about:blank popup">
+            <button id="btn-reload" class="btn btn-ghost" title="Reload Game Frame">
+              <span>🔄</span>
+            </button>
+            <button id="btn-blank-tab" class="btn btn-ghost" title="Open inside cloaked about:blank tab">
               <span>↗ Pop-out</span>
             </button>
-            <a href="#embed-tool" class="btn btn-primary">
-              <span>➕ Embed Game</span>
-            </a>
+            <button id="btn-fullscreen" class="btn btn-accent" title="Fullscreen Playback">
+              <span id="fs-btn-label">⛶ Fullscreen</span>
+            </button>
           </div>
         </div>
-      </nav>
+      </header>
 
-      <!-- Main Arcade Game View -->
-      <main class="main-content">
-        <!-- Game Switcher Bar -->
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 4px;">
-          <button id="tab-openttd" class="btn btn-primary" style="font-weight: 700;">
-            <span>🚂 OpenTTD Online</span>
-          </button>
-          <button id="tab-atari" class="btn btn-secondary" style="font-weight: 700;">
-            <span>🕹️ Atari Breakout</span>
-          </button>
-        </div>
-
-        <div class="player-card">
-          <div class="player-header">
-            <div class="game-meta">
-              <div id="game-avatar" class="game-avatar">🚂</div>
+      <!-- Main Stage -->
+      <main class="stage-wrapper">
+        <div class="viewport-card">
+          <!-- Viewport Header -->
+          <div class="viewport-header">
+            <div class="meta-left">
+              <div id="game-icon" class="game-icon-box">🚂</div>
               <div>
-                <h1 id="game-title" class="game-name">OpenTTD Online</h1>
-                <div class="game-sub">
+                <h1 id="game-title" class="game-title-text">OpenTTD Online</h1>
+                <div class="game-sub-text">
                   <span id="game-genre">Transport Tycoon Simulation</span>
-                  <span>•</span>
-                  <span id="game-rating" class="rating-tag">★ 5.0 (1,250 reviews)</span>
-                  <span>•</span>
+                  <span>·</span>
+                  <span id="game-rating" class="meta-rating">★ 5.0 (1,250 reviews)</span>
+                  <span>·</span>
                   <span style="color: #38bdf8;">Unblocked Iframe</span>
                 </div>
               </div>
             </div>
-            <div class="player-toolbar">
-              <button id="btn-reload" class="btn btn-secondary" title="Reload Game">
-                <span>🔄 Reload</span>
-              </button>
-              <button id="btn-fullscreen" class="btn btn-primary" title="Toggle Fullscreen">
-                <span>⛶ Fullscreen</span>
-              </button>
-            </div>
           </div>
 
-          <!-- Iframe Player -->
-          <div id="viewport-wrap" class="iframe-viewport">
+          <!-- Iframe Frame Viewport with Dual Fullscreen & Floating Exit -->
+          <div id="viewport-stage" class="iframe-container">
+            <!-- Floating Exit Fullscreen Button -->
+            <button id="btn-float-exit-fs" class="floating-exit-fs" title="Exit Fullscreen (Esc)">
+              <span>✕ Exit Fullscreen (Esc)</span>
+            </button>
+
             <iframe
               id="game-iframe"
+              name="gameIframe"
               src="https://openttdonline.com/play"
-              style="width:100%;height:720px;border:0;border-radius:12px;display:block;"
+              class="game-iframe"
               loading="lazy"
               allowfullscreen="true"
-              allow="autoplay; fullscreen; gamepad; clipboard-write; cross-origin-isolated"
-              sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-popups-to-escape-sandbox allow-downloads allow-storage-access-by-user-activation"
+              allow="accelerometer *; autoplay *; camera *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *; geolocation *; gyroscope *; local-network-access *; magnetometer *; microphone *; midi *; payment *; picture-in-picture *; screen-wake-lock *; sync-xhr *; usb *; web-share *"
+              sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-storage-access-by-user-activation allow-pointer-lock"
               data-lang="en">
             </iframe>
           </div>
 
-          <!-- Info & Controls Grid -->
-          <div class="player-info-grid">
-            <div class="info-box">
-              <div class="info-box-title">
+          <!-- Streamlined HUD & Controls -->
+          <div class="hud-grid">
+            <div class="hud-panel">
+              <div class="hud-title">
                 <span>🎮</span>
-                <span>Game Controls Reference</span>
+                <span id="controls-header">Controls Reference</span>
               </div>
-              <ul class="key-list">
-                <li class="key-item">
-                  <span>Left Click</span>
-                  <span class="kbd">Select Tool / Place Tracks & Depots</span>
+              <ul id="controls-list" class="key-grid">
+                <li class="key-row">
+                  <span>Select Tool / Build Tracks</span>
+                  <span class="kbd-chip">Left Click</span>
                 </li>
-                <li class="key-item">
-                  <span>Right Click / Drag</span>
-                  <span class="kbd">Pan Map / Cancel Placement</span>
+                <li class="key-row">
+                  <span>Pan Map / Cancel Tool</span>
+                  <span class="kbd-chip">Right Click Drag</span>
                 </li>
-                <li class="key-item">
-                  <span>Mouse Wheel</span>
-                  <span class="kbd">Zoom In / Out</span>
+                <li class="key-row">
+                  <span>Zoom Map In / Out</span>
+                  <span class="kbd-chip">Mouse Wheel</span>
                 </li>
-                <li class="key-item">
-                  <span>Space</span>
-                  <span class="kbd">Pause / Resume Game</span>
+                <li class="key-row">
+                  <span>Pause / Resume Simulation</span>
+                  <span class="kbd-chip">Spacebar</span>
                 </li>
-                <li class="key-item">
-                  <span>Esc</span>
-                  <span class="kbd">Close Active Window</span>
-                </li>
-                <li class="key-item">
-                  <span>F1 - F12</span>
-                  <span class="kbd">Toolbar & Financials</span>
+                <li class="key-row">
+                  <span>Close Open Window</span>
+                  <span class="kbd-chip">Esc</span>
                 </li>
               </ul>
             </div>
 
-            <div class="info-box">
-              <div class="info-box-title">
+            <div class="hud-panel">
+              <div class="hud-title">
                 <span>💡</span>
-                <span>Getting Started Tips</span>
+                <span id="tips-header">Tactical Tips</span>
               </div>
-              <ol class="step-list">
-                <li>Locate a primary producer (such as a Coal Mine or Forest) near a power plant or sawmill.</li>
-                <li>Build train stations with two platforms next to both locations and connect them with railway tracks.</li>
-                <li>Build a train depot, buy a steam or diesel engine, and attach freight wagons.</li>
-                <li>Add orders for the train: "Load full cargo" at the mine, and "Unload" at the power plant.</li>
-                <li>Press the red flag on the train window to set it to green and start earning cash!</li>
+              <ol id="tips-list" class="tip-list">
+                <li>Locate a primary producer (Coal Mine or Forest) near a power plant or sawmill.</li>
+                <li>Build train stations next to both sites and connect them with railway tracks.</li>
+                <li>Add a train depot, buy a locomotive with freight cars, and dispatch your route.</li>
+                <li>Keep an eye on the news ticker for town subsidies that pay 3x profits for an entire year.</li>
               </ol>
             </div>
           </div>
         </div>
 
-        <!-- Custom Game Embed Section -->
-        <section id="embed-tool" class="embed-section">
-          <h3>Embed Any Game or Iframe</h3>
-          <p>Paste any web game URL or raw <code>&lt;iframe src="..."&gt;</code> code to run it directly inside your arcade sandbox.</p>
+        <!-- Streamlined Custom Embed Bar -->
+        <div class="embed-bar">
+          <div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: #ffffff;">Custom Embed Tool</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Paste any web game link or raw &lt;iframe&gt; code to launch immediately</div>
+          </div>
           <form id="custom-embed-form" class="embed-form">
             <input
               id="embed-url-input"
               type="text"
               class="embed-input"
-              placeholder='Paste iframe code or URL, e.g. <iframe src="https://..." ...> or https://...'
+              placeholder='e.g. https://... or <iframe src="..."></iframe>'
               required
             />
-            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.25rem;">
-              <span>🚀 Launch Embed</span>
+            <button type="submit" class="btn btn-accent" style="padding: 0.45rem 1rem;">
+              <span>Launch</span>
             </button>
           </form>
-        </section>
+        </div>
       </main>
 
-      <footer style="text-align: center; padding: 2rem; color: #64748b; font-size: 0.75rem; border-top: 1px solid rgba(51, 65, 85, 0.4);">
-        Nova Arcade Hub • Self-Contained Unblocked HTML5 & Iframe Game Player • Press ']' anytime for instant stealth cloak
+      <footer style="text-align: center; padding: 2rem; color: #475569; font-size: 0.72rem;">
+        Nova Arcade • Sleek Unblocked Web Player • Press ']' anytime for instant stealth cloak
       </footer>
     </div>
 
-    <!-- Standalone Interactive Handlers (Ensures GitHub Pages is NEVER blank even with zero build step) -->
+    <!-- Standalone Interactive Handlers -->
     <script>
       (function() {
         const iframe = document.getElementById('game-iframe');
-        const viewportWrap = document.getElementById('viewport-wrap');
+        const viewportStage = document.getElementById('viewport-stage');
         const btnFullscreen = document.getElementById('btn-fullscreen');
+        const fsBtnLabel = document.getElementById('fs-btn-label');
+        const btnFloatExitFs = document.getElementById('btn-float-exit-fs');
         const btnReload = document.getElementById('btn-reload');
         const btnBlank = document.getElementById('btn-blank-tab');
         const btnPanicNav = document.getElementById('btn-panic-nav');
@@ -535,56 +643,257 @@
         const panicDisguise = document.getElementById('panic-disguise');
         const embedForm = document.getElementById('custom-embed-form');
         const embedInput = document.getElementById('embed-url-input');
+
         const tabOpenTTD = document.getElementById('tab-openttd');
-        const tabAtari = document.getElementById('tab-atari');
-        const gameAvatar = document.getElementById('game-avatar');
+        const tabFootball = document.getElementById('tab-football');
+        const tabBasket = document.getElementById('tab-basket');
+        const tabBaseball = document.getElementById('tab-baseball');
+        const tabDigOut = document.getElementById('tab-digout');
+
+        const gameIcon = document.getElementById('game-icon');
         const gameTitle = document.getElementById('game-title');
         const gameGenre = document.getElementById('game-genre');
         const gameRating = document.getElementById('game-rating');
+        const controlsList = document.getElementById('controls-list');
+        const tipsList = document.getElementById('tips-list');
 
-        const ATARI_SRC = "https://1600512085-atari-embeds.googleusercontent.com/embeds/30b5756fcd9698c3289bde61e1aae8ae/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.gh7qIZtzO5w.O%2Fd%3D1%2Frs%3DAHpOoo84YKT1RVy0T6hcXi5rH3LooB1WCw%2Fm%3D__features__";
         const OPENTTD_SRC = "https://openttdonline.com/play";
+        const FOOTBALL_SRC = "https://footballbros.io/";
+        const BASKET_SRC = "https://basketbros.io/";
+        const BASEBALL_SRC = "https://baseballbros.io/";
+        const DIGOUT_SRC = "https://html5.gamedistribution.com/6b91889aa08e40ffbc1c09be1a8e81ce/?gd_sdk_referrer_url=https://www.onlinegames.io/dig-out-of-prison/";
 
-        if (tabOpenTTD && tabAtari && iframe) {
-          tabOpenTTD.addEventListener('click', function() {
-            iframe.src = OPENTTD_SRC;
-            tabOpenTTD.className = 'btn btn-primary';
-            tabAtari.className = 'btn btn-secondary';
-            if (gameAvatar) gameAvatar.textContent = '🚂';
-            if (gameTitle) gameTitle.textContent = 'OpenTTD Online';
-            if (gameGenre) gameGenre.textContent = 'Transport Tycoon Simulation';
-            if (gameRating) gameRating.textContent = '★ 5.0 (1,250 reviews)';
-          });
+        const GAME_CONFIGS = {
+          openttd: {
+            src: OPENTTD_SRC,
+            tab: tabOpenTTD,
+            icon: '🚂',
+            accent: '#10b981',
+            title: 'OpenTTD Online',
+            genre: 'Transport Tycoon Simulation',
+            rating: '★ 5.0 (1,250 reviews)',
+            controls: [
+              { action: "Select Tool / Build Tracks", key: "Left Click" },
+              { action: "Pan Map / Cancel Tool", key: "Right Click Drag" },
+              { action: "Zoom Map In / Out", key: "Mouse Wheel" },
+              { action: "Pause / Resume Simulation", key: "Spacebar" },
+              { action: "Close Open Window", key: "Esc" }
+            ],
+            tips: [
+              "Locate a primary producer (Coal Mine or Forest) near a power plant or sawmill.",
+              "Build train stations next to both sites and connect them with railway tracks.",
+              "Add a train depot, buy a locomotive with freight cars, and dispatch your route.",
+              "Keep an eye on the news ticker for town subsidies that pay 3x profits for an entire year."
+            ]
+          },
+          football: {
+            src: FOOTBALL_SRC,
+            tab: tabFootball,
+            icon: '🏈',
+            accent: '#f97316',
+            title: 'Football Bros',
+            genre: 'Multiplayer American Football',
+            rating: '★ 4.95 (3,120 reviews)',
+            controls: [
+              { action: "Move Quarterback / Runner", key: "WASD / Arrows" },
+              { action: "Snap Ball / Throw Pass / Tackle", key: "Spacebar" },
+              { action: "Select Play / Juke Defender", key: "Left Click" },
+              { action: "Pause Match Menu", key: "Esc" }
+            ],
+            tips: [
+              "Wait for your receivers to break away on their route before releasing the ball.",
+              "Pumping the throw meter produces bullet passes that slip right past tight coverage.",
+              "When in the open field, use jukes and spin moves to evade the safety for a touchdown.",
+              "On defense, quickly switch to the nearest linebacker and dive for the tackle."
+            ]
+          },
+          basket: {
+            src: BASKET_SRC,
+            tab: tabBasket,
+            icon: '🏀',
+            accent: '#f59e0b',
+            title: 'Basket Bros',
+            genre: 'Arcade Basketball 1v1',
+            rating: '★ 4.92 (4,210 reviews)',
+            controls: [
+              { action: "Move / Dribble / Jump", key: "WASD / Arrows" },
+              { action: "Shoot Basketball / Steal", key: "Spacebar / L" },
+              { action: "Sprint / Turbo Slam Dunk", key: "Shift / K" },
+              { action: "Pause Match Menu", key: "Esc" }
+            ],
+            tips: [
+              "Release the shoot button right at the peak of your jump for maximum accuracy.",
+              "Hold turbo while driving toward the basket to trigger an unstoppable monster dunk.",
+              "Time your swipe for steals just as the opponent crosses over.",
+              "Step-back jumpers give you massive space away from aggressive rim protectors."
+            ]
+          },
+          baseball: {
+            src: BASEBALL_SRC,
+            tab: tabBaseball,
+            icon: '⚾',
+            accent: '#ef4444',
+            title: 'Baseball Bros',
+            genre: 'Arcade Home Run Baseball',
+            rating: '★ 4.88 (2,470 reviews)',
+            controls: [
+              { action: "Aim & Swing Bat / Pitch", key: "Mouse Left Click" },
+              { action: "Power Swing / Pitch Release", key: "Spacebar" },
+              { action: "Base Running / Move Fielder", key: "WASD / Arrows" },
+              { action: "Pause Game Menu", key: "Esc" }
+            ],
+            tips: [
+              "Patience is key: wait for the ball to enter the strike zone before starting your swing.",
+              "Mix fastballs high in the zone with low-and-away sliders to strike out batters.",
+              "Advance extra bases aggressively on balls hit deep into the outfield gaps.",
+              "Use power swings when ahead in the count (2-0 or 3-1) to launch moonshot home runs."
+            ]
+          },
+          digout: {
+            src: DIGOUT_SRC,
+            tab: tabDigout,
+            icon: '⛏️',
+            accent: '#8b5cf6',
+            title: 'Dig Out of Prison',
+            genre: 'Puzzle & Escape Adventure',
+            rating: '★ 4.85 (1,840 reviews)',
+            controls: [
+              { action: "Dig Soil & Carve Escape Path", key: "Left Click Drag" },
+              { action: "Move Character / Guide Cart", key: "WASD / Arrows" },
+              { action: "Interact / Boost / Dig", key: "Spacebar" },
+              { action: "Pause / Restart Level", key: "Esc" }
+            ],
+            tips: [
+              "Plan your underground path carefully to avoid bedrock and unpassable obstacles.",
+              "Watch searchlight patrol patterns before surfacing or breaking through fences.",
+              "Pick up hidden golden keys and tools along the way to open security gates.",
+              "Trigger environmental traps to distract guards while slipping through safely."
+            ]
+          }
+        };
 
-          tabAtari.addEventListener('click', function() {
-            iframe.src = ATARI_SRC;
-            tabAtari.className = 'btn btn-primary';
-            tabOpenTTD.className = 'btn btn-secondary';
-            if (gameAvatar) gameAvatar.textContent = '🕹️';
-            if (gameTitle) gameTitle.textContent = 'Atari Breakout';
-            if (gameGenre) gameGenre.textContent = 'Arcade Classic';
-            if (gameRating) gameRating.textContent = '★ 4.9 (1,840 reviews)';
-          });
-        }
+        function switchGame(key) {
+          const cfg = GAME_CONFIGS[key];
+          if (!cfg || !iframe) return;
 
-        // Fullscreen Toggle
-        if (btnFullscreen && viewportWrap) {
-          btnFullscreen.addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-              if (viewportWrap.requestFullscreen) {
-                viewportWrap.requestFullscreen();
-              } else if (viewportWrap.webkitRequestFullscreen) {
-                viewportWrap.webkitRequestFullscreen();
-              }
-            } else {
-              if (document.exitFullscreen) {
-                document.exitFullscreen();
-              }
+          iframe.src = cfg.src;
+          if (gameIcon) {
+            gameIcon.textContent = cfg.icon;
+            gameIcon.style.background = cfg.accent;
+          }
+          if (gameTitle) gameTitle.textContent = cfg.title;
+          if (gameGenre) gameGenre.textContent = cfg.genre;
+          if (gameRating) gameRating.textContent = cfg.rating;
+
+          // Update active switcher tab
+          Object.keys(GAME_CONFIGS).forEach(function(k) {
+            const t = GAME_CONFIGS[k].tab;
+            if (t) {
+              if (k === key) t.classList.add('active');
+              else t.classList.remove('active');
             }
           });
+
+          // Render controls & tips
+          if (controlsList) {
+            controlsList.innerHTML = cfg.controls.map(function(c) {
+              return '<li class="key-row"><span>' + c.action + '</span><span class="kbd-chip">' + c.key + '</span></li>';
+            }).join('');
+          }
+          if (tipsList) {
+            tipsList.innerHTML = cfg.tips.map(function(t) {
+              return '<li>' + t + '</li>';
+            }).join('');
+          }
         }
 
-        // Reload Iframe
+        if (tabOpenTTD) tabOpenTTD.addEventListener('click', function() { switchGame('openttd'); });
+        if (tabFootball) tabFootball.addEventListener('click', function() { switchGame('football'); });
+        if (tabBasket) tabBasket.addEventListener('click', function() { switchGame('basket'); });
+        if (tabBaseball) tabBaseball.addEventListener('click', function() { switchGame('baseball'); });
+        if (tabDigOut) tabDigOut.addEventListener('click', function() { switchGame('digout'); });
+
+        // Flawless Dual-Mode Fullscreen System
+        function isCurrentlyFullscreen() {
+          return !!(document.fullscreenElement || document.webkitFullscreenElement || (viewportStage && viewportStage.classList.contains('is-fullscreen')));
+        }
+
+        function updateFsButton(isFs) {
+          if (fsBtnLabel) {
+            fsBtnLabel.textContent = isFs ? '✕ Exit' : '⛶ Fullscreen';
+          }
+          if (btnFullscreen) {
+            if (isFs) {
+              btnFullscreen.style.background = '#e11d48';
+              btnFullscreen.style.color = '#ffffff';
+            } else {
+              btnFullscreen.style.background = '';
+              btnFullscreen.style.color = '';
+            }
+          }
+        }
+
+        function toggleFullscreen() {
+          if (!viewportStage) return;
+          const isFs = isCurrentlyFullscreen();
+
+          if (!isFs) {
+            // Attempt standard HTML5 Fullscreen first
+            const req = viewportStage.requestFullscreen || viewportStage.webkitRequestFullscreen || viewportStage.msRequestFullscreen;
+            if (req) {
+              try {
+                const res = req.call(viewportStage);
+                if (res && res.catch) {
+                  res.catch(function() {
+                    // Fall back directly to CSS full-window overlay if browser blocks or restricts Fullscreen API
+                    viewportStage.classList.add('is-fullscreen');
+                    updateFsButton(true);
+                  });
+                }
+              } catch (e) {
+                viewportStage.classList.add('is-fullscreen');
+                updateFsButton(true);
+              }
+            } else {
+              viewportStage.classList.add('is-fullscreen');
+              updateFsButton(true);
+            }
+          } else {
+            // Exit Fullscreen
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+              const exit = document.exitFullscreen || document.webkitExitFullscreen;
+              if (exit) {
+                try {
+                  const res = exit.call(document);
+                  if (res && res.catch) res.catch(function(){});
+                } catch(e){}
+              }
+            }
+            viewportStage.classList.remove('is-fullscreen');
+            updateFsButton(false);
+          }
+        }
+
+        if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
+        if (btnFloatExitFs) btnFloatExitFs.addEventListener('click', toggleFullscreen);
+
+        // Listen for native fullscreen changes
+        document.addEventListener('fullscreenchange', function() {
+          const isNative = !!document.fullscreenElement;
+          updateFsButton(isNative || (viewportStage && viewportStage.classList.contains('is-fullscreen')));
+          if (!isNative && viewportStage) {
+            viewportStage.classList.remove('is-fullscreen');
+          }
+        });
+        document.addEventListener('webkitfullscreenchange', function() {
+          const isNative = !!document.webkitFullscreenElement;
+          updateFsButton(isNative || (viewportStage && viewportStage.classList.contains('is-fullscreen')));
+          if (!isNative && viewportStage) {
+            viewportStage.classList.remove('is-fullscreen');
+          }
+        });
+
+        // Reload Frame
         if (btnReload && iframe) {
           btnReload.addEventListener('click', function() {
             const currentSrc = iframe.src;
@@ -627,17 +936,22 @@
           isCloaked = !isCloaked;
           if (panicDisguise) {
             panicDisguise.style.display = isCloaked ? 'flex' : 'none';
-            document.title = isCloaked ? 'Classes - Google Classroom' : 'Nova Arcade - Unblocked Games Hub';
+            document.title = isCloaked ? 'Classes - Google Classroom' : 'Nova Arcade • Unblocked Gaming Hub';
           }
         }
 
         if (btnPanicNav) btnPanicNav.addEventListener('click', togglePanic);
         if (btnExitPanic) btnExitPanic.addEventListener('click', togglePanic);
 
-        // Global hotkey: Panic key ']'
+        // Global hotkeys: Panic key ']', Escape for CSS Fullscreen
         window.addEventListener('keydown', function(e) {
           if (e.key === ']') {
             togglePanic();
+          } else if (e.key === 'Escape') {
+            if (viewportStage && viewportStage.classList.contains('is-fullscreen')) {
+              viewportStage.classList.remove('is-fullscreen');
+              updateFsButton(false);
+            }
           }
         });
 
@@ -648,16 +962,16 @@
             let raw = embedInput.value.trim();
             if (!raw) return;
 
-            // Extract src from <iframe src="..."> if pasted
             const match = raw.match(/src=["']([^"']+)["']/i);
             const finalUrl = match ? match[1] : raw;
 
             iframe.src = finalUrl;
-            const gameNameEl = document.querySelector('.game-name');
-            if (gameNameEl) {
-              gameNameEl.textContent = 'Custom Embedded Game';
+            if (gameTitle) gameTitle.textContent = 'Custom Embedded Game';
+            if (gameIcon) {
+              gameIcon.textContent = '🎮';
+              gameIcon.style.background = '#06b6d4';
             }
-            viewportWrap.scrollIntoView({ behavior: 'smooth' });
+            viewportStage.scrollIntoView({ behavior: 'smooth' });
           });
         }
       })();
