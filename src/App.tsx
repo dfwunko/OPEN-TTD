@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [activeGame, setActiveGame] = useState<Game | null>(() => GAMES_CATALOG[0] || null);
+  const [activeGame, setActiveGame] = useState<Game | null>(null);
   const [category, setCategory] = useState<GameCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'popular' | 'rating' | 'newest' | 'az'>('popular');
@@ -191,6 +191,12 @@ export default function App() {
         onOpenCustomModal={() => setIsCustomModalOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onTriggerCloak={() => setIsCloakActive(true)}
+        onGoHome={() => {
+          setActiveGame(null);
+          setCategory('all');
+          setSearchQuery('');
+        }}
+        isHome={activeGame === null}
         favoritesCount={favorites.length}
         customGamesCount={customGames.length}
         panicKey={panicKey}

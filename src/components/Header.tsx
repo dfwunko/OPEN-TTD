@@ -6,6 +6,7 @@ import {
   Code2,
   Bookmark,
   SlidersHorizontal,
+  Home,
   X
 } from 'lucide-react';
 import { GameCategory } from '../types/game';
@@ -18,6 +19,8 @@ interface HeaderProps {
   onOpenCustomModal: () => void;
   onOpenSettings: () => void;
   onTriggerCloak: () => void;
+  onGoHome: () => void;
+  isHome: boolean;
   favoritesCount: number;
   customGamesCount: number;
   panicKey: string;
@@ -43,6 +46,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCustomModal,
   onOpenSettings,
   onTriggerCloak,
+  onGoHome,
+  isHome,
   favoritesCount,
   customGamesCount,
   panicKey
@@ -55,10 +60,8 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Brand */}
           <div
             className="flex items-center gap-3 cursor-pointer group"
-            onClick={() => {
-              onSelectCategory('all');
-              onSearchChange('');
-            }}
+            onClick={onGoHome}
+            title="Return to Home Page"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
               <Gamepad2 className="w-6 h-6" />
@@ -102,6 +105,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Action buttons */}
           <div className="flex items-center gap-2">
+            {/* Home / All Games Button */}
+            <button
+              onClick={onGoHome}
+              title="Home — Browse All Games"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                isHome
+                  ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-bold shadow-md shadow-cyan-500/20'
+                  : 'bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700'
+              }`}
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>Home</span>
+            </button>
+
             {/* Custom Iframe Game Button */}
             <button
               onClick={onOpenCustomModal}
