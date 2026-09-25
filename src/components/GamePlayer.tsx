@@ -12,7 +12,8 @@ import {
   Keyboard,
   Lightbulb,
   Info,
-  Check
+  Check,
+  Play
 } from 'lucide-react';
 import { Game } from '../types/game';
 
@@ -60,6 +61,14 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
     // Track play count locally
     const storedPlays = parseInt(localStorage.getItem(`plays_${game.id}`) || '0', 10);
     localStorage.setItem(`plays_${game.id}`, String(storedPlays + 1));
+
+    return () => {
+      if (iframeRef.current) {
+        try {
+          iframeRef.current.src = 'about:blank';
+        } catch {}
+      }
+    };
   }, [game.id, game.aspectRatio]);
 
   // Fullscreen change listener
@@ -137,15 +146,19 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   };
 
   const handlePopOutAboutBlank = () => {
-    // Classic stealth unblocked technique
     const win = window.open('about:blank', '_blank');
-    if (!win) {
-      alert('Pop-up was blocked. Please allow popups for this site.');
-      return;
-    }
+    if (!win) return;
 
-    win.document.title = game.title;
-    const body = win.document.body;
+    const doc = win.document;
+    doc.title = 'Google Docs';
+
+    const link = doc.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico';
+    doc.head.appendChild(link);
+
+    const body = doc.body;
     body.style.margin = '0';
     body.style.padding = '0';
     body.style.overflow = 'hidden';
@@ -181,28 +194,28 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
     setTimeout(() => setRatingSubmitted(false), 2500);
   };
 
-  // Related games from same category or random
+  // Related games from catalog
   const relatedGames = allGames
     .filter((g) => g.id !== game.id)
     .sort((a, b) => (a.category === game.category ? -1 : 1))
     .slice(0, 4);
 
   return (
-    <div className={`w-full pb-16 ${isTheater ? 'max-w-none px-2 sm:px-6' : 'max-w-5xl mx-auto px-4'}`}>
+    <div className={`w-full pb-16 ${isTheater ? 'max-w-none px-2 sm:px-6' : 'max-w-5xl mx-auto'}`}>
       {/* Top back & quick navigation */}
-      <div className="flex items-center justify-between py-3 mb-2">
+      <div className="flex items-center justify-between py-2 mb-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer group"
+          className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Games Hub</span>
+          <span>Back to Catalog</span>
         </button>
 
         {/* Unboxed breadcrumb metadata */}
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span className="capitalize">{game.category}</span>
-          <span aria-hidden="true">·</span>
+        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-slate-400">
+          <span className="text-cyan-400">{game.category}</span>
+          <span aria-hidden="true" className="text-slate-600">·</span>
           <span>{game.releaseYear}</span>
         </div>
       </div>
@@ -210,10 +223,10 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
       {/* Main Iframe Player Wrapper */}
       <div
         ref={wrapperRef}
-        className={`relative bg-black overflow-hidden border border-slate-800 shadow-2xl flex flex-col ${
+        className={`relative bg-black overflow-hidden border border-white/[0.08] shadow-2xl flex flex-col ${
           activeFullscreen
             ? '!fixed !inset-0 !w-screen !h-screen !max-h-screen !z-[999999] !rounded-none !border-0 !m-0 !p-0'
-            : 'rounded-xl'
+            : 'rounded-2xl'
         }`}
       >
         {/* Floating Exit Fullscreen Button */}
@@ -234,56 +247,58 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             activeFullscreen
               ? 'flex-1 h-full'
               : aspectRatio === '16/9'
-              ? 'h-[720px] max-h-[85vh]'
+              ? 'h-[640px] max-h-[85vh]'
               : aspectRatio === '4/3'
               ? 'aspect-[4/3] max-h-[78vh]'
               : aspectRatio === '1/1'
               ? 'aspect-square max-h-[80vh]'
-              : 'h-[720px]'
+              : 'h-[640px]'
           }`}
         >
           <iframe
             ref={iframeRef}
-            title={game.title}
+            id="game-iframe"
+            title={game.iframeTitle || game.title}
             src={game.customHtml ? undefined : game.src}
             srcDoc={game.customHtml}
-            className="force-focus wh-full w-full h-full border-0 block"
+            scrolling="no"
+            className="GameContainerDesktop_gameIframe__6GEYI force-focus wh-full w-full h-full border-0 block"
             style={{
-              width: '100%',
-              height: activeFullscreen ? '100%' : '720px',
+              width: game.iframeStyle?.width || '100%',
+              height: activeFullscreen ? '100%' : (game.iframeStyle?.height || '100%'),
               border: 0,
-              borderRadius: activeFullscreen ? '0' : '12px'
+              ...(game.iframeStyle || {})
             }}
-            loading="lazy"
+            loading="eager"
+            {...({ importance: 'high' } as any)}
             allowFullScreen
             data-lang="en"
-            sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-storage-access-by-user-activation allow-pointer-lock"
-            allow="accelerometer *; autoplay *; camera *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *; geolocation *; gyroscope *; local-network-access *; magnetometer *; microphone *; midi *; payment *; picture-in-picture *; screen-wake-lock *; sync-xhr *; usb *; web-share *"
+            data-hj-allow-iframe="true"
+            sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+            allow="autoplay; payment; fullscreen; microphone; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-read; clipboard-write; accelerometer; gyroscope; keyboard-map; encrypted-media *; picture-in-picture *; web-share *"
           />
         </div>
 
-        {/* Player Toolbar */}
-        <div className="bg-[#0b0f19] border-t border-slate-800/80 px-4 py-2.5 flex items-center justify-between flex-wrap gap-2 text-xs text-slate-300">
-          {/* Left info & status */}
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-slate-100 text-sm hidden sm:inline-block">
+        {/* Sleek Minimalist Player Toolbar */}
+        <div className="bg-[#090d16] border-t border-white/[0.06] px-4 py-2 flex items-center justify-between flex-wrap gap-2 text-xs text-slate-300">
+          {/* Left: Title & unboxed category */}
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-white text-sm">
               {game.title}
             </span>
-            <span className="flex items-center gap-1 text-emerald-400 font-mono text-[11px]">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block mr-1" />
-              ONLINE
-            </span>
+            <span aria-hidden="true" className="text-slate-600">·</span>
+            <span className="text-xs text-slate-400 capitalize">{game.category}</span>
           </div>
 
-          {/* Right player controls */}
+          {/* Right: Controls */}
           <div className="flex items-center gap-1.5 sm:gap-2">
             {/* Aspect ratio selector */}
             {!activeFullscreen && (
-              <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-[11px]">
+              <div className="flex items-center bg-[#0d121e] border border-white/[0.08] rounded-lg p-0.5 text-[11px] font-mono">
                 <button
                   onClick={() => setAspectRatio('16/9')}
-                  className={`px-2 py-1 rounded transition-colors ${
-                    aspectRatio === '16/9' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  className={`px-2 py-0.5 rounded transition-colors ${
+                    aspectRatio === '16/9' ? 'bg-white/10 text-white font-bold' : 'text-slate-400 hover:text-white'
                   }`}
                   title="16:9 Widescreen"
                 >
@@ -291,17 +306,17 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
                 </button>
                 <button
                   onClick={() => setAspectRatio('4/3')}
-                  className={`px-2 py-1 rounded transition-colors ${
-                    aspectRatio === '4/3' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  className={`px-2 py-0.5 rounded transition-colors ${
+                    aspectRatio === '4/3' ? 'bg-white/10 text-white font-bold' : 'text-slate-400 hover:text-white'
                   }`}
-                  title="4:3 Arcade Box"
+                  title="4:3 Box"
                 >
                   4:3
                 </button>
                 <button
                   onClick={() => setAspectRatio('1/1')}
-                  className={`px-2 py-1 rounded transition-colors ${
-                    aspectRatio === '1/1' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  className={`px-2 py-0.5 rounded transition-colors ${
+                    aspectRatio === '1/1' ? 'bg-white/10 text-white font-bold' : 'text-slate-400 hover:text-white'
                   }`}
                   title="1:1 Square"
                 >
@@ -314,31 +329,31 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             <button
               onClick={handleReloadIframe}
               title="Restart / Reload Game"
-              className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
             </button>
 
             {/* Theater Mode toggle */}
             {!activeFullscreen && (
               <button
                 onClick={() => setIsTheater(!isTheater)}
-                title={isTheater ? 'Exit Theater Mode' : 'Theater Mode (Expand View)'}
-                className={`p-2 rounded-lg transition-colors cursor-pointer ${
+                title={isTheater ? 'Default View' : 'Theater Mode (Expand View)'}
+                className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                   isTheater
                     ? 'bg-cyan-500 text-slate-950 font-bold'
-                    : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white'
+                    : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white'
                 }`}
               >
-                <Tv className="w-4 h-4" />
+                <Tv className="w-3.5 h-3.5" />
               </button>
             )}
 
             {/* Pop-out in about:blank */}
             <button
               onClick={handlePopOutAboutBlank}
-              title="Open in stealth about:blank window (bypass browser history)"
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs font-semibold"
+              title="Open in stealth about:blank window"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white transition-colors cursor-pointer text-xs font-medium"
             >
               <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
               <span>About:Blank</span>
@@ -348,31 +363,31 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             <button
               onClick={(e) => onToggleFavorite(game.id, e)}
               title={isFavorite ? 'Remove Favorite' : 'Save as Favorite'}
-              className={`p-2 rounded-lg transition-colors cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 isFavorite
                   ? 'bg-amber-500 text-slate-950 shadow-md'
-                  : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white'
+                  : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white'
               }`}
             >
-              <Bookmark className="w-4 h-4 fill-current" />
+              <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
             </button>
 
             {/* Share Link */}
             <button
               onClick={handleShare}
               title="Copy Game Link"
-              className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
-              {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
             </button>
 
             {/* Fullscreen button */}
             <button
               onClick={handleToggleFullscreen}
-              title={activeFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition-colors cursor-pointer"
+              title={activeFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold transition-all cursor-pointer"
             >
-              {activeFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              {activeFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
               <span className="hidden sm:inline-block">
                 {activeFullscreen ? 'Exit' : 'Fullscreen'}
               </span>
@@ -381,28 +396,27 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
         </div>
       </div>
 
-      {/* Game Details & Controls Information */}
+      {/* Game Details & Controls Section */}
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 columns: Description, Instructions, Pro Tips */}
+        {/* Left 2 columns: Description & Instructions */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Header & Description */}
-          <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+          {/* Header & Overview */}
+          <div className="bg-[#0a0e18] border border-white/[0.07] rounded-2xl p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
               <div>
                 <h1 className="text-2xl font-black text-white">{game.title}</h1>
-                {/* Clean unboxed metadata per frontend-design */}
-                <div className="mt-1 flex items-center gap-2 text-xs text-slate-400">
-                  <span className="capitalize">{game.category} Arcade</span>
-                  <span aria-hidden="true">·</span>
+                <div className="mt-1 flex items-center gap-2 text-xs font-mono text-slate-400">
+                  <span className="capitalize">{game.category}</span>
+                  <span aria-hidden="true" className="text-slate-600">·</span>
                   <span>Released {game.releaseYear}</span>
-                  <span aria-hidden="true">·</span>
+                  <span aria-hidden="true" className="text-slate-600">·</span>
                   <span>{game.plays.toLocaleString()} plays</span>
                 </div>
               </div>
 
               {/* Star Rating Section */}
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-0.5">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -421,12 +435,12 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
                     </button>
                   ))}
                 </div>
-                <span className="text-xs font-semibold text-slate-300">
-                  {game.rating.toFixed(1)}
+                <span className="text-xs font-semibold text-slate-300 font-mono">
+                  {game.rating.toFixed(2)}
                 </span>
                 {ratingSubmitted && (
-                  <span className="text-xs text-emerald-400 font-semibold animate-pulse">
-                    Thank you!
+                  <span className="text-xs text-emerald-400 font-medium">
+                    Saved
                   </span>
                 )}
               </div>
@@ -437,17 +451,17 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             </p>
           </div>
 
-          {/* How to Play / Instructions */}
+          {/* Instructions */}
           {game.instructions && game.instructions.length > 0 && (
-            <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-6">
-              <h2 className="text-base font-bold text-slate-100 flex items-center gap-2 mb-3">
+            <div className="bg-[#0a0e18] border border-white/[0.07] rounded-2xl p-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 mb-3">
                 <Info className="w-4 h-4 text-cyan-400" />
                 <span>How to Play</span>
               </h2>
-              <ul className="space-y-2">
+              <ul className="space-y-2.5">
                 {game.instructions.map((inst, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
-                    <span className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-cyan-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/[0.08] text-cyan-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span>{inst}</span>
@@ -459,15 +473,15 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
 
           {/* Pro Tips */}
           {game.tips && game.tips.length > 0 && (
-            <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-6">
-              <h2 className="text-base font-bold text-slate-100 flex items-center gap-2 mb-3">
+            <div className="bg-[#0a0e18] border border-white/[0.07] rounded-2xl p-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 mb-3">
                 <Lightbulb className="w-4 h-4 text-amber-400" />
-                <span>Pro Tips & Strategies</span>
+                <span>Tips & Strategy</span>
               </h2>
               <ul className="space-y-2">
                 {game.tips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
-                    <span className="text-amber-400 font-bold shrink-0">✦</span>
+                    <span className="text-amber-400 shrink-0 font-bold">·</span>
                     <span>{tip}</span>
                   </li>
                 ))}
@@ -479,17 +493,17 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
         {/* Right column: Keyboard Controls Guide & Related Games */}
         <div className="space-y-6">
           {/* Keyboard Controls Guide */}
-          <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-6">
-            <h2 className="text-base font-bold text-slate-100 flex items-center gap-2 mb-4">
+          <div className="bg-[#0a0e18] border border-white/[0.07] rounded-2xl p-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 mb-4">
               <Keyboard className="w-4 h-4 text-emerald-400" />
               <span>Keyboard Controls</span>
             </h2>
 
-            <div className="divide-y divide-slate-800/80">
+            <div className="divide-y divide-white/[0.06]">
               {game.controls.map((ctrl, i) => (
                 <div key={i} className="py-2.5 flex items-center justify-between gap-3 text-xs">
                   <span className="text-slate-400">{ctrl.action}</span>
-                  <kbd className="px-2.5 py-1 bg-slate-900 border border-slate-700/80 rounded font-mono text-slate-200 text-xs font-semibold shadow-inner">
+                  <kbd className="px-2 py-0.5 bg-[#0f1424] border border-white/[0.1] rounded font-mono text-slate-200 text-xs font-semibold">
                     {ctrl.key}
                   </kbd>
                 </div>
@@ -497,36 +511,42 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             </div>
           </div>
 
-          {/* Related Games Suggestions (if any) */}
+          {/* Related Games Suggestions with Real Artwork */}
           {relatedGames.length > 0 && (
-            <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-6">
-              <h2 className="text-base font-bold text-slate-100 mb-3">
-                You Might Also Like
+            <div className="bg-[#0a0e18] border border-white/[0.07] rounded-2xl p-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-3">
+                More Titles
               </h2>
               <div className="space-y-2.5">
                 {relatedGames.map((rel) => (
                   <div
                     key={rel.id}
                     onClick={() => onSelectRelatedGame(rel)}
-                    className="flex items-center gap-3 p-2 rounded-lg bg-slate-900/60 hover:bg-slate-800 border border-slate-800/60 hover:border-cyan-500/40 cursor-pointer transition-colors group"
+                    className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-cyan-500/30 cursor-pointer transition-colors group"
                   >
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center font-mono font-bold text-sm shrink-0"
-                      style={{
-                        backgroundColor: `${rel.accentColor}22`,
-                        color: rel.accentColor
-                      }}
-                    >
-                      {rel.title.slice(0, 2).toUpperCase()}
+                    <div className="w-16 h-11 rounded-lg overflow-hidden relative shrink-0 bg-slate-900 border border-white/[0.08]">
+                      {rel.thumbnailUrl ? (
+                        <img
+                          src={rel.thumbnailUrl}
+                          alt={rel.title}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-mono font-bold text-xs text-cyan-400">
+                          {rel.title.slice(0, 2).toUpperCase()}
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-bold text-slate-200 group-hover:text-cyan-400 truncate">
                         {rel.title}
                       </h4>
-                      <p className="text-[11px] text-slate-400 capitalize">
-                        {rel.category} · {rel.rating.toFixed(1)} ★
+                      <p className="text-[11px] text-slate-400 font-mono capitalize">
+                        {rel.category} · ★ {rel.rating.toFixed(1)}
                       </p>
                     </div>
+                    <Play className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors shrink-0" />
                   </div>
                 ))}
               </div>

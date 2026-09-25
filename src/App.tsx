@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { GAMES_CATALOG } from './data/games';
 import { Game, GameCategory, CloakPreset } from './types/game';
 import { Header } from './components/Header';
@@ -14,15 +14,10 @@ import { CloakDisguise } from './components/CloakDisguise';
 import { SettingsModal } from './components/SettingsModal';
 import {
   Gamepad2,
-  Flame,
-  Star,
-  Clock,
-  Sparkles,
+  Play,
   ArrowUpDown,
   Bookmark,
-  Shield,
-  Code2,
-  RefreshCw
+  Code2
 } from 'lucide-react';
 
 export default function App() {
@@ -35,9 +30,9 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('nova_arcade_favorites');
-      return saved ? JSON.parse(saved) : ['openttd-online'];
+      return saved ? JSON.parse(saved) : ['polytrack'];
     } catch {
-      return ['openttd-online'];
+      return ['polytrack'];
     }
   });
 
@@ -101,30 +96,26 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [panicKey]);
 
-  const handleToggleFavorite = (id: string, e: React.MouseEvent) => {
+  const handleToggleFavorite = useCallback((id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
-  };
+  }, []);
 
-  const handleSaveCustomGame = (newGame: Game) => {
+  const handleSaveCustomGame = useCallback((newGame: Game) => {
     setCustomGames((prev) => [newGame, ...prev]);
     setActiveGame(newGame);
-  };
+  }, []);
 
-  const handleClearData = () => {
-    localStorage.removeItem('nova_arcade_favorites');
-    localStorage.removeItem('nova_arcade_custom_games');
-    localStorage.removeItem('blockfall_best');
-    localStorage.removeItem('snake_deluxe_best');
-    localStorage.removeItem('2048_deluxe_best');
-    localStorage.removeItem('dino_runner_hi');
-    localStorage.removeItem('flappy_retro_best');
+  const handleClearData = useCallback(() => {
+    try {
+      localStorage.removeItem('nova_arcade_favorites');
+      localStorage.removeItem('nova_arcade_custom_games');
+    } catch {}
     setFavorites([]);
     setCustomGames([]);
-    alert('All local arcade data and records have been cleared.');
-  };
+  }, []);
 
   // Combine built-in games and custom games
   const allGames = useMemo(() => {
@@ -169,7 +160,7 @@ export default function App() {
   }, [allGames]);
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#06080e] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200">
       {/* Panic Cloak Fullscreen Disguise */}
       {isCloakActive && (
         <CloakDisguise
@@ -217,81 +208,108 @@ export default function App() {
         ) : (
           /* Game Catalog & Directory */
           <div className="space-y-8">
-            {/* Featured Hero Banner (Shown only on All category with no search query) */}
+            {/* Featured Hero Showcase (Shown when browsing All without search) */}
             {category === 'all' && !searchQuery && featuredGame && (
-              <section className="relative rounded-2xl overflow-hidden border border-slate-800 bg-gradient-to-r from-slate-900 via-[#0d1424] to-[#0f172a] p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="max-w-xl space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-cyan-400">
-                    <Sparkles className="w-4 h-4 text-cyan-400" />
-                    <span>Featured Unblocked Title</span>
-                    <span aria-hidden="true">·</span>
-                    <span className="text-slate-400">Zero Lag · No Ads</span>
+              <section className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0a0e18] shadow-2xl group">
+                {/* Background Ambient Artwork with Fade */}
+                {featuredGame.thumbnailUrl && (
+                  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                    <img
+                      src={featuredGame.thumbnailUrl}
+                      alt={featuredGame.title}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover opacity-20 filter blur-sm scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0a0e18] via-[#0a0e18]/90 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e18] via-transparent to-[#0a0e18]/40" />
+                  </div>
+                )}
+
+                <div className="relative z-10 p-6 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                  {/* Left: Info & Launch */}
+                  <div className="max-w-xl space-y-4">
+                    {/* Unboxed Metadata Kicker (Anti-Pill Discipline) */}
+                    <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-cyan-400 font-semibold">
+                      <span>Featured Title</span>
+                      <span aria-hidden="true" className="text-slate-600">·</span>
+                      <span className="text-slate-300 capitalize">{featuredGame.category}</span>
+                      <span aria-hidden="true" className="text-slate-600">·</span>
+                      <span className="text-amber-400 font-medium">★ {featuredGame.rating.toFixed(2)}</span>
+                    </div>
+
+                    <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight text-balance">
+                      {featuredGame.title}
+                    </h1>
+
+                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg">
+                      {featuredGame.description}
+                    </p>
+
+                    <div className="flex items-center gap-3 pt-2">
+                      <button
+                        onClick={() => setActiveGame(featuredGame)}
+                        className="px-6 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02] cursor-pointer flex items-center gap-2"
+                      >
+                        <Play className="w-4 h-4 fill-current ml-0.5" />
+                        <span>Play Now</span>
+                      </button>
+                      <button
+                        onClick={(e) => handleToggleFavorite(featuredGame.id, e)}
+                        className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all cursor-pointer flex items-center gap-2 ${
+                          favorites.includes(featuredGame.id)
+                            ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                            : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border-white/10'
+                        }`}
+                      >
+                        <Bookmark className={`w-4 h-4 ${favorites.includes(featuredGame.id) ? 'fill-current' : ''}`} />
+                        <span>{favorites.includes(featuredGame.id) ? 'Bookmarked' : 'Bookmark'}</span>
+                      </button>
+                    </div>
                   </div>
 
-                  <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
-                    {featuredGame.title}
-                  </h1>
-
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    {featuredGame.description}
-                  </p>
-
-                  <div className="flex items-center gap-3 pt-2">
-                    <button
-                      onClick={() => setActiveGame(featuredGame)}
-                      className="px-6 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-sm tracking-wide shadow-lg shadow-cyan-500/25 transition-all hover:scale-102 cursor-pointer flex items-center gap-2"
-                    >
-                      <Gamepad2 className="w-4 h-4" />
-                      <span>Play Now</span>
-                    </button>
-                    <button
-                      onClick={(e) => handleToggleFavorite(featuredGame.id, e)}
-                      className={`px-4 py-2.5 rounded-lg border text-sm font-semibold transition-colors cursor-pointer flex items-center gap-2 ${
-                        favorites.includes(featuredGame.id)
-                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/40'
-                          : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-700'
-                      }`}
-                    >
-                      <Bookmark className="w-4 h-4" />
-                      <span>{favorites.includes(featuredGame.id) ? 'Saved' : 'Bookmark'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Hero Visual Preview */}
-                <div
-                  onClick={() => setActiveGame(featuredGame)}
-                  className="w-full md:w-80 aspect-video rounded-xl bg-slate-950 border border-slate-700/60 flex items-center justify-center p-6 text-center cursor-pointer group hover:border-cyan-500 transition-colors relative overflow-hidden"
-                >
+                  {/* Right: High-Res Interactive Visual Card */}
                   <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-cyan-400 font-mono text-2xl font-black shadow-xl group-hover:scale-110 transition-transform"
-                    style={{
-                      backgroundColor: `${featuredGame.accentColor}22`,
-                      border: `2px solid ${featuredGame.accentColor}`
-                    }}
+                    onClick={() => setActiveGame(featuredGame)}
+                    className="w-full lg:w-96 aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl relative cursor-pointer group/preview hover:border-cyan-500/50 transition-all"
                   >
-                    {featuredGame.title.slice(0, 2).toUpperCase()}
-                  </div>
-                  <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="bg-cyan-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs shadow-lg">
-                      Launch Game
-                    </span>
+                    {featuredGame.thumbnailUrl ? (
+                      <img
+                        src={featuredGame.thumbnailUrl}
+                        alt={featuredGame.title}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover group-hover/preview:scale-105 transition-transform duration-500 ease-out"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-slate-900 flex items-center justify-center font-mono font-bold text-cyan-400 text-xl">
+                        {featuredGame.title}
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs">
+                      <span className="font-semibold text-white tracking-wide flex items-center gap-1.5">
+                        <Play className="w-3.5 h-3.5 fill-cyan-400 text-cyan-400" />
+                        Click to Launch
+                      </span>
+                      <span className="font-mono text-cyan-300 text-[11px]">
+                        {featuredGame.releaseYear}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </section>
             )}
 
             {/* Catalog Controls Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.06] pb-3.5">
               <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg font-bold text-white flex items-center gap-2">
                   <span className="capitalize">
                     {category === 'all'
-                      ? 'All Unblocked Games'
+                      ? 'Catalog'
                       : category === 'favorites'
-                      ? 'Your Bookmarked Favorites'
+                      ? 'Your Favorites'
                       : category === 'custom'
-                      ? 'Custom Iframe Games'
+                      ? 'Custom Embeds'
                       : `${category} Games`}
                   </span>
                   <span className="text-xs font-mono text-slate-400 font-normal">
@@ -299,7 +317,7 @@ export default function App() {
                   </span>
                 </h2>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Real HTML5 and canvas games embedded in responsive sandbox iframes
+                  High-performance unblocked games with instant loading and native keyboard controls
                 </p>
               </div>
 
@@ -312,7 +330,7 @@ export default function App() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-1.5 text-slate-200 font-medium focus:outline-none focus:border-cyan-500 cursor-pointer"
+                  className="bg-[#0c101b] border border-white/10 rounded-lg px-2.5 py-1 text-slate-200 text-xs font-medium focus:outline-none focus:border-cyan-500 cursor-pointer"
                 >
                   <option value="popular">Most Popular</option>
                   <option value="rating">Highest Rated</option>
@@ -322,9 +340,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* Games Grid */}
+            {/* Games Grid - Sleek 3-Column Minimalist Presentation */}
             {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredGames.map((game) => (
                   <GameCard
                     key={game.id}
@@ -337,18 +355,18 @@ export default function App() {
               </div>
             ) : allGames.length === 0 ? (
               /* All Games Cleared State */
-              <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-10 text-center max-w-lg mx-auto my-8 shadow-2xl">
-                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mx-auto mb-4">
-                  <Gamepad2 className="w-7 h-7" />
+              <div className="bg-[#0a0e18] border border-white/[0.08] rounded-2xl p-10 text-center max-w-lg mx-auto my-8 shadow-2xl">
+                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mx-auto mb-4">
+                  <Gamepad2 className="w-6 h-6" />
                 </div>
-                <h3 className="font-bold text-white text-lg mb-1.5">All Games Cleared</h3>
+                <h3 className="font-bold text-white text-base mb-1.5">No Games In Catalog</h3>
                 <p className="text-xs text-slate-400 mb-6 leading-relaxed max-w-sm mx-auto">
-                  All catalog games and previously embedded titles have been completely cleared. You can embed any web game, iframe snippet, or HTML project directly into your personal sandbox.
+                  Embed any web game, iframe snippet, or HTML project directly into your personal sandbox.
                 </p>
                 <div className="flex items-center justify-center">
                   <button
                     onClick={() => setIsCustomModalOpen(true)}
-                    className="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs cursor-pointer transition-colors shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
+                    className="px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs cursor-pointer transition-colors flex items-center justify-center gap-2"
                   >
                     <Code2 className="w-4 h-4" />
                     <span>Embed Game / Iframe</span>
@@ -357,9 +375,9 @@ export default function App() {
               </div>
             ) : (
               /* Filter / Search Empty State */
-              <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-12 text-center max-w-md mx-auto my-8">
-                <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 mx-auto mb-3">
-                  <Gamepad2 className="w-6 h-6" />
+              <div className="bg-[#0a0e18] border border-white/[0.08] rounded-2xl p-12 text-center max-w-md mx-auto my-8">
+                <div className="w-11 h-11 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 mx-auto mb-3">
+                  <Gamepad2 className="w-5 h-5" />
                 </div>
                 <h3 className="font-bold text-white text-base mb-1">No Games Found</h3>
                 <p className="text-xs text-slate-400 mb-4 leading-relaxed">
@@ -368,25 +386,15 @@ export default function App() {
                     : category === 'favorites'
                     ? "You haven't bookmarked any games yet! Click the bookmark icon on any game card to add it here."
                     : category === 'custom'
-                    ? "No custom games embedded yet. Click 'Embed Game' to load any URL or paste HTML."
+                    ? "No custom games embedded yet. Click 'Embed' to load any URL or paste HTML."
                     : 'No games available in this category.'}
                 </p>
-                {category === 'custom' ? (
+                {category === 'custom' && (
                   <button
                     onClick={() => setIsCustomModalOpen(true)}
-                    className="px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs cursor-pointer hover:bg-cyan-400 transition-colors"
+                    className="px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs cursor-pointer transition-colors"
                   >
                     Embed Custom Game
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setCategory('all');
-                      setSearchQuery('');
-                    }}
-                    className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition-colors cursor-pointer"
-                  >
-                    View All Games
                   </button>
                 )}
               </div>
@@ -396,51 +404,52 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t border-slate-800/80 bg-[#090d16] text-xs text-slate-400 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-white/[0.06] mt-16 py-6 text-center text-xs text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-mono font-bold text-slate-300">Nova Arcade Hub</span>
+            <span className="font-mono font-bold text-white">NOVA ARCADE</span>
             <span aria-hidden="true" className="text-slate-600">·</span>
-            <span>Self-Contained HTML5 & Iframe Game Player</span>
+            <span>Minimalist Unblocked Gaming Sandbox</span>
           </div>
-
-          <div className="flex items-center gap-4 text-slate-500 text-[11px]">
-            <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-mono text-slate-300">{panicKey}</kbd> for Panic Cloak</span>
-            <span aria-hidden="true">·</span>
-            <button
-              onClick={() => setIsCustomModalOpen(true)}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
-            >
-              Add Custom Iframe
-            </button>
-            <span aria-hidden="true">·</span>
+          <div className="flex items-center gap-4 text-slate-400 text-xs">
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
+              className="hover:text-slate-200 transition-colors cursor-pointer"
             >
-              Settings
+              Preferences
+            </button>
+            <span aria-hidden="true" className="text-slate-600">·</span>
+            <button
+              onClick={() => setIsCloakActive(true)}
+              className="hover:text-rose-300 transition-colors cursor-pointer"
+            >
+              Quick Cloak ({panicKey})
             </button>
           </div>
         </div>
       </footer>
 
       {/* Custom Game Embed Modal */}
-      <CustomGameModal
-        isOpen={isCustomModalOpen}
-        onClose={() => setIsCustomModalOpen(false)}
-        onSaveCustomGame={handleSaveCustomGame}
-      />
+      {isCustomModalOpen && (
+        <CustomGameModal
+          isOpen={isCustomModalOpen}
+          onClose={() => setIsCustomModalOpen(false)}
+          onSaveCustomGame={handleSaveCustomGame}
+        />
+      )}
 
       {/* Settings Modal */}
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        preset={cloakPreset}
-        onChangePreset={setCloakPreset}
-        panicKey={panicKey}
-        onChangePanicKey={setPanicKey}
-        onClearData={handleClearData}
-      />
+      {isSettingsOpen && (
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          preset={cloakPreset}
+          onChangePreset={setCloakPreset}
+          panicKey={panicKey}
+          onChangePanicKey={setPanicKey}
+          onClearData={handleClearData}
+        />
+      )}
     </div>
   );
 }

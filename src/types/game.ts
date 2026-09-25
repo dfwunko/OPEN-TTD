@@ -32,8 +32,11 @@ export interface Game {
   iconName: string;
   accentColor: string;
   releaseYear: number;
+  thumbnailUrl?: string;
   customHtml?: string;
   isCustom?: boolean;
+  iframeStyle?: React.CSSProperties;
+  iframeTitle?: string;
 }
 
 export type CloakPreset = 'classroom' | 'drive' | 'docs' | 'wikipedia' | 'canvas';

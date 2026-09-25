@@ -2,11 +2,10 @@ import React from 'react';
 import {
   Gamepad2,
   Search,
-  ShieldAlert,
+  Shield,
   Code2,
   Bookmark,
   SlidersHorizontal,
-  Home,
   X
 } from 'lucide-react';
 import { GameCategory } from '../types/game';
@@ -28,14 +27,14 @@ interface HeaderProps {
 
 const CATEGORIES: { id: GameCategory; label: string }[] = [
   { id: 'all', label: 'All Games' },
-  { id: 'arcade', label: 'Arcade' },
-  { id: 'retro', label: 'Retro' },
-  { id: 'action', label: 'Action' },
-  { id: 'puzzle', label: 'Puzzle' },
   { id: 'driving', label: 'Driving' },
-  { id: 'skill', label: 'Skill' },
+  { id: 'retro', label: 'Retro & Voxel' },
+  { id: 'action', label: 'Action' },
+  { id: 'puzzle', label: 'Platformer' },
+  { id: 'skill', label: 'Survival' },
+  { id: 'arcade', label: 'Tycoon' },
   { id: 'favorites', label: 'Favorites' },
-  { id: 'custom', label: 'Custom Iframe' }
+  { id: 'custom', label: 'Custom Embeds' }
 ];
 
 export const Header: React.FC<HeaderProps> = ({
@@ -53,91 +52,76 @@ export const Header: React.FC<HeaderProps> = ({
   panicKey
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-[#090d16]/95 backdrop-blur-md border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col gap-3">
+    <header className="sticky top-0 z-40 bg-[#06080e]/90 backdrop-blur-xl border-b border-white/[0.06] transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-col gap-2">
         {/* Top brand & utility bar */}
         <div className="flex items-center justify-between gap-4">
           {/* Brand */}
           <div
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer group select-none"
             onClick={onGoHome}
-            title="Return to Home Page"
+            title="Return to Home Catalog"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-              <Gamepad2 className="w-6 h-6" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/50 group-hover:scale-105 transition-all">
+              <Gamepad2 className="w-4 h-4" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-black tracking-tight text-white font-mono">
-                  NOVA<span className="text-cyan-400">.ARCADE</span>
-                </span>
-                <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-800/60">
-                  UNBLOCKED
-                </span>
-              </div>
-              <p className="text-xs text-slate-400">
-                HTML5 & Iframe Game Portal · Zero Blockers
-              </p>
+            <div className="flex items-center gap-2">
+              <span className="text-base font-extrabold tracking-tight text-white font-mono">
+                NOVA<span className="text-cyan-400">ARCADE</span>
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" title="Systems Online" />
             </div>
           </div>
 
           {/* Search bar */}
-          <div className="flex-1 max-w-md hidden md:block">
+          <div className="flex-1 max-w-sm hidden md:block">
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search games by title, genre, or keyword... (/)"
+                placeholder="Search games... (Press /)"
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full bg-slate-900/90 border border-slate-700/80 rounded-lg pl-9 pr-9 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                className="w-full bg-[#0d121c] border border-white/[0.08] rounded-lg pl-9 pr-9 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all font-sans"
               />
-              {searchQuery && (
-                <button
-                  onClick={() => onSearchChange('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
+              <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center">
+                {searchQuery ? (
+                  <button
+                    onClick={() => onSearchChange('')}
+                    className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono text-slate-500 bg-white/[0.04] border border-white/[0.08] rounded">
+                    /
+                  </kbd>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Action buttons */}
-          <div className="flex items-center gap-2">
-            {/* Home / All Games Button */}
-            <button
-              onClick={onGoHome}
-              title="Home — Browse All Games"
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                isHome
-                  ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-bold shadow-md shadow-cyan-500/20'
-                  : 'bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700'
-              }`}
-            >
-              <Home className="w-3.5 h-3.5" />
-              <span>Home</span>
-            </button>
-
+          {/* Action controls */}
+          <div className="flex items-center gap-1.5">
             {/* Custom Iframe Game Button */}
             <button
               onClick={onOpenCustomModal}
-              title="Load custom URL or HTML code in an iframe sandbox"
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer"
+              title="Embed any external web game or iframe"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white text-xs font-medium border border-white/[0.08] transition-all cursor-pointer"
             >
-              <Code2 className="w-4 h-4 text-cyan-400" />
-              <span>Embed Game</span>
+              <Code2 className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Embed</span>
             </button>
 
             {/* Panic / Cloak Button */}
             <button
               onClick={onTriggerCloak}
-              title={`Instantly disguise this tab as Google Classroom or Google Drive (Shortcut: ${panicKey})`}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-950/70 hover:bg-red-900/90 text-red-200 border border-red-800/80 text-xs font-bold transition-all shadow-sm cursor-pointer hover:shadow-red-900/20"
+              title={`Stealth Disguise (Shortcut: ${panicKey})`}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/25 text-xs font-semibold transition-all cursor-pointer"
             >
-              <ShieldAlert className="w-4 h-4 text-red-400 animate-pulse" />
-              <span>Panic Cloak</span>
-              <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] bg-red-900/80 rounded border border-red-700 text-red-200 font-mono">
+              <Shield className="w-3.5 h-3.5 text-rose-400" />
+              <span>Panic</span>
+              <kbd className="hidden sm:inline-block px-1 py-0.2 text-[10px] bg-rose-950/60 rounded border border-rose-800 text-rose-300 font-mono">
                 {panicKey}
               </kbd>
             </button>
@@ -145,38 +129,38 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Settings button */}
             <button
               onClick={onOpenSettings}
-              title="Settings & Cloak Presets"
-              className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-colors cursor-pointer"
+              title="Settings & Cloak Preferences"
+              className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white border border-white/[0.08] transition-all cursor-pointer"
             >
-              <SlidersHorizontal className="w-4 h-4" />
+              <SlidersHorizontal className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
 
         {/* Mobile Search Input */}
         <div className="md:hidden relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             placeholder="Search games..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-8 py-1.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-[#0d121c] border border-white/[0.08] rounded-lg pl-8 pr-8 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
           />
           {searchQuery && (
             <button
               onClick={() => onSearchChange('')}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        {/* Categories segmented bar */}
+        {/* Interactive Categories Segmented Bar */}
         <nav
           aria-label="Game categories"
-          className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs"
+          className="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5 text-xs"
         >
           {CATEGORIES.map((cat) => {
             const isActive = currentCategory === cat.id;
@@ -191,17 +175,14 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-lg font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+                className={`whitespace-nowrap px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                   isActive
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm shadow-cyan-500/20'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    ? 'bg-cyan-500/15 text-cyan-300 font-semibold border border-cyan-500/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]'
                 }`}
               >
                 {cat.id === 'favorites' && (
-                  <Bookmark className={`w-3.5 h-3.5 ${isActive ? 'text-slate-950' : 'text-amber-400'}`} />
-                )}
-                {cat.id === 'custom' && (
-                  <Code2 className={`w-3.5 h-3.5 ${isActive ? 'text-slate-950' : 'text-cyan-400'}`} />
+                  <Bookmark className={`w-3 h-3 ${isActive ? 'text-amber-400 fill-amber-400' : 'text-amber-400'}`} />
                 )}
                 <span>
                   {cat.label}

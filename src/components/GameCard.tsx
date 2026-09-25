@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, Star, Bookmark, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, Bookmark, Play, ArrowRight } from 'lucide-react';
 import { Game } from '../types/game';
 
 interface GameCardProps {
@@ -7,105 +7,115 @@ interface GameCardProps {
   isFavorite: boolean;
   onToggleFavorite: (id: string, e: React.MouseEvent) => void;
   onPlayGame: (game: Game) => void;
-  highScore?: number;
 }
 
-export const GameCard: React.FC<GameCardProps> = ({
+export const GameCard: React.FC<GameCardProps> = React.memo(({
   game,
   isFavorite,
   onToggleFavorite,
   onPlayGame,
-  highScore
 }) => {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <article
       onClick={() => onPlayGame(game)}
-      className="group relative bg-[#0f1422] border border-slate-800 hover:border-cyan-500/60 rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-950/20 cursor-pointer flex flex-col justify-between"
+      className="group relative bg-[#0a0e18] border border-white/[0.07] hover:border-cyan-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/60 cursor-pointer flex flex-col justify-between"
     >
-      {/* Thumbnail / Visual graphic banner */}
-      <div className="relative aspect-video w-full overflow-hidden bg-slate-950 flex items-center justify-center border-b border-slate-800/80">
-        {/* Dynamic game illustration background */}
-        <div
-          className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity"
-          style={{
-            background: `radial-gradient(circle at center, ${game.accentColor} 0%, transparent 70%)`
-          }}
-        />
-
-        {/* Game Icon Graphic */}
-        <div className="relative z-10 flex flex-col items-center justify-center p-4 text-center">
+      {/* Visual Thumbnail Banner */}
+      <div className="relative aspect-video w-full overflow-hidden bg-slate-950 border-b border-white/[0.06]">
+        {game.thumbnailUrl && !imgError ? (
+          <img
+            src={game.thumbnailUrl}
+            alt={game.title}
+            width={480}
+            height={270}
+            referrerPolicy="no-referrer"
+            loading="lazy"
+            decoding="async"
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
           <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-2 shadow-lg transition-transform duration-200 group-hover:scale-110"
+            className="w-full h-full flex items-center justify-center"
             style={{
-              backgroundColor: `${game.accentColor}22`,
-              border: `1.5px solid ${game.accentColor}66`,
-              color: game.accentColor
+              background: `radial-gradient(circle at center, ${game.accentColor}25 0%, #06090f 80%)`
             }}
           >
-            <span className="font-mono text-xl font-black">
+            <span className="font-mono text-2xl font-black text-cyan-400">
               {game.title.slice(0, 2).toUpperCase()}
             </span>
           </div>
-          <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400">
-            {game.category}
-          </span>
-        </div>
+        )}
+
+        {/* Ambient Dark Gradient Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e18] via-transparent to-black/20 opacity-80 pointer-events-none" />
 
         {/* Favorite Bookmark Button */}
         <button
+          type="button"
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           onClick={(e) => onToggleFavorite(game.id, e)}
-          className={`absolute top-2.5 right-2.5 z-20 p-2 rounded-lg backdrop-blur-md transition-colors cursor-pointer ${
+          className={`absolute top-2.5 right-2.5 z-20 p-2 rounded-xl backdrop-blur-md transition-all cursor-pointer ${
             isFavorite
-              ? 'bg-amber-500/90 text-slate-950 shadow-md'
-              : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800'
+              ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/25 scale-105'
+              : 'bg-black/50 hover:bg-black/80 text-slate-300 hover:text-white border border-white/10'
           }`}
         >
-          <Bookmark className="w-4 h-4 fill-current" />
+          <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
         </button>
 
-        {/* Hover Play Overlay */}
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
-          <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-500/40 transform scale-75 group-hover:scale-100 transition-transform">
-            <Play className="w-6 h-6 fill-current ml-0.5" />
+        {/* Play Icon Affordance on Hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none">
+          <div className="w-11 h-11 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-500/40 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+            <Play className="w-4 h-4 fill-current ml-0.5" />
           </div>
         </div>
       </div>
 
       {/* Card Body */}
-      <div className="p-4 flex-1 flex flex-col justify-between">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3.5">
         <div>
+          {/* Quiet Unboxed Metadata Kicker (Anti-Pill Discipline) */}
+          <div className="flex items-center gap-1.5 text-[11px] font-mono tracking-wider uppercase text-cyan-400 font-semibold mb-1">
+            <span>{game.category}</span>
+            <span aria-hidden="true" className="text-slate-600">·</span>
+            <span className="text-slate-400 font-normal">{game.releaseYear}</span>
+            {game.badge && (
+              <>
+                <span aria-hidden="true" className="text-slate-600">·</span>
+                <span className="text-slate-400 font-normal">{game.badge}</span>
+              </>
+            )}
+          </div>
+
           {/* Title */}
-          <h3 className="font-bold text-base text-slate-100 group-hover:text-cyan-400 transition-colors line-clamp-1">
+          <h3 className="font-bold text-base text-white group-hover:text-cyan-400 transition-colors line-clamp-1">
             {game.title}
           </h3>
 
           {/* Description */}
-          <p className="mt-1.5 text-xs text-slate-400 line-clamp-2 leading-relaxed">
+          <p className="mt-1 text-xs text-slate-400 line-clamp-2 leading-relaxed">
             {game.description}
           </p>
         </div>
 
-        {/* Unboxed Metadata (Zero-pill discipline per frontend-design guidelines) */}
-        <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-1.5">
+        {/* Footer: Rating, Plays & Launch Action */}
+        <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
+          <div className="flex items-center gap-1.5 text-slate-400 font-mono tabular-nums">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span className="font-semibold text-slate-200">{game.rating.toFixed(1)}</span>
-            <span aria-hidden="true" className="text-slate-600">·</span>
-            <span>{game.plays.toLocaleString()} plays</span>
+            <span className="font-semibold text-slate-200">{game.rating.toFixed(2)}</span>
+            <span aria-hidden="true" className="text-slate-700">·</span>
+            <span className="text-[11px] text-slate-400 font-sans">{game.plays.toLocaleString()} plays</span>
           </div>
 
-          {highScore !== undefined && highScore > 0 ? (
-            <div className="text-emerald-400 font-mono text-[11px] font-medium">
-              Best: {highScore.toLocaleString()}
-            </div>
-          ) : (
-            <span className="text-slate-500 font-mono text-[11px]">
-              {game.releaseYear}
-            </span>
-          )}
+          <div className="flex items-center gap-1 text-cyan-400 font-semibold text-xs group-hover:translate-x-0.5 transition-transform">
+            <span>Play</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </div>
         </div>
       </div>
     </article>
   );
-};
+});

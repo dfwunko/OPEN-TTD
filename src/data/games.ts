@@ -2,539 +2,473 @@ import { Game } from '../types/game';
 
 export const GAMES_CATALOG: Game[] = [
   {
-    id: 'openttd-online',
-    title: 'OpenTTD Online',
-    category: 'retro',
-    description: 'Play OpenTTD (Transport Tycoon Deluxe) online directly in your browser. Build roads, rails, airports, and shipping networks.',
-    longDescription: 'OpenTTD Online is the complete open-source simulation based on Chris Sawyer\'s classic Transport Tycoon Deluxe. Set up intricate rail networks with path signals, dispatch steam and high-speed electric trains, manage airports, connect growing cities, and out-maneuver competing freight companies.',
-    src: 'https://openttdonline.com/play',
+    id: 'polytrack',
+    title: 'PolyTrack',
+    category: 'driving',
+    description: 'Fast-paced low-poly racing game inspired by TrackMania featuring high-speed loops, banked turns, custom track builder, and asynchronous ghost time trials.',
+    longDescription: "PolyTrack is a minimalist 3D racing phenomenon. Pilot customizable low-poly sports cars across death-defying roller-coaster tracks featuring vertical loops, wall-rides, and mountain-clearing jumps where every millisecond counts. Build your own tracks in the integrated 3D level editor, share track codes with friends, and challenge global leaderboard ghosts.",
+    src: 'https://games.crazygames.com/en_US/polytrack/index.html?isFirstSession=true&czyExpClientSuppressFirstDayPreroll_CZY_20818=enabled&czyExpClientAdsDummyAA=disabled&czyExpClientGamera=disabled&czyExpClientVastVideoCache=local_cache_prebid_url&czyExpClientAdsConsentGate=disabled&czyExpClientLiveIntent=enabled&czyExpClientGooglePPID=enabled&czyExpClientContentSignals=disabled&czyExpDisableInterstitialsFirst12h_CZY_18471=disabled&czyExpGamePageReco_CZY_19213=enabled&czyExpNewSaveProgressNotice_CZY_19240=disabled&czyExpClientSideLogging_CZY_19610=enabled&czyExpGameThumbHover_CZY_19482=enabled&czyExpProgressSaveNudge_CZY_18842=enabled&czyExpMetaPixel=enabled&czyExpModelGamePage=knn_v3&v=2.10',
     aspectRatio: '16/9',
     controls: [
-      { key: 'Left Click', action: 'Select Tool / Place Tracks & Depots' },
-      { key: 'Right Click / Drag', action: 'Pan Map / Cancel Placement' },
-      { key: 'Mouse Wheel', action: 'Zoom Map In / Out' },
-      { key: 'Spacebar', action: 'Pause / Resume Simulation' },
-      { key: 'Esc', action: 'Close Active Window' },
-      { key: 'F1 - F12', action: 'Toolbar Shortcuts & Financials' }
+      { key: 'WASD / Arrow Keys', action: 'Accelerate, Steer, Brake & Reverse' },
+      { key: 'Spacebar / Shift', action: 'Handbrake / Drift Initiation' },
+      { key: 'R', action: 'Instant Restart Lap / Time Trial' },
+      { key: 'Left Click', action: 'Place Track Pieces & Obstacles (Editor)' },
+      { key: 'Right Click + Drag', action: 'Orbit 3D Camera / Inspect Layout' },
+      { key: 'Esc', action: 'Pause Menu / Return to Track Select' }
     ],
     instructions: [
-      'Survey the map for primary industries (such as Coal Mines, Forests, or Oil Wells).',
-      'Construct a railway station or truck bay near the producer and another at the processing factory or power plant.',
-      'Lay tracks connecting them, build a train depot, and buy a locomotive with cargo wagons.',
-      'Assign orders for the train to load cargo at the source and unload at the destination to start generating cash!',
-      'Connect growing towns with passenger trains and buses to unlock massive long-term transit profits.'
+      'Master 17+ official tracks across Summer, Winter, and Desert biomes, or load community circuit codes.',
+      'Race against the clock to set record lap times, utilizing banked turns, turbo pads, and jump arcs.',
+      'Challenge leaderboard rivals asynchronously by loading verified driver ghost cars directly into your run.',
+      'Construct custom courses with the 3D level editor and export shareable track codes.'
     ],
     tips: [
-      'Rail transport delivers the highest profit margins over medium and long distances.',
-      'Build two parallel tracks (one for each direction) and place one-way path signals so multiple trains can run safely.',
-      'Watch for town subsidies in the news ticker—fulfilling them pays a 3x profit bonus for a full year!',
-      'Use the fast-forward speed button in the top menu to quickly accumulate capital for major expansions.'
+      'Tap the handbrake lightly right before corner entry to initiate a smooth drift without bleeding momentum.',
+      'Hit R instantly if you miss an apex or spin out to restart your time trial with zero downtime.',
+      'Watch opponent ghost lines to discover cutting-edge braking points and shortcut vectors.'
     ],
-    plays: 48920,
-    rating: 5.0,
-    ratingCount: 1250,
-    badge: 'OpenTTD Online',
-    iconName: 'Train',
-    accentColor: '#10b981',
-    releaseYear: 1994
-  },
-  {
-    id: 'football-bros',
-    title: 'Football Bros',
-    category: 'action',
-    description: 'Fast-paced multiplayer American football with touchdowns, spin moves, deep passes, and field goals.',
-    longDescription: 'Football Bros is a fast-paced unblocked football game by Blue Wizard Digital. Play quick matches, call offensive routes, dodge defensive tackles with jukes, and throw deep passes into the end zone for thrilling touchdowns!',
-    src: 'https://footballbros.io/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'WASD / Arrow Keys', action: 'Move Quarterback / Runner' },
-      { key: 'Spacebar', action: 'Snap Ball / Throw Pass / Tackle' },
-      { key: 'Left Click', action: 'Select Play / Juke' },
-      { key: 'Esc', action: 'Pause Menu' }
-    ],
-    instructions: [
-      'Choose your offensive or defensive playbook before each down.',
-      'On offense: Press Spacebar to snap the ball to the QB, move to avoid the blitz, and press Space again to throw to an open receiver.',
-      'On defense: Switch to the closest defender and dive/tackle the ball carrier before they gain first down yardage.',
-      'Score touchdowns and kick extra points to lead your team to victory!'
-    ],
-    tips: [
-      'Watch your receivers\' routes on the field before throwing to lead them into open grass.',
-      'Pumping the throw meter gives you bullet passes that pierce tight coverage.',
-      'Use spin and juke moves when one-on-one with the safety for breakaway touchdowns.'
-    ],
-    plays: 95400,
-    rating: 4.95,
-    ratingCount: 3120,
-    badge: 'Football Bros',
-    iconName: 'Trophy',
-    accentColor: '#f97316',
-    releaseYear: 2024
-  },
-  {
-    id: 'basket-bros',
-    title: 'Basket Bros',
-    category: 'action',
-    description: 'High-flying arcade basketball action with monster dunks, three-pointers, steals, and intense 1v1 matchups.',
-    longDescription: 'Basket Bros is an explosive arcade basketball game by Blue Wizard Digital. Customize your hooper, unlock gear, unleash slam dunks, swat opponent shots, and drain buzzer-beaters from deep behind the arc.',
-    src: 'https://basketbros.io/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'WASD / Arrow Keys', action: 'Move / Dribble / Jump' },
-      { key: 'Spacebar / L', action: 'Shoot Basketball / Steal' },
-      { key: 'Shift / K', action: 'Sprint / Turbo Dunk' },
-      { key: 'Esc', action: 'Pause Menu' }
-    ],
-    instructions: [
-      'Pick your favorite basketball character and arena.',
-      'Hold the shoot key to jump, then release at the peak of your elevation for high shooting accuracy.',
-      'Time your jump near the rim while holding turbo to trigger a backboard-shattering slam dunk!',
-      'Play defense by staying in front of the ball-handler and swiping for the steal when they cross over.'
-    ],
-    tips: [
-      'Release the shoot button right when your player reaches maximum jump height for green shot releases.',
-      'Save your turbo meter for fast-break transition dunks and defensive chase-down blocks.',
-      'Step-back jumpers create massive separation from aggressive defenders.'
-    ],
-    plays: 114200,
-    rating: 4.92,
-    ratingCount: 4210,
-    badge: 'Basket Bros',
-    iconName: 'Flame',
-    accentColor: '#f59e0b',
-    releaseYear: 2023
-  },
-  {
-    id: 'baseball-bros',
-    title: 'Baseball Bros',
-    category: 'action',
-    description: 'Classic arcade baseball with moonshot home runs, curveballs, blazing fastballs, and stellar fielding.',
-    longDescription: 'Baseball Bros brings retro arcade baseball to life. Step up to the plate, time the pitch to hit grand slams over the fences, pitch nasty breaking balls with full control, and turn double plays on defense.',
-    src: 'https://baseballbros.io/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Mouse / Left Click', action: 'Swing Bat / Aim & Throw Pitch' },
-      { key: 'Spacebar', action: 'Power Swing / Pitch Release' },
-      { key: 'WASD / Arrow Keys', action: 'Base Running / Move Fielder' },
-      { key: 'Esc', action: 'Pause Game' }
-    ],
-    instructions: [
-      'When batting, watch the ball release from the pitcher\'s hand and swing when it reaches the strike zone.',
-      'When pitching, select your pitch type (fastball, curveball, changeup) and click the target location.',
-      'Command your fielders to field ground balls and throw to the correct base to force out runners.',
-      'Score runs by knocking line drives into the gaps and clearing the bases with home runs.'
-    ],
-    tips: [
-      'Timing is everything—swing slightly earlier on fastballs and wait patiently on off-speed curveballs.',
-      'Mix up your pitch locations between high fastballs and low-and-away sliders to keep batters guessing.',
-      'Send aggressive runners home on fly balls with tag-up plays.'
-    ],
-    plays: 86500,
-    rating: 4.88,
-    ratingCount: 2470,
-    badge: 'Baseball Bros',
-    iconName: 'Activity',
-    accentColor: '#ef4444',
-    releaseYear: 2024
-  },
-  {
-    id: 'shell-shockers',
-    title: 'Shell Shockers',
-    category: 'action',
-    description: 'The world\'s top egg-based 3D multiplayer first-person shooter with eggstraordinary arenas and weapons.',
-    longDescription: 'Shell Shockers (Shellshock.io) is the smash-hit 3D multiplayer first-person shooter where you play as armed eggs battling across intense 3D maps. Crack your opponents with EggK-47s, Scramblers, and RPEGGs!',
-    src: 'https://shellshock.io/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'WASD', action: 'Move / Strafe' },
-      { key: 'Mouse Aim & Left Click', action: 'Aim & Fire Weapon' },
-      { key: 'Spacebar', action: 'Jump' },
-      { key: 'R', action: 'Reload Magazine' },
-      { key: 'E / Q', action: 'Switch Weapons' },
-      { key: 'Shift', action: 'Aim Down Sights' }
-    ],
-    instructions: [
-      'Choose your loadout (EggK-47 assault rifle, CSG-1 shotgun, Crackshot sniper, or RPEGG launcher).',
-      'Jump into Free-For-All, Teams, or King of the Coop match types.',
-      'Aim for headshots (the top of the egg shell) for instant crack critical damage!',
-      'Collect grenade pickups and ammo boxes scattered across the arena.'
-    ],
-    tips: [
-      'Constantly bunny-hop and strafe to make your egg hitbox elusive to enemy snipers.',
-      'Reload behind cover before pushing into high-traffic arena corridors.',
-      'Throw grenades into doorways where opponents are grouping up.'
-    ],
-    plays: 245000,
-    rating: 4.96,
-    ratingCount: 7850,
-    badge: 'Shell Shockers',
-    iconName: 'Crosshair',
-    accentColor: '#eab308',
-    releaseYear: 2024
-  },
-  {
-    id: 'dig-out-of-prison',
-    title: 'Dig Out of Prison',
-    category: 'puzzle',
-    description: 'Excavate escape tunnels, avoid guards, overcome obstacles, and dig your way to freedom.',
-    longDescription: 'Dig Out of Prison is an addictive puzzle and skill arcade challenge. Plan your digging path underground, dodge searchlights, dismantle security obstacles, collect valuable hidden contraband, and guide your inmate to the getaway vehicle.',
-    src: 'https://html5.gamedistribution.com/6b91889aa08e40ffbc1c09be1a8e81ce/?gd_sdk_referrer_url=https://www.onlinegames.io/dig-out-of-prison/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Left Click / Drag', action: 'Dig Soil & Carve Escape Path' },
-      { key: 'WASD / Arrow Keys', action: 'Move Character / Steer Cart' },
-      { key: 'Spacebar', action: 'Interact / Dig / Boost' },
-      { key: 'Esc', action: 'Pause / Restart Level' }
-    ],
-    instructions: [
-      'Study the prison underground map to identify guards, stone barriers, and the getaway route.',
-      'Drag your cursor or use controls to dig tunnels through soft dirt while bypassing hard bedrock.',
-      'Avoid triggering motion sensors, underground security lasers, and guard patrol zones.',
-      'Reach the surface extraction point safely to complete each prison breakout level!'
-    ],
-    tips: [
-      'Always look ahead before digging to avoid trapping yourself in a dead end.',
-      'Collect keys and golden lockpicks scattered underground to unlock shortcut gates.',
-      'Trigger environmental traps to distract guards while slipping through unnoticed.'
-    ],
-    plays: 67300,
-    rating: 4.85,
-    ratingCount: 1840,
-    badge: 'Dig Out of Prison',
-    iconName: 'Compass',
-    accentColor: '#8b5cf6',
-    releaseYear: 2023
-  },
-  {
-    id: 'fmovies',
-    title: 'FMovies Cinema',
-    category: 'arcade',
-    description: 'Direct streaming cinema player with movies, TV shows, and full player controls in an unblocked sandbox.',
-    longDescription: 'FMovies Cinema provides access to movies and shows directly in an unblocked sandboxed player. Features full audio, popout playback, and fullscreen video support.',
-    src: 'https://ww4.fmovies.co/23/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Left Click', action: 'Select Movie / Play Video' },
-      { key: 'Spacebar', action: 'Play / Pause Video' },
-      { key: 'F', action: 'Toggle Cinema Fullscreen' },
-      { key: 'M', action: 'Mute / Unmute Audio' }
-    ],
-    instructions: [
-      'Browse or search the cinema library to find movies or series.',
-      'Click on any title to open the streaming player.',
-      'Use the Nova Arcade fullscreen button for cinema-style full-display playback.',
-      'If playback issues occur, click Reload in the toolbar or open in a stealth tab.'
-    ],
-    tips: [
-      'Use the Fullscreen mode for an uninterrupted theater viewing experience.',
-      'Hit the stealth Panic button (\']\') if you need to instantly disguise the screen as Google Classroom.'
-    ],
-    plays: 182400,
-    rating: 4.9,
-    ratingCount: 5600,
-    badge: 'Cinema Player',
-    iconName: 'Film',
-    accentColor: '#ec4899',
-    releaseYear: 2024
-  },
-  {
-    id: 'interstellar-proxy',
-    title: 'Interstellar Proxy',
-    category: 'arcade',
-    description: 'Next-generation stealth web proxy and privacy browser for bypassing web filters seamlessly.',
-    longDescription: 'Interstellar is a modern, ultra-fast web proxy and unblocker service with built-in tab cloaking, custom search engines, tab masking, and unrestricted web navigation directly within an unblocked sandbox.',
-    src: 'https://gointerstellar.app/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Address Bar', action: 'Search or Enter Web URL' },
-      { key: 'Enter', action: 'Navigate to Destination' },
-      { key: 'F', action: 'Fullscreen Browser' },
-      { key: 'Esc', action: 'Return / Exit' }
-    ],
-    instructions: [
-      'Enter any website URL or search term in the Interstellar navigation bar.',
-      'Browse with accelerated speeds and evasion protocols.',
-      'Use fullscreen mode for a full desktop browser experience.',
-      'Hit the panic key (\']\') at any time to instantly mask with Google Classroom.'
-    ],
-    tips: [
-      'Interstellar provides built-in stealth evasion and tab masquerading.',
-      'Open links in popout mode or stealth about:blank for maximum bypass reliability.'
-    ],
-    plays: 312000,
-    rating: 4.97,
-    ratingCount: 8900,
-    badge: 'Web Proxy',
-    iconName: 'Globe',
-    accentColor: '#38bdf8',
-    releaseYear: 2024
-  },
-  {
-    id: '1v1-lol',
-    title: '1v1.LOL Reloaded',
-    category: 'action',
-    description: 'Fast-paced 3D competitive third-person shooter and building simulator battle royale.',
-    longDescription: '1v1.LOL Reloaded is the premier competitive 3D building and shooting game. Practice box fights, edit walls, place ramps, duel opponents in 1v1 arenas, and out-build your rivals in high-speed tactical combat.',
-    src: 'https://1v1lolreloaded.com/index.html',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'WASD', action: 'Move Character' },
-      { key: 'Mouse Left Click', action: 'Shoot Weapon / Place Build' },
-      { key: 'Spacebar', action: 'Jump' },
-      { key: 'Z / X / C / V', action: 'Wall / Floor / Ramp / Cone' },
-      { key: 'R', action: 'Reload / Rotate Build' },
-      { key: 'F / E', action: 'Edit Building Structure' }
-    ],
-    instructions: [
-      'Choose your game mode: 1v1 Box Fights, Free Build Practice, Battle Royale, or Zone Wars.',
-      'Swap between weapons (shotgun, assault rifle, sniper) and building mode rapidly.',
-      'Erect walls and ramps to gain the high ground on opponents before taking your shot.',
-      'Practice editing openings in walls for swift counter-attacks.'
-    ],
-    tips: [
-      'High ground grants superior angles and headshot multiplier damage.',
-      'Place a ramp immediately after shooting to protect yourself from return fire.',
-      'Keep your crosshair centered on the enemy head when aiming through edit peeks.'
-    ],
-    plays: 289400,
-    rating: 4.94,
-    ratingCount: 6840,
-    badge: '1v1.LOL',
-    iconName: 'Crosshair',
-    accentColor: '#3b82f6',
-    releaseYear: 2024
-  },
-  {
-    id: 'infinite-craft',
-    title: 'Infinite Craft',
-    category: 'puzzle',
-    description: 'Synthesize elements starting with Water, Fire, Wind, and Earth to discover endless items, people, and universes.',
-    longDescription: 'Infinite Craft is the viral sandbox alchemy game where four basic elements expand into an infinite universe of concepts, pop culture, technologies, and wonders. Drag and combine elements to unlock new discoveries.',
-    src: '/infinite-craft/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Left Click Drag', action: 'Drag Element onto Canvas' },
-      { key: 'Drop on Element', action: 'Synthesize / Combine Elements' },
-      { key: 'Search Bar', action: 'Filter Discovered Elements' },
-      { key: 'Clear Board', action: 'Wipe Canvas Clean' }
-    ],
-    instructions: [
-      'Start with the four primordial elements: Water, Fire, Wind, and Earth.',
-      'Drag elements onto the canvas from the inventory sidebar.',
-      'Drop an element directly over another to synthesize a brand-new creation.',
-      'Every new item you synthesize is permanently added to your personal discovery almanac!'
-    ],
-    tips: [
-      'Combine elemental opposites like Fire + Water to create Steam, or Earth + Water for Mud.',
-      'Combine Life with human concepts like Tools to discover Professions and Civilizations.',
-      'Click "Live Server" at the top right inside the game if you want to connect to Neal.fun\'s live AI model.'
-    ],
-    plays: 198000,
+    plays: 384000,
     rating: 4.98,
-    ratingCount: 9420,
-    badge: 'Infinite Craft',
-    iconName: 'Sparkles',
-    accentColor: '#a855f7',
-    releaseYear: 2024
+    ratingCount: 16200,
+    badge: 'Trending #1',
+    iconName: 'Car',
+    accentColor: '#06b6d4',
+    releaseYear: 2022,
+    thumbnailUrl: '/images/polytrack.jpg'
+  },
+  {
+    id: 'basketbros',
+    title: 'BasketBros',
+    category: 'action',
+    description: 'Fast-paced 1v1 cartoon basketball action: dunk over defenders, hit step-back threes, and unlock custom ballers.',
+    longDescription: 'BasketBros brings high-energy 1v1 arcade basketball to your browser. Choose your favorite baller, execute jaw-dropping slam dunks, shoot clutch three-pointers, steal the ball from opponents, and unlock wild costumes, hairstyles, and accessories in solo or head-to-head competition.',
+    src: 'https://assets.shuttlemath.com/basketbros-io/',
+    iframeTitle: 'Education Game',
+    iframeStyle: {
+      borderRadius: '0px 0px 10px 10px',
+      transformOrigin: 'left top',
+      transform: 'scale(0.85)',
+      width: '117.647%',
+      height: '117.647%'
+    },
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Jump / Position' },
+      { key: 'Spacebar / L', action: 'Shoot / Dunk / Steal' }
+    ],
+    instructions: [
+      'Dribble across the court and time your jump to unleash an unstoppable high-flying slam dunk.',
+      'Contest outside jump shots and snatch critical rebounds off the backboard.',
+      'Win consecutive tournament matches to unlock new characters with upgraded dunk and speed attributes.'
+    ],
+    tips: [
+      'Release your shot right at the apex of your jump for the highest shooting accuracy percentage.',
+      'Use quick directional cuts to break defender ankles and create open driving lanes.'
+    ],
+    plays: 356000,
+    rating: 4.97,
+    ratingCount: 12400,
+    badge: '1v1 Arcade',
+    iconName: 'Flame',
+    accentColor: '#f97316',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/basketbros.jpg'
+  },
+  {
+    id: 'retro-bowl-college',
+    title: 'Retro Bowl College',
+    category: 'retro',
+    description: 'Manage your collegiate football dynasty: recruit star athletes, call clutch offensive plays, and win national championships.',
+    longDescription: 'Retro Bowl College brings the acclaimed retro pixel-art football management simulation to the college gridiron. Manage scholarships, scout high school prospects, balance team GPA and morale, and take direct control on the field throwing bullet passes, evading linebackers, and scoring game-winning touchdowns.',
+    src: 'https://retrobowl26.college/game/rb-college/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Click / Drag', action: 'Aim & Throw Bullet / Lob Passes' },
+      { key: 'WASD / Arrow Keys', action: 'Sidestep / Evade Tackles / Juke' },
+      { key: 'Spacebar', action: 'Snap Ball / Confirm Play / Advance' }
+    ],
+    instructions: [
+      'Click and drag backward from your quarterback to set pass trajectory, then release to fire a pass to your wideout.',
+      'Swipe or steer your ball carrier with WASD or mouse to sidestep oncoming defensive backs and dive for extra yardage.',
+      'Recruit 5-star student athletes during the offseason and balance training facility upgrades with academic eligibility.'
+    ],
+    tips: [
+      'Lead your wide receivers into open space rather than throwing directly at their current defender-covered position.',
+      'Dive forward on 3rd down to secure crucial first-down conversions before stepping out of bounds.'
+    ],
+    plays: 430000,
+    rating: 4.99,
+    ratingCount: 19500,
+    badge: 'College Dynasty',
+    iconName: 'Trophy',
+    accentColor: '#e11d48',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/retrobowl.jpg'
   },
   {
     id: 'eaglercraft-1-8',
-    title: 'Eaglercraft 1.8.8',
+    title: 'Minecraft 1.8.8',
     category: 'retro',
-    description: 'Full unblocked Minecraft 1.8.8 in the browser with survival, creative mode, and multiplayer servers.',
-    longDescription: 'Eaglercraft 1.8.8 brings the complete Minecraft 1.8.8 experience straight to the web. Mine resources, craft tools, build massive architectural creations, explore caves and the Nether, and connect to live multiplayer servers directly from your browser without any installation.',
+    description: 'Full unblocked Minecraft 1.8.8 in the browser with survival, creative sandbox, redstone engineering, and multiplayer servers.',
+    longDescription: 'Eaglercraft 1.8.8 delivers the genuine, authentic Minecraft 1.8.8 Java Edition directly in WebGL and WebAssembly. Mine underground caverns, harvest raw ores, construct towering castles, automate farms with redstone, and connect to live multiplayer communities straight from your browser with zero installation.',
     src: 'https://ubghyper.github.io/GameList.github.io/Eaglercraft/',
     aspectRatio: '16/9',
     controls: [
-      { key: 'WASD', action: 'Move / Walk' },
-      { key: 'Mouse Left Click', action: 'Mine / Attack / Destroy Block' },
-      { key: 'Mouse Right Click', action: 'Place Block / Use Item' },
-      { key: 'Spacebar', action: 'Jump / Swim Up' },
-      { key: 'Shift', action: 'Sneak / Crouch' },
-      { key: 'E', action: 'Open Inventory' },
+      { key: 'WASD', action: 'Walk / Sprint / Swim' },
+      { key: 'Mouse Left Click', action: 'Mine / Attack / Break Block' },
+      { key: 'Mouse Right Click', action: 'Place Block / Use Item / Open Chest' },
+      { key: 'Spacebar', action: 'Jump / Ascend Water' },
+      { key: 'Shift', action: 'Sneak / Crouch (Prevents Ledge Falling)' },
+      { key: 'E', action: 'Open Inventory / Crafting Grid' },
       { key: '1 - 9', action: 'Select Hotbar Slot' },
-      { key: 'Esc', action: 'Pause Menu / Release Pointer Lock' }
+      { key: 'Esc', action: 'Pause Menu / Release Mouse Pointer Lock' }
     ],
     instructions: [
-      'Click into the game frame to activate mouse pointer lock for full 3D camera control.',
-      'Gather wood by punching trees, craft a crafting table, and forge your first wooden pickaxe.',
-      'Mine stone to upgrade to stone tools, discover coal for torches, and find iron ore.',
-      'Build a shelter before nightfall to survive against zombies, skeletons, and creepers!'
+      'Click inside the game frame to activate mouse pointer lock for full 3D camera navigation.',
+      'Punch trees for wood logs, craft wooden planks, make a crafting table, and forge your first pickaxe.',
+      'Delve into subterranean stone layers for coal and iron ore, craft torches, and fortify your base.',
+      'Survive the wilderness against nighttime monsters and explore the Nether dimension.'
     ],
     tips: [
-      'Use Fullscreen mode for the best immersive desktop experience and smoother mouse locking.',
-      'Press F11 or Nova Arcade\'s Fullscreen button for true edge-to-edge Minecraft gameplay.',
-      'Save your singleplayer worlds by exporting them from the world selection screen.'
+      'Press F11 or use the Fullscreen toggle for an edge-to-edge, ultra-smooth desktop experience.',
+      'Always carry a water bucket on your hotbar to negate high fall damage and neutralize lava pools.',
+      'Export and backup your singleplayer world files from the world selection screen to preserve your builds.'
     ],
-    plays: 340000,
+    plays: 412000,
     rating: 4.99,
-    ratingCount: 14500,
-    badge: 'Minecraft 1.8',
+    ratingCount: 18400,
+    badge: 'Classic Voxel',
     iconName: 'Pickaxe',
     accentColor: '#22c55e',
-    releaseYear: 2024
+    releaseYear: 2024,
+    thumbnailUrl: '/images/minecraft.jpg'
   },
   {
     id: 'raft-survival',
     title: 'Raft',
     category: 'skill',
-    description: 'Oceanic survival adventure: throw your hook, gather floating materials, craft tools, expand your raft, and survive against the great white shark.',
-    longDescription: 'Trapped on an oceanic raft with nothing but a hook made of old plastic, you awake on an endless blue sea. Hook floating flotsam, scavenge barrels, craft spears, purify seawater, cook fish, build multi-story floating fortresses, and defend against the relentless man-eating shark circling your raft.',
+    description: 'Oceanic survival odyssey: cast your salvage hook, gather oceanic flotsam, expand your vessel, and defend against the great white shark.',
+    longDescription: 'Trapped on an oceanic raft with nothing but a salvage hook made of plastic, you awaken stranded on an endless azure sea. Scavenge floating barrels and timber planks, craft spears and desalination filters, cook fresh catches, construct multi-tier floating cathedrals, and ward off the man-eating shark circling your hull.',
     src: 'https://ubghyper.github.io/GameList.github.io/Raft/',
     aspectRatio: '16/9',
     controls: [
-      { key: 'WASD', action: 'Move / Swim' },
-      { key: 'Mouse Left Click', action: 'Throw Hook / Attack / Build' },
-      { key: 'Mouse Right Click', action: 'Cancel Hook / Rotate Block' },
-      { key: 'Spacebar', action: 'Jump' },
-      { key: 'E', action: 'Interact / Pickup Item' },
-      { key: 'Tab', action: 'Crafting & Inventory' },
-      { key: '1 - 8', action: 'Hotbar Selection' },
-      { key: 'Esc', action: 'Pause / Menu' }
+      { key: 'WASD', action: 'Move / Swim / Navigate' },
+      { key: 'Mouse Left Click', action: 'Cast Hook / Strike Shark / Place Structure' },
+      { key: 'Mouse Right Click', action: 'Cancel Hook / Rotate Structural Piece' },
+      { key: 'Spacebar', action: 'Jump / Surface from Dive' },
+      { key: 'E', action: 'Interact / Pick Up Floating Debris' },
+      { key: 'Tab', action: 'Open Blueprint Crafting & Inventory' },
+      { key: '1 - 8', action: 'Hotbar Item Selection' },
+      { key: 'Esc', action: 'Pause / Options Menu' }
     ],
     instructions: [
-      'Click inside the frame to lock mouse pointer into the 3D marine environment.',
-      'Aim your hook at floating barrels, wood planks, and leaves to pull supplies toward your raft.',
-      'Purify seawater using the simple purifier to keep your hydration bar full.',
-      'Forge a wooden spear quickly to fend off the shark whenever it bites your raft foundations.'
+      'Click within the viewport to lock the pointer into the 3D marine environment.',
+      'Aim and charge your salvage hook toward floating barrels, planks, and palm leaves.',
+      'Desalinate seawater with a simple purifier to prevent dehydration, and grill captured mackerel.',
+      'Craft a sturdy wooden spear to repel the shark whenever it attacks your raft perimeter.'
     ],
     tips: [
-      'Never swim into the open water when the shark is circling close to your raft.',
-      'Craft net collectors along the front perimeter to automatically collect floating debris while you build.'
+      'Install collection nets along your raft forward edge to capture drift materials automatically.',
+      'Never dive into the open water when the shark fin is cutting the surface nearby.',
+      'Reinforce boundary foundation tiles with iron plating to render them immune to shark attacks.'
     ],
-    plays: 245000,
+    plays: 289000,
     rating: 4.96,
-    ratingCount: 8120,
-    badge: 'Ocean Survival',
+    ratingCount: 9300,
+    badge: 'Survival',
     iconName: 'Anchor',
     accentColor: '#0ea5e9',
-    releaseYear: 2024
-  },
-  {
-    id: 'cuphead',
-    title: 'Cuphead',
-    category: 'action',
-    description: 'Legendary 1930s cartoon run-and-gun platformer featuring intense multi-phase boss battles and original jazz.',
-    longDescription: 'Cuphead is the acclaimed run-and-gun action game celebrated for its hand-drawn cel animation, watercolor backgrounds, and original jazz recordings. Play as Cuphead or Mugman as you traverse strange worlds, acquire new weapons, learn powerful super moves, and battle gargantuan bosses to repay your debt to the devil!',
-    src: 'https://ubghyper.github.io/GameList.github.io/Cuphead/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Arrow Keys / WASD', action: 'Move & Aim Direction' },
-      { key: 'Z', action: 'Jump / Parry Pink Objects' },
-      { key: 'X', action: 'Shoot Peashooter / Spread' },
-      { key: 'C', action: 'Dash Dodge' },
-      { key: 'V', action: 'EX Move / Super Blast' },
-      { key: 'Tab / Shift', action: 'Switch Weapon' }
-    ],
-    instructions: [
-      'Dodge bullets, projectiles, and incoming hazards by constantly jumping and dashing.',
-      'Slap any bright pink projectile or enemy by pressing Jump again mid-air to execute a Parry and build up your Super meter card deck.',
-      'Memorize boss attack phases and patterns to time your offensive blasts.'
-    ],
-    tips: [
-      'Master the jump parry on pink objects — it charges your super meter rapidly and resets your mid-air jump.',
-      'Smoke bomb dash gives you invulnerability frames to phase straight through boss attacks.'
-    ],
-    plays: 382000,
-    rating: 4.98,
-    ratingCount: 12400,
-    badge: 'Boss Rush',
-    iconName: 'Coffee',
-    accentColor: '#ef4444',
-    releaseYear: 2024
-  },
-  {
-    id: 'level-devil',
-    title: 'Level Devil',
-    category: 'puzzle',
-    description: 'Hilarious and infuriating troll platformer where the floor vanishes, spikes fly, and doors move when you approach.',
-    longDescription: 'Level Devil is a deceptively simple platformer with a sinister twist: the game is actively trolling you! Navigate each level toward the exit door while dodging disappearing platforms, surprise crushing ceilings, shifting gravity, flying spikes, and inverted controls.',
-    src: 'https://ubghyper.github.io/GameList.github.io/Level-Devil/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'A / D or Left / Right', action: 'Move Left / Right' },
-      { key: 'W / Space / Up', action: 'Jump' },
-      { key: 'R', action: 'Quick Restart Room' },
-      { key: 'Esc', action: 'Level Select Menu' }
-    ],
-    instructions: [
-      'Run toward the golden door at the end of each room.',
-      'Expect the unexpected: steps will crumble, ceilings will drop, and doors will run away from you.',
-      'Learn from each trap and find the secret alternate route to triumph over the devil\'s trickery.'
-    ],
-    tips: [
-      'Don\'t rush blindly; pause for a split second before stepping on suspicious floor tiles.',
-      'Watch out for reversed controls on later stages where right moves left!'
-    ],
-    plays: 290000,
-    rating: 4.95,
-    ratingCount: 7600,
-    badge: 'Troll Platformer',
-    iconName: 'Flame',
-    accentColor: '#f97316',
-    releaseYear: 2024
-  },
-  {
-    id: 'idle-mining-empire',
-    title: 'Idle Mining Empire',
-    category: 'arcade',
-    description: 'Addictive management simulation: dig shafts, hire elevator operators, automate transports, and mine rare gems.',
-    longDescription: 'Idle Mining Empire is a deep incremental tycoon simulator where you start with a single underground mining shaft and scale up to an automated subterranean empire. Hire specialized managers to automate digging, upgrade elevators to haul ore to the surface, and warehouse collectors to maximize profits.',
-    src: 'https://ubghyper.github.io/GameList.github.io/Idle-Mining-Empire/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Mouse Left Click', action: 'Click to Dig / Collect Ore / Upgrade' },
-      { key: 'Scroll Wheel', action: 'Pan Up / Down Deep Shafts' },
-      { key: 'Spacebar', action: 'Fast Forward / Quick Collect' }
-    ],
-    instructions: [
-      'Click on your miners to manually dig coal and minerals from underground shafts.',
-      'Click the elevator operator to lift the mined ore up to the surface facility.',
-      'Direct warehouse workers to transport ore to the distribution bank for instant cash.',
-      'Hire managers for each station to fully automate the production line even while idle!'
-    ],
-    tips: [
-      'Keep your elevator capacity and warehouse transport balanced with your shaft extraction rate to prevent bottlenecks.',
-      'Unlock deeper mine shafts to discover high-value minerals like Gold, Rubies, and Diamonds.'
-    ],
-    plays: 215000,
-    rating: 4.92,
-    ratingCount: 5400,
-    badge: 'Tycoon',
-    iconName: 'Coins',
-    accentColor: '#eab308',
-    releaseYear: 2024
+    releaseYear: 2024,
+    thumbnailUrl: '/images/raft.jpg'
   },
   {
     id: 'super-smash-flash',
     title: 'Super Smash Flash',
     category: 'action',
-    description: 'The legendary browser crossover fighting game: battle with Mario, Sonic, Mega Man, Goku, Naruto, and Link!',
-    longDescription: 'Super Smash Flash is the iconic platform brawler that brings together characters from Nintendo, anime, and classic gaming history. Pick your favorite fighter, jump into frantic 4-player melees, unleash signature specials, smash opponents off the stage, and climb the classic arcade ladder.',
+    description: 'Iconic crossover fighting game: clash in frantic platform melees with Mario, Sonic, Link, Goku, Naruto, and Mega Man.',
+    longDescription: 'Super Smash Flash is the premier browser platform fighting game bringing together titans of video game and anime history. Choose your champion, leap into chaotic 4-player battles, unleash signature special moves, build rival damage percentages, and blast opponents clean off the arena stage.',
     src: 'https://ubghyper.github.io/GameList.github.io/Super-Smash-Flash/',
     aspectRatio: '16/9',
     controls: [
-      { key: 'WASD / Arrow Keys', action: 'Movement / Crouch / Up-Jump' },
-      { key: 'O', action: 'Standard Attack / Jab / Smash' },
-      { key: 'P', action: 'Special Attack (Hadoken, Kamehameha, Spin)' },
-      { key: 'Spacebar', action: 'Jump / Double Jump' },
-      { key: 'Backspace', action: 'Pause Match' }
+      { key: 'WASD / Arrow Keys', action: 'Movement / Crouch / Platform Drop / Up-Jump' },
+      { key: 'O', action: 'Standard Attack / Rapid Jab / Tilt / Smash' },
+      { key: 'P', action: 'Special Ability (Hadoken / Kamehameha / Spin Dash)' },
+      { key: 'Spacebar', action: 'Jump / Mid-Air Recovery Double Jump' },
+      { key: 'Backspace', action: 'Pause Match / View Move List' }
     ],
     instructions: [
-      'Pick your hero from legendary rosters including Mario, Sonic, Goku, Naruto, Link, Kirby, and Fox.',
-      'Deal damage to build up enemy damage percentages — the higher their %, the farther they fly when hit.',
-      'Land a powerful smash attack to launch enemies beyond the screen blast zones for KOs.'
+      'Select your fighter from a roster including Mario, Sonic, Goku, Link, Kirby, Mega Man, and Fox.',
+      'Land combos to raise rival damage meters — the higher their %, the farther they fly when hit.',
+      'Deliver a charged smash attack to launch adversaries past screen blast zones for decisive KOs.'
     ],
     tips: [
-      'Combine Up + Special (W + P) as your primary recovery move to get back onto the platform when knocked off-stage.',
-      'Use shields and rolling dodges to slip behind heavy attacks and counter-strike.'
+      'Combine Up + Special (W + P) as your primary vertical recovery move to return to the platform.',
+      'Use defensive shields and directional rolling dodges to bypass aggressive smash attacks.'
     ],
-    plays: 360000,
+    plays: 395000,
     rating: 4.98,
-    ratingCount: 11200,
-    badge: 'Smash Brawler',
+    ratingCount: 13800,
+    badge: 'Brawler',
     iconName: 'Swords',
     accentColor: '#8b5cf6',
-    releaseYear: 2024
+    releaseYear: 2024,
+    thumbnailUrl: '/images/smash.jpg'
+  },
+  {
+    id: 'level-devil',
+    title: 'Level Devil',
+    category: 'puzzle',
+    description: 'Devious minimalist troll platformer where the floor crumbles, ceiling spikes plunge, and the exit door flees from you.',
+    longDescription: 'Level Devil looks like a clean, innocent geometric platformer, but every level has a wicked mind of its own. Dash toward the golden exit door while surviving disappearing ground, flying gravity-defying spikes, teleporting hazards, moving doors, and inverted button controls designed to challenge your reflexes.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Level-Devil/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'A / D or Left / Right', action: 'Move Character Left / Right' },
+      { key: 'W / Spacebar / Up', action: 'Jump / Leap Obstacles' },
+      { key: 'R', action: 'Instant Restart Chamber' },
+      { key: 'Esc', action: 'Level Select / Main Menu' }
+    ],
+    instructions: [
+      'Navigate your character to the glowing golden doorway at the opposite side of each chamber.',
+      'Anticipate treacherous tricks: floor tiles evaporate, ceilings drop, and goals actively flee.',
+      'Learn from every trap and uncover the deceptive paths to outsmart the demonic game design.'
+    ],
+    tips: [
+      'Do not sprint blindly; pause for a microsecond before stepping onto suspicious platform blocks.',
+      'Pay close attention on inverted levels where the left key commands rightward movement.'
+    ],
+    plays: 318000,
+    rating: 4.95,
+    ratingCount: 8900,
+    badge: 'Troll Platformer',
+    iconName: 'Flame',
+    accentColor: '#f97316',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/leveldevil.jpg'
+  },
+  {
+    id: 'idle-mining-empire',
+    title: 'Idle Mining Empire',
+    category: 'arcade',
+    description: 'Deep subterranean tycoon management: dig shafts, operate industrial elevators, automate logistics, and unearth precious gems.',
+    longDescription: 'Idle Mining Empire is an engrossing incremental tycoon simulation. Start with a single pickaxe miner in a shallow shaft, extract coal and gold, and expand into an automated underground enterprise. Hire elevator engineers to haul ore to the surface, dispatch logistics handlers, and automate shafts to amass fortune even while idle.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Idle-Mining-Empire/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Click to Dig / Collect Ore / Upgrade Systems' },
+      { key: 'Scroll Wheel', action: 'Pan Up & Down Deep Subterranean Shafts' },
+      { key: 'Spacebar', action: 'Fast Forward / Instant Collection Pulse' }
+    ],
+    instructions: [
+      'Direct your miners to excavate mineral deposits from subterranean levels.',
+      'Click the elevator operator to hoist buckets of extracted ore to ground-level processing.',
+      'Command surface warehouse personnel to deliver cargo to the treasury for instant revenue.',
+      'Hire departmental managers to automate every level so profits accumulate autonomously.'
+    ],
+    tips: [
+      'Balance elevator lift capacity and surface warehouse throughput with mining shaft generation.',
+      'Excavate deeper subterranean tiers to unlock lucrative gold veins, rubies, and diamond clusters.'
+    ],
+    plays: 242000,
+    rating: 4.93,
+    ratingCount: 6800,
+    badge: 'Tycoon Tycoon',
+    iconName: 'Coins',
+    accentColor: '#eab308',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/mining.jpg'
+  },
+  {
+    id: 'basketball-legends-2020',
+    title: 'Basketball Legends 2020',
+    category: 'action',
+    description: 'Legendary 2-player arcade basketball: unleash supersonic supershots, steal the rock, and win the championship trophy.',
+    longDescription: 'Basketball Legends 2020 is the premier two-player head-to-head arcade basketball classic. Pick your iconic basketball superstar, charge up your game-changing Supershot ability, perform gravity-defying dunks, and compete in Quick Match or full Tournament brackets solo or with a friend on shared keyboard.',
+    src: 'https://basketball-legends-2020.gamestores.fun/',
+    iframeTitle: 'Basketball Legends game',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move, Jump & Pump Fake' },
+      { key: 'B / L', action: 'Shoot / Dunk / Steal Ball' },
+      { key: 'V / K', action: 'Unleash Supershot Special Ability' },
+      { key: 'D + D / Right + Right', action: 'Turbo Dash Sprint' }
+    ],
+    instructions: [
+      'Fill your Supershot gauge by scoring baskets and stealing to trigger an unblockable flaming dunk.',
+      'Pump fake to force defenders into the air before pulling up for an open baseline three.',
+      'Play 1v1, 2v2, or full tournament brackets in single player or 2-player local versus.'
+    ],
+    tips: [
+      'Time your jump right as your opponent shoots to deliver an emphatic rejection swat.',
+      'Double tap directional keys to sprint past defenders on fast-break opportunities.'
+    ],
+    plays: 512000,
+    rating: 4.98,
+    ratingCount: 22800,
+    badge: '2-Player Versus',
+    iconName: 'Trophy',
+    accentColor: '#ea580c',
+    releaseYear: 2020,
+    thumbnailUrl: '/images/basketball_legends.jpg'
+  },
+  {
+    id: 'golf-bit',
+    title: 'Golf Bit',
+    category: 'skill',
+    description: 'Charming 16-bit arcade golf: master ball physics, ricochet off hazards, and sink hole-in-ones across challenging mini courses.',
+    longDescription: 'Golf Bit delivers retro arcade mini-golf bliss with pixel-perfect physics and clever environmental puzzle courses. Aim your shot, gauge power and backspin, calculate bank angles off bumpers, avoid water hazards, and sink clutch putts with the lowest possible stroke count.',
+    src: 'https://cloud.onlinegames.io/games/2026/construct/328/golf-bit/game.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Click + Drag', action: 'Aim Trajectory & Charge Power' },
+      { key: 'Release Mouse', action: 'Strike Golf Ball' },
+      { key: 'R', action: 'Reset Shot / Restart Hole' },
+      { key: 'Esc', action: 'Pause Menu' }
+    ],
+    instructions: [
+      'Click and drag backward from your golf ball to set shot angle and power gauge.',
+      'Bank shots off surrounding stone bumpers to navigate tight doglegs and avoid sand traps.',
+      'Sink the ball under par on each hole to earn maximum rating stars and unlock custom ball skins.'
+    ],
+    tips: [
+      'Bank shots off cushioned barriers are often much safer than high-risk direct lines.',
+      'Ease back on power when putting down steep slopes to prevent overshooting past the cup.'
+    ],
+    plays: 285000,
+    rating: 4.96,
+    ratingCount: 9400,
+    badge: 'Pixel Golf',
+    iconName: 'Compass',
+    accentColor: '#10b981',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/golf_bit.jpg'
+  },
+  {
+    id: 'nova-craft',
+    title: 'Nova Craft',
+    category: 'retro',
+    description: 'Voxel sandbox exploration: mine rare minerals, build architectural wonders, and craft survival tools in an infinite block world.',
+    longDescription: 'Nova Craft invites you into an expansive 3D voxel sandbox adventure. Mine crystalline ores, craft weapons and construction blocks, explore towering mountains and caverns, and design elaborate fortresses in creative sandbox or survival mode straight in your browser.',
+    src: 'https://cloud.onlinegames.io/games/2024/more2/nova-craft/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Walk, Sprint & Swim' },
+      { key: 'Spacebar', action: 'Jump / Ascend Water' },
+      { key: 'Mouse Left Click', action: 'Mine / Attack / Break Blocks' },
+      { key: 'Mouse Right Click', action: 'Place Block / Build' },
+      { key: '1 - 9', action: 'Select Hotbar Inventory Slot' },
+      { key: 'E', action: 'Open Crafting & Inventory' },
+      { key: 'Esc', action: 'Release Mouse Pointer Lock' }
+    ],
+    instructions: [
+      'Click inside the game window to lock mouse cursor for fluid 3D first-person control.',
+      'Harvest raw materials from terrain layers to craft refined stone, brick, and wooden structures.',
+      'Build your dream castle or explore deep subterranean caverns for rare glowing ores.'
+    ],
+    tips: [
+      'Build a sheltered base before dusk to protect against nocturnal creatures.',
+      'Stack jumping blocks underneath your feet (Spacebar + Right Click) to rapidly reach high vantage points.'
+    ],
+    plays: 380000,
+    rating: 4.97,
+    ratingCount: 15300,
+    badge: '3D Voxel Sandbox',
+    iconName: 'Boxes',
+    accentColor: '#8b5cf6',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/nova_craft.jpg'
+  },
+  {
+    id: 'football-king',
+    title: 'Football King',
+    category: 'action',
+    description: 'High-energy arcade soccer: execute curling free kicks, dribble past defenders, and score championship goals.',
+    longDescription: 'Football King brings exhilarating top-tier arcade football to your screen. Pick your international team, dribble past aggressive defenders, bend shots around the goalkeeper, time headers off crosses, and lift the championship cup.',
+    src: 'https://www.onlinegames.io/games/2024/construct/226/football-king/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Dribble, Steer & Sprint' },
+      { key: 'Mouse / Spacebar', action: 'Shoot, Pass, Tackle & Curve' }
+    ],
+    instructions: [
+      'Dribble down the pitch and calculate shooting trajectory toward the corners of the goal.',
+      'Time your sliding tackles to dispossess attacking strikers cleanly.',
+      'Curve your free kicks around defensive walls to beat the keeper.'
+    ],
+    tips: [
+      'Aim for the top corners of the net where goalkeepers have the slowest dive recovery.',
+      'Pass to open wingers to stretch opponent defensive backlines.'
+    ],
+    plays: 340000,
+    rating: 4.96,
+    ratingCount: 11200,
+    badge: 'Arcade Soccer',
+    iconName: 'Trophy',
+    accentColor: '#22c55e',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/football_king.jpg'
+  },
+  {
+    id: 'clash-of-crowns',
+    title: 'Clash of Crowns',
+    category: 'puzzle',
+    description: 'Real-time kingdom warfare: command knight battalions, deploy siege weapons, cast arcane spells, and conquer rival fortresses.',
+    longDescription: 'Clash of Crowns is an intense tactical kingdom battle simulation. Construct fortified defenses, train swordsmen and archers, deploy devastating siege catapults, and command battlefield tactics to claim royal crowns and dominate the medieval realm.',
+    src: 'https://play.galatrix.com/play/clash-of-crowns?autologin=1',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Select Units, Deploy Troops & Cast Spells' },
+      { key: 'Click & Drag', action: 'Pan Battlefield Camera' },
+      { key: '1 - 5', action: 'Quick-Deploy Unit Hotkeys' }
+    ],
+    instructions: [
+      'Deploy units in strategic lanes to counter enemy frontline formations.',
+      'Protect your royal crown tower while directing vanguard forces to breach the enemy keep.',
+      'Harness magical elixir to cast fireballs and freeze spells at critical moments.'
+    ],
+    tips: [
+      'Deploy tank units first to soak up archer fire while high-damage rangers advance behind them.',
+      'Save area-of-effect spells for clustered swarms of enemy infantry.'
+    ],
+    plays: 410000,
+    rating: 4.97,
+    ratingCount: 14800,
+    badge: 'Kingdom War',
+    iconName: 'Shield',
+    accentColor: '#a855f7',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/clash_of_crowns.jpg'
+  },
+  {
+    id: 'tennis-masters',
+    title: 'Tennis Masters',
+    category: 'action',
+    description: 'Fast-paced 2-player arcade tennis: unleash super smashes, drop shots, and diving returns in solo or versus matches.',
+    longDescription: 'Tennis Masters puts you center court in a wild arcade tennis tournament. Play 1v1 against challenging AI or share a keyboard with a friend in 2-player mode. Charge your power smash, collect court power-ups, and unleash devastating cross-court winners.',
+    src: 'https://html5.gamedistribution.com/ab2f156d72894fd8a5dedb85b34a05e4/?gd_sdk_referrer_url=https://www.onlinegames.io/tennis-masters-2026',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move, Jump & Position' },
+      { key: 'X / L', action: 'Hit, Return & Power Smash' },
+      { key: 'Z / K', action: 'Super Smash / Special Shot' }
+    ],
+    instructions: [
+      'Position your player behind the bounce and time your swing for maximum velocity.',
+      'Hit floating power-up bubbles on the court to trigger mini-ball, giant racquet, or frozen court effects.',
+      'Compete in Quick Match or World Tournament mode across clay, grass, and hard courts.'
+    ],
+    tips: [
+      'Use lob shots when your rival charges the net to send the ball over their head.',
+      'Time your jump at the net to intercept high bounces with an unreturnable smash.'
+    ],
+    plays: 460000,
+    rating: 4.98,
+    ratingCount: 17600,
+    badge: '2-Player Sports',
+    iconName: 'Zap',
+    accentColor: '#06b6d4',
+    releaseYear: 2024,
+    thumbnailUrl: '/images/tennis_masters.jpg'
   }
 ];
