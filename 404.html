@@ -10,6 +10,17 @@
         var p = window.location.pathname;
         if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
           window.location.replace(p + '/' + window.location.search + window.location.hash);
+          return;
+        }
+
+        // If raw unbundled index.html is served directly by GitHub Pages (e.g. main branch / root folder)
+        // seamlessly forward to /docs/ where the compiled production bundle is pre-built
+        if (window.location.hostname.endsWith('github.io')) {
+          var isRawSource = document.querySelector('script[src*="main.tsx"]');
+          if (isRawSource && !p.includes('/docs')) {
+            var target = p.endsWith('/') ? p + 'docs/' : p + '/docs/';
+            window.location.replace(target + window.location.search + window.location.hash);
+          }
         }
       })();
     </script>
@@ -26,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-CxeM241e.js"></script>
+    <script type="module" crossorigin src="./assets/index-CWLyHmec.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-CbXtAM7H.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-icons-BqR-2TJf.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-react-DHVo6S0X.js">
