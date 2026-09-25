@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && rm -rf docs && cp -r dist docs",
+    "start": "node server.ts",
+    "build": "vite build && rm -rf docs && cp -r dist docs && cp dist/index.html docs/404.html",
     "preview": "vite preview",
     "clean": "rm -rf dist docs server.js",
     "lint": "tsc --noEmit"
