@@ -16,6 +16,7 @@ import {
   Play
 } from 'lucide-react';
 import { Game } from '../types/game';
+import { safeStorage } from '../utils/storage';
 
 interface GamePlayerProps {
   game: Game;
@@ -59,8 +60,8 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Track play count locally
-    const storedPlays = parseInt(localStorage.getItem(`plays_${game.id}`) || '0', 10);
-    localStorage.setItem(`plays_${game.id}`, String(storedPlays + 1));
+    const storedPlays = parseInt(safeStorage.getItem(`plays_${game.id}`) || '0', 10);
+    safeStorage.setItem(`plays_${game.id}`, String(storedPlays + 1));
 
     return () => {
       if (iframeRef.current) {
@@ -190,7 +191,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   const handleRate = (stars: number) => {
     setUserRating(stars);
     setRatingSubmitted(true);
-    localStorage.setItem(`rating_${game.id}`, String(stars));
+    safeStorage.setItem(`rating_${game.id}`, String(stars));
     setTimeout(() => setRatingSubmitted(false), 2500);
   };
 

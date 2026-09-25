@@ -12,6 +12,7 @@ import { GamePlayer } from './components/GamePlayer';
 import { CustomGameModal } from './components/CustomGameModal';
 import { CloakDisguise } from './components/CloakDisguise';
 import { SettingsModal } from './components/SettingsModal';
+import { safeStorage } from './utils/storage';
 import {
   Gamepad2,
   Play,
@@ -29,7 +30,7 @@ export default function App() {
   // Local storage state: Favorites
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('nova_arcade_favorites');
+      const saved = safeStorage.getItem('nova_arcade_favorites');
       return saved ? JSON.parse(saved) : ['polytrack'];
     } catch {
       return ['polytrack'];
@@ -39,7 +40,7 @@ export default function App() {
   // Local storage state: Custom games
   const [customGames, setCustomGames] = useState<Game[]>(() => {
     try {
-      const saved = localStorage.getItem('nova_arcade_custom_games');
+      const saved = safeStorage.getItem('nova_arcade_custom_games');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -51,27 +52,27 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCloakActive, setIsCloakActive] = useState(false);
   const [cloakPreset, setCloakPreset] = useState<CloakPreset>(() => {
-    return (localStorage.getItem('nova_arcade_cloak_preset') as CloakPreset) || 'classroom';
+    return (safeStorage.getItem('nova_arcade_cloak_preset') as CloakPreset) || 'classroom';
   });
   const [panicKey, setPanicKey] = useState<string>(() => {
-    return localStorage.getItem('nova_arcade_panic_key') || ']';
+    return safeStorage.getItem('nova_arcade_panic_key') || ']';
   });
 
   // Save favorites & custom games
   useEffect(() => {
-    localStorage.setItem('nova_arcade_favorites', JSON.stringify(favorites));
+    safeStorage.setItem('nova_arcade_favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   useEffect(() => {
-    localStorage.setItem('nova_arcade_custom_games', JSON.stringify(customGames));
+    safeStorage.setItem('nova_arcade_custom_games', JSON.stringify(customGames));
   }, [customGames]);
 
   useEffect(() => {
-    localStorage.setItem('nova_arcade_cloak_preset', cloakPreset);
+    safeStorage.setItem('nova_arcade_cloak_preset', cloakPreset);
   }, [cloakPreset]);
 
   useEffect(() => {
-    localStorage.setItem('nova_arcade_panic_key', panicKey);
+    safeStorage.setItem('nova_arcade_panic_key', panicKey);
   }, [panicKey]);
 
   // Global hotkeys: Panic Key & Search shortcut
@@ -109,10 +110,8 @@ export default function App() {
   }, []);
 
   const handleClearData = useCallback(() => {
-    try {
-      localStorage.removeItem('nova_arcade_favorites');
-      localStorage.removeItem('nova_arcade_custom_games');
-    } catch {}
+    safeStorage.removeItem('nova_arcade_favorites');
+    safeStorage.removeItem('nova_arcade_custom_games');
     setFavorites([]);
     setCustomGames([]);
   }, []);

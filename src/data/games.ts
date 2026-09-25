@@ -35,7 +35,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Car',
     accentColor: '#06b6d4',
     releaseYear: 2022,
-    thumbnailUrl: '/images/polytrack.jpg'
+    thumbnailUrl: './images/polytrack.jpg'
   },
   {
     id: 'basketbros',
@@ -73,7 +73,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Flame',
     accentColor: '#f97316',
     releaseYear: 2024,
-    thumbnailUrl: '/images/basketbros.jpg'
+    thumbnailUrl: './images/basketbros.jpg'
   },
   {
     id: 'retro-bowl-college',
@@ -104,7 +104,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Trophy',
     accentColor: '#e11d48',
     releaseYear: 2024,
-    thumbnailUrl: '/images/retrobowl.jpg'
+    thumbnailUrl: './images/retrobowl.jpg'
   },
   {
     id: 'eaglercraft-1-8',
@@ -142,7 +142,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Pickaxe',
     accentColor: '#22c55e',
     releaseYear: 2024,
-    thumbnailUrl: '/images/minecraft.jpg'
+    thumbnailUrl: './images/minecraft.jpg'
   },
   {
     id: 'raft-survival',
@@ -180,7 +180,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Anchor',
     accentColor: '#0ea5e9',
     releaseYear: 2024,
-    thumbnailUrl: '/images/raft.jpg'
+    thumbnailUrl: './images/raft.jpg'
   },
   {
     id: 'super-smash-flash',
@@ -213,7 +213,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Swords',
     accentColor: '#8b5cf6',
     releaseYear: 2024,
-    thumbnailUrl: '/images/smash.jpg'
+    thumbnailUrl: './images/smash.jpg'
   },
   {
     id: 'level-devil',
@@ -245,7 +245,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Flame',
     accentColor: '#f97316',
     releaseYear: 2024,
-    thumbnailUrl: '/images/leveldevil.jpg'
+    thumbnailUrl: './images/leveldevil.jpg'
   },
   {
     id: 'idle-mining-empire',
@@ -277,7 +277,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Coins',
     accentColor: '#eab308',
     releaseYear: 2024,
-    thumbnailUrl: '/images/mining.jpg'
+    thumbnailUrl: './images/mining.jpg'
   },
   {
     id: 'basketball-legends-2020',
@@ -310,7 +310,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Trophy',
     accentColor: '#ea580c',
     releaseYear: 2020,
-    thumbnailUrl: '/images/basketball_legends.jpg'
+    thumbnailUrl: './images/basketball_legends.jpg'
   },
   {
     id: 'golf-bit',
@@ -342,7 +342,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Compass',
     accentColor: '#10b981',
     releaseYear: 2024,
-    thumbnailUrl: '/images/golf_bit.jpg'
+    thumbnailUrl: './images/golf_bit.jpg'
   },
   {
     id: 'nova-craft',
@@ -377,7 +377,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Boxes',
     accentColor: '#8b5cf6',
     releaseYear: 2024,
-    thumbnailUrl: '/images/nova_craft.jpg'
+    thumbnailUrl: './images/nova_craft.jpg'
   },
   {
     id: 'football-king',
@@ -407,7 +407,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Trophy',
     accentColor: '#22c55e',
     releaseYear: 2024,
-    thumbnailUrl: '/images/football_king.jpg'
+    thumbnailUrl: './images/football_king.jpg'
   },
   {
     id: 'clash-of-crowns',
@@ -438,7 +438,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Shield',
     accentColor: '#a855f7',
     releaseYear: 2024,
-    thumbnailUrl: '/images/clash_of_crowns.jpg'
+    thumbnailUrl: './images/clash_of_crowns.jpg'
   },
   {
     id: 'tennis-masters',
@@ -469,6 +469,6 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Zap',
     accentColor: '#06b6d4',
     releaseYear: 2024,
-    thumbnailUrl: '/images/tennis_masters.jpg'
+    thumbnailUrl: './images/tennis_masters.jpg'
   }
 ];

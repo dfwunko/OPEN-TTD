@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#06080e" />
+    <script>
+      // Self-heal GitHub Pages base path when accessed without a trailing slash
+      (function() {
+        var p = window.location.pathname;
+        if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          window.location.replace(p + '/' + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <title>Nova Arcade • Unblocked Gaming Hub</title>
     <meta name="description" content="Play PolyTrack, Tennis Masters, Football King, Clash of Crowns, Basketball Legends, Nova Craft, Golf Bit, and BasketBros unblocked." />
     <meta property="og:title" content="Nova Arcade • Unblocked Gaming Hub" />
