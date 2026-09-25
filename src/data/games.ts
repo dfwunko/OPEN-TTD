@@ -470,5 +470,37 @@ export const GAMES_CATALOG: Game[] = [
     accentColor: '#06b6d4',
     releaseYear: 2024,
     thumbnailUrl: './images/tennis_masters.jpg'
+  },
+  {
+    id: 'infinite-craft',
+    title: 'Infinite Craft',
+    category: 'puzzle',
+    description: 'Endless elemental alchemy: combine Water, Fire, Earth, and Wind to craft thousands of items, concepts, and discoveries.',
+    longDescription: 'Infinite Craft is the viral sandbox alchemy sensation. Start with the four classical elements — Water, Fire, Earth, and Wind — and drag them onto the crafting canvas. Combine elements to discover Steam, Lava, Plants, Philosophy, Galaxies, and infinite creations. All your discovered recipes are saved locally with zero installation.',
+    src: './infinite-craft/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Drag & Drop', action: 'Drag elements onto canvas & combine' },
+      { key: 'Double Click Element', action: 'Quick duplicate element on canvas' },
+      { key: 'Search Bar', action: 'Filter discovered element collection' },
+      { key: 'Clear / Broom', action: 'Wipe canvas clean while keeping discoveries' }
+    ],
+    instructions: [
+      'Drag elemental cards from the right sidebar onto the interactive workspace.',
+      'Drop one element directly on top of another to trigger an elemental reaction.',
+      'Discover thousands of recipes from simple nature to mythical gods and technology.'
+    ],
+    tips: [
+      'Combine matching elements (e.g. Earth + Earth = Mountain, Mountain + Mountain = Mountain Range).',
+      'Use the search bar in the element drawer to quickly pull up past discoveries.'
+    ],
+    plays: 540000,
+    rating: 4.99,
+    ratingCount: 24500,
+    badge: 'Viral Alchemy',
+    iconName: 'Sparkles',
+    accentColor: '#38bdf8',
+    releaseYear: 2024,
+    thumbnailUrl: './images/infinite_craft.jpg'
   }
 ];

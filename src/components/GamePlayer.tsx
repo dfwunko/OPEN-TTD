@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Game } from '../types/game';
 import { safeStorage } from '../utils/storage';
+import { resolveAssetUrl } from '../utils/paths';
 
 interface GamePlayerProps {
   game: Game;
@@ -174,7 +175,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
     if (game.customHtml) {
       iframe.srcdoc = game.customHtml;
     } else {
-      iframe.src = game.src.startsWith('http') ? game.src : window.location.origin + game.src;
+      iframe.src = resolveAssetUrl(game.src);
     }
 
     body.appendChild(iframe);
@@ -260,7 +261,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
             ref={iframeRef}
             id="game-iframe"
             title={game.iframeTitle || game.title}
-            src={game.customHtml ? undefined : game.src}
+            src={game.customHtml ? undefined : resolveAssetUrl(game.src)}
             srcDoc={game.customHtml}
             scrolling="no"
             className="GameContainerDesktop_gameIframe__6GEYI force-focus wh-full w-full h-full border-0 block"
@@ -528,7 +529,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
                     <div className="w-16 h-11 rounded-lg overflow-hidden relative shrink-0 bg-slate-900 border border-white/[0.08]">
                       {rel.thumbnailUrl ? (
                         <img
-                          src={rel.thumbnailUrl}
+                          src={resolveAssetUrl(rel.thumbnailUrl)}
                           alt={rel.title}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Star, Bookmark, Play, ArrowRight } from 'lucide-react';
 import { Game } from '../types/game';
+import { resolveAssetUrl } from '../utils/paths';
 
 interface GameCardProps {
   game: Game;
@@ -26,7 +27,7 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
       <div className="relative aspect-video w-full overflow-hidden bg-slate-950 border-b border-white/[0.06]">
         {game.thumbnailUrl && !imgError ? (
           <img
-            src={game.thumbnailUrl}
+            src={resolveAssetUrl(game.thumbnailUrl)}
             alt={game.title}
             width={480}
             height={270}

@@ -35,5 +35,16 @@ export const safeStorage = {
       // Fallback to memory
     }
     memoryFallback.delete(key);
+  },
+
+  clear: (): void => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.clear();
+      }
+    } catch {
+      // Fallback to memory
+    }
+    memoryFallback.clear();
   }
 };

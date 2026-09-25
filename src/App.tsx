@@ -13,6 +13,7 @@ import { CustomGameModal } from './components/CustomGameModal';
 import { CloakDisguise } from './components/CloakDisguise';
 import { SettingsModal } from './components/SettingsModal';
 import { safeStorage } from './utils/storage';
+import { resolveAssetUrl } from './utils/paths';
 import {
   Gamepad2,
   Play,
@@ -104,11 +105,6 @@ export default function App() {
     );
   }, []);
 
-  const handleSaveCustomGame = useCallback((newGame: Game) => {
-    setCustomGames((prev) => [newGame, ...prev]);
-    setActiveGame(newGame);
-  }, []);
-
   const handleClearData = useCallback(() => {
     safeStorage.removeItem('nova_arcade_favorites');
     safeStorage.removeItem('nova_arcade_custom_games');
@@ -120,6 +116,47 @@ export default function App() {
   const allGames = useMemo(() => {
     return [...customGames, ...GAMES_CATALOG];
   }, [customGames]);
+
+  // Update URL hash when active game changes
+  const handleSelectGame = useCallback((game: Game | null) => {
+    setActiveGame(game);
+    if (game) {
+      if (!window.location.hash.includes(`game=${game.id}`)) {
+        window.location.hash = `game=${game.id}`;
+      }
+    } else {
+      if (window.location.hash.includes('game=')) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+  }, []);
+
+  const handleSaveCustomGame = useCallback((newGame: Game) => {
+    setCustomGames((prev) => [newGame, ...prev]);
+    handleSelectGame(newGame);
+  }, [handleSelectGame]);
+
+  // Sync active game with URL hash (#game=id) or search query (?game=id)
+  useEffect(() => {
+    const parseGameFromUrl = () => {
+      const hashMatch = window.location.hash.match(/game=([a-zA-Z0-9_-]+)/);
+      const searchParams = new URLSearchParams(window.location.search);
+      const gameId = hashMatch ? hashMatch[1] : searchParams.get('game');
+      if (gameId) {
+        const found = allGames.find((g) => g.id === gameId);
+        if (found) {
+          setActiveGame(found);
+          return;
+        }
+      } else if (activeGame) {
+        setActiveGame(null);
+      }
+    };
+
+    parseGameFromUrl();
+    window.addEventListener('hashchange', parseGameFromUrl);
+    return () => window.removeEventListener('hashchange', parseGameFromUrl);
+  }, [allGames]);
 
   // Filter & sort
   const filteredGames = useMemo(() => {
@@ -174,7 +211,7 @@ export default function App() {
         currentCategory={category}
         onSelectCategory={(cat) => {
           setCategory(cat);
-          if (activeGame) setActiveGame(null);
+          if (activeGame) handleSelectGame(null);
         }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -182,7 +219,7 @@ export default function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         onTriggerCloak={() => setIsCloakActive(true)}
         onGoHome={() => {
-          setActiveGame(null);
+          handleSelectGame(null);
           setCategory('all');
           setSearchQuery('');
         }}
@@ -198,10 +235,10 @@ export default function App() {
           /* Active Game Iframe Player */
           <GamePlayer
             game={activeGame}
-            onBack={() => setActiveGame(null)}
+            onBack={() => handleSelectGame(null)}
             isFavorite={favorites.includes(activeGame.id)}
             onToggleFavorite={handleToggleFavorite}
-            onSelectRelatedGame={(related) => setActiveGame(related)}
+            onSelectRelatedGame={(related) => handleSelectGame(related)}
             allGames={allGames}
           />
         ) : (
@@ -214,7 +251,7 @@ export default function App() {
                 {featuredGame.thumbnailUrl && (
                   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <img
-                      src={featuredGame.thumbnailUrl}
+                      src={resolveAssetUrl(featuredGame.thumbnailUrl)}
                       alt={featuredGame.title}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover opacity-20 filter blur-sm scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
@@ -246,7 +283,7 @@ export default function App() {
 
                     <div className="flex items-center gap-3 pt-2">
                       <button
-                        onClick={() => setActiveGame(featuredGame)}
+                        onClick={() => handleSelectGame(featuredGame)}
                         className="px-6 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02] cursor-pointer flex items-center gap-2"
                       >
                         <Play className="w-4 h-4 fill-current ml-0.5" />
@@ -268,12 +305,12 @@ export default function App() {
 
                   {/* Right: High-Res Interactive Visual Card */}
                   <div
-                    onClick={() => setActiveGame(featuredGame)}
+                    onClick={() => handleSelectGame(featuredGame)}
                     className="w-full lg:w-96 aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl relative cursor-pointer group/preview hover:border-cyan-500/50 transition-all"
                   >
                     {featuredGame.thumbnailUrl ? (
                       <img
-                        src={featuredGame.thumbnailUrl}
+                        src={resolveAssetUrl(featuredGame.thumbnailUrl)}
                         alt={featuredGame.title}
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover group-hover/preview:scale-105 transition-transform duration-500 ease-out"
@@ -348,7 +385,7 @@ export default function App() {
                     game={game}
                     isFavorite={favorites.includes(game.id)}
                     onToggleFavorite={handleToggleFavorite}
-                    onPlayGame={(g) => setActiveGame(g)}
+                    onPlayGame={(g) => handleSelectGame(g)}
                   />
                 ))}
               </div>

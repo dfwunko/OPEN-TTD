@@ -10,6 +10,17 @@
         var p = window.location.pathname;
         if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
           window.location.replace(p + '/' + window.location.search + window.location.hash);
+          return;
+        }
+
+        // If raw unbundled index.html is served directly by GitHub Pages (e.g. main branch / root folder)
+        // seamlessly forward to /docs/ where the compiled production bundle is pre-built
+        if (window.location.hostname.endsWith('github.io')) {
+          var isRawSource = document.querySelector('script[src*="main.tsx"]');
+          if (isRawSource && !p.includes('/docs')) {
+            var target = p.endsWith('/') ? p + 'docs/' : p + '/docs/';
+            window.location.replace(target + window.location.search + window.location.hash);
+          }
         }
       })();
     </script>
@@ -29,6 +40,6 @@
   </head>
   <body class="bg-[#06080e] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200 min-h-screen">
     <div id="root"></div>
-    <script type="module" src="dfwunko.github.io/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
