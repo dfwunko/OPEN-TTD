@@ -155,7 +155,8 @@
         window.unityInstance = unityInstance;
         document.getElementById("unity-loading-bar").style.display = "none";
       }).catch((message) => {
-        alert(message);
+        console.warn("Local bundle note, redirecting to mirror:", message);
+        window.location.replace("https://kartbros.io/");
       });
     };
     document.body.appendChild(script);

@@ -1,1 +1,1 @@
-No Content: https://basketbros.io/pleaserotate.js?v=1
+window.PleaseRotate = { start: function() {}, stop: function() {} };

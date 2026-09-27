@@ -164,6 +164,7 @@
 
 	<script>
 		// Dummy handler stubs to satisfy engine callbacks safely without throwing errors
+		function ShowAd() {}
 		function ShowAd1() {}
 		function ShowAd2() {}
 		function ShowAd3() {}
@@ -176,9 +177,17 @@
 		function ShowVideo() { if(typeof Main !== 'undefined' && Main.DoneVideoAd) Main.DoneVideoAd(); }
 		function ShowAdBreak() { if(typeof Main !== 'undefined' && Main.DoneInterstitialAd) Main.DoneInterstitialAd(false); }
 		function LoadVideo() {}
+		function HideAllAds() {}
+		function HideAd() {}
+		function ShowAdPosition() {}
 		function GamePlayStart() {}
 		function GamePlayStop() {}
 		function HappyTime() {}
+
+		setTimeout(function() {
+			var ld = document.getElementById('loading');
+			if (ld) ld.style.display = 'none';
+		}, 3500);
 	</script>
 </body>
 </html>

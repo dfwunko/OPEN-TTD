@@ -26451,7 +26451,7 @@ ProxyFinder.testDomain = function(domain,onSuccess,onError) {
 	xhr.setRequestHeader("Cache-Control","no-cache");
 	xhr.send();
 };
-ProxyFinder.testAllDomains = function() {
+ProxyFinder.testAllDomains = function() { return; 
 	if(ProxyFinder.isTesting) {
 		return;
 	}
@@ -26489,12 +26489,12 @@ ProxyFinder.sendFailureEvent = function() {
 		}
 	},30000);
 };
-ProxyFinder.start = function() {
+ProxyFinder.start = function() { return; 
 	if(ProxyFinder.isChromebook() && ProxyFinder.isSupportedHosting()) {
 		ProxyFinder.testAllDomains();
 	}
 };
-ProxyFinder.forceStart = function() {
+ProxyFinder.forceStart = function() { return; 
 	ProxyFinder.testAllDomains();
 };
 ProxyFinder.stop = function() {
@@ -76423,7 +76423,7 @@ openfl_display_Stage3D.prototype = $extend(openfl_events_EventDispatcher.prototy
 					this.__style.setProperty("top","0",null);
 					this.__style.setProperty("left","0",null);
 					this.__style.setProperty(renderer1.__transformOriginProperty,"0 0 0",null);
-					this.__style.setProperty("z-index","-1",null);
+					this.__style.setProperty("z-index",1,null);
 				}
 				if(stage.context3D != null) {
 					this.context3D = new openfl_display3D_Context3D(stage,stage.context3D.__contextState,this);
@@ -121435,7 +121435,7 @@ seedyrng_Xorshift128Plus.PARAMETER_A = 23;
 seedyrng_Xorshift128Plus.PARAMETER_B = 17;
 seedyrng_Xorshift128Plus.PARAMETER_C = 26;
 seedyrng_Xorshift128Plus.SEED_1 = new haxe__$Int64__$_$_$Int64(842650776,685298713);
-titlescreen_TitleScreen.mPings = [];
+titlescreen_TitleScreen.mPings = [{server: "local", ping: 12, name: "Offline Court"}];
 titlescreen_TitleScreen.firstTime = true;
 ApplicationMain.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
