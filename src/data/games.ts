@@ -311,37 +311,5 @@ export const GAMES_CATALOG: Game[] = [
     accentColor: '#a855f7',
     releaseYear: 2024,
     thumbnailUrl: './images/clash_of_crowns.jpg'
-  },
-  {
-    id: 'idle-mining-empire',
-    title: 'Idle Mining Empire',
-    category: 'arcade',
-    description: 'Deep subterranean tycoon management: dig shafts, operate industrial elevators, automate logistics, and unearth precious gems.',
-    longDescription: 'Idle Mining Empire is an engrossing incremental tycoon simulation. Start with a single pickaxe miner in a shallow shaft, extract coal and gold, and expand into an automated underground enterprise. Hire elevator engineers to haul ore to the surface, dispatch logistics handlers, and automate shafts to amass fortune even while idle.',
-    src: 'https://ubghyper.github.io/GameList.github.io/Idle-Mining-Empire/',
-    aspectRatio: '16/9',
-    controls: [
-      { key: 'Mouse Left Click', action: 'Click to Dig / Collect Ore / Upgrade Systems' },
-      { key: 'Scroll Wheel', action: 'Pan Up & Down Deep Subterranean Shafts' },
-      { key: 'Spacebar', action: 'Fast Forward / Instant Collection Pulse' }
-    ],
-    instructions: [
-      'Direct your miners to excavate mineral deposits from subterranean levels.',
-      'Click the elevator operator to hoist buckets of extracted ore to ground-level processing.',
-      'Command surface warehouse personnel to deliver cargo to the treasury for instant revenue.',
-      'Hire departmental managers to automate every level so profits accumulate autonomously.'
-    ],
-    tips: [
-      'Balance elevator lift capacity and surface warehouse throughput with mining shaft generation.',
-      'Excavate deeper subterranean tiers to unlock lucrative gold veins, rubies, and diamond clusters.'
-    ],
-    plays: 242000,
-    rating: 4.93,
-    ratingCount: 6800,
-    badge: 'Tycoon Tycoon',
-    iconName: 'Coins',
-    accentColor: '#eab308',
-    releaseYear: 2024,
-    thumbnailUrl: './images/mining.jpg'
   }
 ];
