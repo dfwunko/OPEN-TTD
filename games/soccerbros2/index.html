@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>SOCCER BROS 2</title>
+
+	<meta name="description" content="Online multiplayer soccer! Score goals on your bros!" />
+	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="shortcut icon" type="image/png" href="./favicon.png">
+	<meta name="Keywords" content="Soccer, Play, Free, Online, Multiplayer, Games, IO, Sports, Scrolling, Friends">
+	<meta name="author" content="Blue Wizard Digital">
+	<link rel="manifest" href="manifest.json">
+
+	<script type="text/javascript" src="./SoccerBros.js?th=1784915592"></script>
+
+	<script>
+		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
+		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+			var meta = document.getElementById ("viewport");
+			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+		}
+		window.addEventListener('keydown', function(e) {
+			var tag = e.target.tagName;
+			if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+				e.preventDefault();
+			}
+		});
+		var aCo = "US";
+	</script>
+
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			width: 100vw;
+			background: #000000;
+			color: orange;
+			overflow: hidden;
+		}
+		.body::-webkit-scrollbar {
+			width: 0px;
+		}
+		#openfl-content {
+			background: #000000;
+			width: 100%;
+			height: 100%;
+		}
+		#spinner {
+			-webkit-transform-origin: 50% 50%;
+			-moz-transform-origin: 50% 50%;
+			-o-transform-origin: 50% 50%;
+			transform-origin: 50% 50%;
+			width: 82px;
+			height: 81px;
+			-webkit-animation: spin1 2s infinite linear;
+			-moz-animation: spin1 2s infinite linear;
+			-o-animation: spin1 2s infinite linear;
+			-ms-animation: spin1 2s infinite linear;
+			animation: spin1 2s infinite linear;
+		}
+	</style>
+
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+	<script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyA4vm8qzAsl93QB7bf-fR28uJ4m2C68Z1I",
+			authDomain: "soccer-bros-6a027.firebaseapp.com",
+			projectId: "soccer-bros-6a027",
+			storageBucket: "soccer-bros-6a027.appspot.com",
+			messagingSenderId: "348784683755",
+			appId: "1:348784683755:web:a8ceb7a303bdd5c2646cae"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+		const auth = firebase.auth();
+		const db = firebase.firestore();
+		var userData = "";
+
+		function triggerSignIn() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			auth.signInWithPopup(provider);
+		}
+
+		function saveGameData(gameDataValue) {
+			var userId = auth.currentUser.uid;
+			userData = gameDataValue;
+			db.collection('users').doc(userId).set({
+				gameData_kickbros: gameDataValue
+			}).then(function() {
+				console.log('Game data saved');
+			}).catch(function(error) {
+				console.error('Error saving game data:', error);
+			});
+		}
+
+		function loadGameData() { return userData; }
+
+		function loadGameDataAsync() {
+			var userId = auth.currentUser.uid;
+			db.collection('users').doc(userId).get().then(function(doc) {
+				if (doc.exists) {
+					userData = doc.data().gameData_kickbros;
+					if (typeof Main != "undefined") {
+						Main.LoadDataComplete();
+					}
+				}
+			}).catch(function(error) {
+				console.error('Error loading game data:', error);
+			});
+		}
+
+		auth.onAuthStateChanged(function(user) {
+			if (user) {
+				loadGameDataAsync();
+			}
+		});
+
+		function signOut() {
+			auth.signOut().then(() => {
+				Main.SignOutComplete();
+			});
+		}
+
+		function isUserLoggedIn() {
+			return auth.currentUser !== null;
+		}
+	</script>
+</head>
+
+<body style="overflow:hidden;">
+	<noscript>Enable JavaScript bro!</noscript>
+
+	<div id="loading" style="position: absolute; z-index: 15; top: 60%; left: 50%; transform: translate(-50%, 0); background: black;">
+		<center>
+			<img src="assets/loading4.png"><br/>
+			<img src="assets/fbro.png">
+			<img src="assets/bbbro.png">
+			<img src="assets/sbro.png">
+			<img src="assets/wbro.png">
+			<img src="assets/kbro.png">
+			<img src="assets/kartbro.png">
+			<img src="assets/bbro.png"><br/>
+		</center>
+	</div>
+
+	<div id="game2" style="width: 100%; height: 100%;">
+		<div id="openfl-content" onblur="window.focus();" style="width: 100%; height: 100%;">
+			<script type="text/javascript">
+				lime.embed ("SoccerBros", "openfl-content", 0, 0, { parameters: {} });
+			</script>
+		</div>
+	</div>
+
+	<script>
+		// Dummy handler stubs to satisfy engine function callbacks seamlessly
+		function ShowAd1() {}
+		function ShowAd2() {}
+		function ShowAd3() {}
+		function ShowAd4() {}
+		function ShowAd6() {}
+		function ShowAd7() {}
+		function ShowAd8() {}
+		function ShowAd9() {}
+		function ShowVideo() { if(typeof Main !== 'undefined' && Main.DoneVideoAd) Main.DoneVideoAd(); }
+		function ShowAdBreak() { if(typeof Main !== 'undefined' && Main.DoneInterstitialAd) Main.DoneInterstitialAd(false); }
+		function LoadVideo() {}
+		function HideAllAds() {}
+		function HideAd() {}
+		function ShowAdPosition() {}
+		function GamePlayStart() {}
+		function GamePlayStop() {}
+		function HappyTime() {}
+
+		const element = document.getElementById('openfl-content');
+		function keepFocus() {
+			element.focus();
+		}
+		element.addEventListener('blur', keepFocus);
+		element.addEventListener('focusout', keepFocus);
+	</script>
+</body>
+</html>
