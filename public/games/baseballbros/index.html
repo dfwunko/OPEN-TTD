@@ -19,12 +19,16 @@
 			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
 		}
 		window.addEventListener('keydown', function(e) {
-			var tag = e.target.tagName;
-			if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
-				e.preventDefault();
+			if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.code) >= 0 || [32, 37, 38, 39, 40].indexOf(e.keyCode) >= 0) {
+				var tag = (e.target && e.target.tagName) || '';
+				if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+					e.preventDefault();
+				}
 			}
 		});
 		var aCo = "US";
+		window.aCo = "US";
+		window.scrollerMessage = "BASEBALL BROS · OFFLINE ARCADE · HIT NUKES & SLAMS · TAP SPACE TO PLAY!";
 	</script>
 
 	<style>
@@ -165,6 +169,7 @@
             }
         }
 
+        function ShowAd() {}
         function ShowAd1() {}
         function ShowAd2() {}
         function ShowAd3() {}
@@ -191,7 +196,7 @@
         function EmailSignup() {}
         function SendEvent() {}
 
-		// Auto-hide loading screen once canvas is active
+		// Auto-hide loading screen once canvas is active or after maximum safety timeout
 		var checkCanvasInterval = setInterval(function () {
 			var canvas = document.querySelector("#openfl-content canvas");
 			if (canvas && canvas.width > 0 && canvas.height > 0) {
@@ -199,7 +204,13 @@
 				if (loadDiv) loadDiv.style.display = "none";
 				clearInterval(checkCanvasInterval);
 			}
-		}, 300);
+		}, 200);
+
+		setTimeout(function () {
+			var loadDiv = document.getElementById("loading");
+			if (loadDiv) loadDiv.style.display = "none";
+			if (checkCanvasInterval) clearInterval(checkCanvasInterval);
+		}, 2500);
 
 		setInterval(function () {
 			if (document.activeElement && document.activeElement.tagName == "IFRAME") {
