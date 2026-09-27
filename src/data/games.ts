@@ -2,6 +2,38 @@ import { Game } from '../types/game';
 
 export const GAMES_CATALOG: Game[] = [
   {
+    id: 'baseball-bros',
+    title: 'Baseball Bros',
+    category: 'arcade',
+    description: 'Fast-paced arcade baseball: strike out batters, time your swings, steal bases, and blast towering grand slams and home run nukes!',
+    longDescription: 'Baseball Bros is a high-octane, fast-paced arcade baseball game from Blue Wizard Digital. Step into the batter\'s box, read the pitcher\'s delivery, and crush tape-measure home runs. When on the mound, mix up blazing fastballs, biting curveballs, and deceptive changeups to rack up strikeouts. Features responsive controls, fluid ragdoll animations, and offline single-player and 2-player modes.',
+    src: './games/baseballbros/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Aim Pitch / Position Batter / Direct Runners' },
+      { key: 'Spacebar', action: 'Swing Bat / Deliver Pitch / Command Base Steal' },
+      { key: 'Mouse Click', action: 'Menu Navigation & Team Selection' }
+    ],
+    instructions: [
+      'When batting: Move your batter into position using Arrow Keys/WASD and tap Spacebar right as the ball crosses the strike zone to launch a hit.',
+      'When pitching: Aim your pitch trajectory across the strike zone edges and press Spacebar to deliver.',
+      'When running: Press Spacebar while on base to initiate steals and advance to scoring position.'
+    ],
+    tips: [
+      'Watch the pitch speed and elevation — swinging slightly underneath high fastballs yields majestic fly-ball homers.',
+      'Vary your pitch placement toward the outside corners to induce weak grounders and pop flies.',
+      'Steal second base on early pitch counts to keep pressure on the opposing defense.'
+    ],
+    plays: 430000,
+    rating: 4.98,
+    ratingCount: 18900,
+    badge: 'Arcade Baseball',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2024,
+    thumbnailUrl: './images/baseballbros.jpg'
+  },
+  {
     id: 'scarwrit',
     title: 'Scarwrit',
     category: 'skill',
