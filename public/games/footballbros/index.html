@@ -158,19 +158,12 @@
 
 	<script>
         /* OFFLINE AD & ENGINE STUBS - Prevents the game engine from crashing */
-		function ShowAd() {}
-		function ShowVideo() { if(typeof Main !== 'undefined' && Main.DoneVideoAd) Main.DoneVideoAd(); }
 		function ShowAdBreak() {
             console.log("Offline: Interstitial Ad Skipped.");
-            if (typeof Main !== 'undefined' && Main.DoneInterstitialAd) {
+            if (typeof Main !== 'undefined') {
                 Main.DoneInterstitialAd(false);
             }
 		}
-
-        setTimeout(function() {
-            var ld = document.getElementById('loading');
-            if (ld) ld.style.display = 'none';
-        }, 3500);
 
         function ShowAd1() {}
         function ShowAd2() {}
