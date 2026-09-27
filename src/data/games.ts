@@ -2,6 +2,38 @@ import { Game } from '../types/game';
 
 export const GAMES_CATALOG: Game[] = [
   {
+    id: 'basket-bros',
+    title: 'Basket Bros',
+    category: 'arcade',
+    description: 'Fast-paced 1-on-1 arcade basketball: soar for rim-rocking dunks, stepback three-pointers, and high-flying basketball action!',
+    longDescription: 'Basket Bros is a high-flying, fast-paced 1v1 arcade basketball game from Blue Wizard Digital. Drive to the hoop, unleash devastating dunks, pull off stepback jumpers, and defend your basket against rival bros. Features smooth ragdoll physics, customizable character ballers, and intense local single-player & multiplayer gameplay.',
+    src: './games/basket/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Drive / Move / Aim Jump' },
+      { key: 'W / Up Arrow', action: 'Jump / Shoot / Dunk' },
+      { key: 'Spacebar / Enter', action: 'Steal / Block / Knockdown' }
+    ],
+    instructions: [
+      'Use WASD or Arrow Keys to position your baller on defense and offense.',
+      'Press Up / W to leap for rebounds and jump shots. Time your release at the apex of your jump for perfect accuracy.',
+      'Drive hard toward the hoop and press Jump while sprinting to throw down explosive dunks!'
+    ],
+    tips: [
+      'Pump fake by tapping jump quickly to draw defender blocks before driving past them.',
+      'Time your steals right when the opponent crosses over to force turnovers.',
+      'Step back behind the 3-point arc for high-value long distance shots when trailing.'
+    ],
+    plays: 680000,
+    rating: 4.99,
+    ratingCount: 28900,
+    badge: 'Trending #1 Sports',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2026,
+    thumbnailUrl: './images/basketbros.jpg'
+  },
+  {
     id: 'baseball-bros',
     title: 'Baseball Bros',
     category: 'arcade',
