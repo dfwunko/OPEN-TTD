@@ -23,10 +23,10 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
   return (
     <article
       onClick={() => onPlayGame(game)}
-      className="group relative bg-[#0a0a0a] border border-neutral-800 hover:border-neutral-600 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black cursor-pointer flex flex-col justify-between"
+      className="group relative bg-[#080808] border border-neutral-850 hover:border-neutral-700 rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between"
     >
       {/* Visual Thumbnail Banner */}
-      <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-neutral-800">
+      <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-neutral-850">
         {game.thumbnailUrl && !imgError ? (
           <img
             src={resolveAssetUrl(game.thumbnailUrl)}
@@ -37,33 +37,33 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
             loading="lazy"
             decoding="async"
             onError={() => setImgError(true)}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300 ease-out"
           />
         ) : (
           <div
             className="w-full h-full flex items-center justify-center bg-neutral-900"
             style={{
-              background: `radial-gradient(circle at center, ${game.accentColor}20 0%, #050505 85%)`
+              background: `radial-gradient(circle at center, ${game.accentColor}15 0%, #050505 85%)`
             }}
           >
-            <span className="font-mono text-2xl font-black text-white">
+            <span className="font-mono text-xl font-bold text-white">
               {game.title.slice(0, 2).toUpperCase()}
             </span>
           </div>
         )}
 
         {/* Ambient Dark Gradient Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/40 opacity-90 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-black/30 opacity-90 pointer-events-none" />
 
         {/* Favorite Bookmark Button */}
         <button
           type="button"
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           onClick={(e) => onToggleFavorite(game.id, e)}
-          className={`absolute top-2.5 right-2.5 z-20 p-2 rounded-xl backdrop-blur-md transition-all cursor-pointer ${
+          className={`absolute top-2.5 right-2.5 z-20 p-1.5 rounded-md backdrop-blur-md transition-all cursor-pointer ${
             isFavorite
-               ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/25 scale-105'
-               : 'bg-black/60 hover:bg-black/90 text-neutral-300 hover:text-white border border-neutral-700'
+               ? 'bg-amber-500 text-black font-bold scale-105'
+               : 'bg-black/60 hover:bg-black/90 text-neutral-400 hover:text-white border border-neutral-800'
           }`}
         >
           <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
@@ -76,25 +76,25 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
             aria-label="Remove custom embed"
             title="Remove embed (can be recovered from archive)"
             onClick={(e) => onDeleteCustomGame(game, e)}
-            className="absolute top-2.5 left-2.5 z-20 p-2 rounded-xl backdrop-blur-md bg-black/60 hover:bg-red-500 text-neutral-300 hover:text-white border border-neutral-700 hover:border-red-400 transition-all cursor-pointer opacity-80 hover:opacity-100"
+            className="absolute top-2.5 left-2.5 z-20 p-1.5 rounded-md backdrop-blur-md bg-black/60 hover:bg-rose-900/80 text-neutral-400 hover:text-white border border-neutral-800 transition-all cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
         )}
 
         {/* Play Icon Affordance on Hover */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none">
-          <div className="w-11 h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
-            <Play className="w-4 h-4 fill-current ml-0.5" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center z-10 pointer-events-none">
+          <div className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-200">
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
           </div>
         </div>
       </div>
 
       {/* Card Body */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3.5">
+      <div className="p-4 flex-1 flex flex-col justify-between gap-3">
         <div>
           {/* Quiet Unboxed Metadata Kicker (Anti-Pill Discipline) */}
-          <div className="flex items-center gap-1.5 text-[11px] font-mono tracking-wider uppercase text-neutral-400 font-semibold mb-1">
+          <div className="flex items-center gap-1.5 text-[11px] font-mono tracking-wider uppercase text-neutral-500 font-medium mb-1">
             <span>{game.category}</span>
             <span aria-hidden="true" className="text-neutral-700">·</span>
             <span className="text-neutral-500 font-normal">{game.releaseYear}</span>
@@ -107,7 +107,7 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
           </div>
 
           {/* Title */}
-          <h3 className="font-bold text-base text-white group-hover:text-neutral-200 transition-colors line-clamp-1">
+          <h3 className="font-semibold text-sm text-neutral-100 group-hover:text-white transition-colors line-clamp-1">
             {game.title}
           </h3>
 
@@ -117,18 +117,18 @@ export const GameCard: React.FC<GameCardProps> = React.memo(({
           </p>
         </div>
 
-        {/* Footer: Rating, Plays & Launch Action */}
-        <div className="pt-3 border-t border-neutral-850 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 text-neutral-400 font-mono tabular-nums">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span className="font-semibold text-neutral-200">{game.rating.toFixed(2)}</span>
+        {/* Footer: Rating & Action */}
+        <div className="pt-2.5 border-t border-neutral-850 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-1.5 text-neutral-400 font-mono tabular-nums text-[11px]">
+            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+            <span className="font-medium text-neutral-300">{game.rating.toFixed(2)}</span>
             <span aria-hidden="true" className="text-neutral-700">·</span>
-            <span className="text-[11px] text-neutral-500 font-sans">{game.plays.toLocaleString()} plays</span>
+            <span className="text-neutral-500 font-sans">{game.plays.toLocaleString()} plays</span>
           </div>
 
-          <div className="flex items-center gap-1 text-white font-semibold text-xs group-hover:translate-x-0.5 transition-transform">
+          <div className="flex items-center gap-1 text-neutral-300 font-medium text-xs group-hover:text-white group-hover:translate-x-0.5 transition-all">
             <span>Play</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3 h-3" />
           </div>
         </div>
       </div>

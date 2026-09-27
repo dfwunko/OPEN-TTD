@@ -337,7 +337,7 @@ export default function App() {
           <div className="space-y-8">
             {/* Featured Hero Showcase (Shown when browsing All without search) */}
             {category === 'all' && !searchQuery && featuredGame && (
-              <section className="relative rounded-2xl overflow-hidden border border-neutral-800 bg-[#0a0a0a] shadow-2xl group">
+              <section className="relative rounded-xl overflow-hidden border border-neutral-850 bg-[#080808] group">
                 {/* Background Ambient Artwork with Fade */}
                 {featuredGame.thumbnailUrl && (
                   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -345,50 +345,50 @@ export default function App() {
                       src={resolveAssetUrl(featuredGame.thumbnailUrl)}
                       alt={featuredGame.title}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover opacity-15 filter blur-sm scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover opacity-10 filter blur-md scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/40" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/90 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/40" />
                   </div>
                 )}
 
-                <div className="relative z-10 p-6 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div className="relative z-10 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-8">
                   {/* Left: Info & Launch */}
-                  <div className="max-w-xl space-y-4">
+                  <div className="max-w-xl space-y-3.5">
                     {/* Unboxed Metadata Kicker (Anti-Pill Discipline) */}
-                    <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-400 font-semibold">
-                      <span>Featured Title</span>
+                    <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 font-medium">
+                      <span>Featured</span>
                       <span aria-hidden="true" className="text-neutral-700">·</span>
-                      <span className="text-neutral-300 capitalize">{featuredGame.category}</span>
+                      <span className="text-neutral-400 capitalize">{featuredGame.category}</span>
                       <span aria-hidden="true" className="text-neutral-700">·</span>
-                      <span className="text-amber-400 font-medium">★ {featuredGame.rating.toFixed(2)}</span>
+                      <span className="text-amber-500 font-medium">★ {featuredGame.rating.toFixed(2)}</span>
                     </div>
 
-                    <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight text-balance">
+                    <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
                       {featuredGame.title}
                     </h1>
 
-                    <p className="text-sm sm:text-base text-neutral-400 leading-relaxed max-w-lg">
+                    <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-lg">
                       {featuredGame.description}
                     </p>
 
-                    <div className="flex items-center gap-3 pt-2">
+                    <div className="flex items-center gap-2.5 pt-1 text-xs">
                       <button
                         onClick={() => handleSelectGame(featuredGame)}
-                        className="px-6 py-2.5 rounded-xl bg-white hover:bg-neutral-200 text-black font-bold text-sm tracking-wide shadow-xl shadow-white/10 transition-all hover:scale-[1.02] cursor-pointer flex items-center gap-2"
+                        className="px-5 py-2 rounded-md bg-white hover:bg-neutral-200 text-black font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-2"
                       >
-                        <Play className="w-4 h-4 fill-current ml-0.5" />
+                        <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                         <span>Play Now</span>
                       </button>
                       <button
                         onClick={(e) => handleToggleFavorite(featuredGame.id, e)}
-                        className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all cursor-pointer flex items-center gap-2 ${
+                        className={`px-3.5 py-2 rounded-md border text-xs font-medium transition-all cursor-pointer flex items-center gap-2 ${
                           favorites.includes(featuredGame.id)
-                            ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                            ? 'bg-amber-950/20 text-amber-400 border-amber-800/40'
                             : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border-neutral-800'
                         }`}
                       >
-                        <Bookmark className={`w-4 h-4 ${favorites.includes(featuredGame.id) ? 'fill-current' : ''}`} />
+                        <Bookmark className={`w-3.5 h-3.5 ${favorites.includes(featuredGame.id) ? 'fill-current' : ''}`} />
                         <span>{favorites.includes(featuredGame.id) ? 'Bookmarked' : 'Bookmark'}</span>
                       </button>
                     </div>
@@ -397,7 +397,7 @@ export default function App() {
                   {/* Right: High-Res Interactive Visual Card */}
                   <div
                     onClick={() => handleSelectGame(featuredGame)}
-                    className="w-full lg:w-96 aspect-video rounded-xl overflow-hidden border border-neutral-800 shadow-2xl relative cursor-pointer group/preview hover:border-neutral-600 transition-all bg-black"
+                    className="w-full lg:w-80 aspect-video rounded-lg overflow-hidden border border-neutral-800 relative cursor-pointer group/preview hover:border-neutral-600 transition-all bg-black"
                   >
                     {featuredGame.thumbnailUrl ? (
                       <img
@@ -407,17 +407,17 @@ export default function App() {
                         className="w-full h-full object-cover group-hover/preview:scale-105 transition-transform duration-500 ease-out"
                       />
                     ) : (
-                      <div className="w-full h-full bg-neutral-900 flex items-center justify-center font-mono font-bold text-white text-xl">
+                      <div className="w-full h-full bg-neutral-900 flex items-center justify-center font-mono font-bold text-white text-lg">
                         {featuredGame.title}
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-90" />
-                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs">
-                      <span className="font-semibold text-white tracking-wide flex items-center gap-1.5">
-                        <Play className="w-3.5 h-3.5 fill-white text-white" />
-                        Click to Launch
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px]">
+                      <span className="font-medium text-white tracking-wide flex items-center gap-1.5">
+                        <Play className="w-3 h-3 fill-white text-white" />
+                        Launch
                       </span>
-                      <span className="font-mono text-neutral-400 text-[11px]">
+                      <span className="font-mono text-neutral-400">
                         {featuredGame.releaseYear}
                       </span>
                     </div>
