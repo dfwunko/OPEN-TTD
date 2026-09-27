@@ -1,1 +1,7 @@
-No Content: https://basketbros.io/pleaserotate.js?v=1
+// Please Rotate handler stub
+(function() {
+  window.PleaseRotate = {
+    start: function() {},
+    stop: function() {}
+  };
+})();
