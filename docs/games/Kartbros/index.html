@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>KART BROS! - Free Online .io Kart Racing Game</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  
+  <style>
+    /* Clean, full-screen styling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      color: #000;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      scrollbar-width: none;
+    }
+    body::-webkit-scrollbar { display: none; }
+    
+    .game-section {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #000;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overscroll-behavior: none;
+    }
+    
+    #unity-canvas {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: block;
+    }
+    
+    #unity-loading-bar {
+      position: absolute;
+      z-index: 15;
+      text-align: center;
+    }
+    
+    #unity-warning {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      pointer-events: none;
+      text-align: center;
+      display: none;
+    }
+    
+    .spinning-wheel {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Arial,sans-serif;font-size:20px;z-index:9999;text-align:center;padding:24px">
+      Enable JavaScript bro!
+    </div>
+  </noscript>
+
+  <div class="game-section">
+    <canvas id="unity-canvas" tabindex="-1" onblur="window.focus(); window.scrollTo(0, 0);"></canvas>
+    
+    <div id="unity-loading-bar">
+      <center>
+        <img src="TemplateData/kart_wheel.png" class="spinning-wheel" alt="Loading indicator"><br>
+        <img src="TemplateData/loading4.png" alt="Loading game"><br>
+        <img src="TemplateData/fbro.png" alt="Football Bros">
+        <img src="TemplateData/bbbro.png" alt="Basket Bros">
+        <img src="TemplateData/sbro.png" alt="Soccer Bros">
+        <img src="TemplateData/wbro.png" alt="Wrestle Bros">
+        <img src="TemplateData/kbro.png" alt="Kart Bros">
+        <img src="TemplateData/bbro.png" alt="Baseball Bros">
+        <img src="TemplateData/kartbro.png" alt="Kart Bros">
+      </center>
+    </div>
+    
+    <div id="unity-warning"></div>
+  </div>
+
+  <script src="TemplateData/pleaserotate.min.js"></script>
+  
+  <script>
+    // Orientation fix for mobile
+    window.addEventListener('orientationchange', () => {
+      if (window.screen.orientation && window.screen.orientation.type.startsWith('portrait')) {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    let canvas = document.getElementById("unity-canvas");
+
+    function unityShowBanner(msg, type) {
+      let warningBanner = document.getElementById("unity-warning");
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+      }
+      let div = document.createElement("div");
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+
+      if (type === "error") {
+        div.style = "background: red; padding: 10px;";
+      } else if (type === "warning") {
+        div.style = "background: yellow; padding: 10px;";
+        setTimeout(() => {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/652a22c3090093352f44bc371e58690d.loader.js";
+    var config = {
+      arguments: [],
+      dataUrl: buildUrl + "/b7cbbb0acd383469ca490842db3abba2.data.gz",
+      frameworkUrl: buildUrl + "/a371bc5529193330ff53e3b81048b860.framework.js.gz",
+      codeUrl: buildUrl + "/9508436e1cf5603a8df211c583b86804.wasm.gz",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "BlueWizard",
+      productName: "KART BROS!",
+      productVersion: "1.72",
+      showBanner: unityShowBanner,
+    };
+
+    document.getElementById("unity-loading-bar").style.display = "block";
+
+    let script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        // Progress bar logic can be added here if needed
+      }).then((unityInstance) => {
+        window.unityInstance = unityInstance;
+        document.getElementById("unity-loading-bar").style.display = "none";
+      }).catch((message) => {
+        console.warn("Local bundle note, redirecting to mirror:", message);
+        window.location.replace("https://kartbros.io/");
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>

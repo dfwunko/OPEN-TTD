@@ -34,6 +34,118 @@ export const GAMES_CATALOG: Game[] = [
     thumbnailUrl: './images/baseballbros.jpg'
   },
   {
+    id: 'basket-bros',
+    title: 'Basket Bros',
+    category: 'arcade',
+    description: 'Fun, fast-paced 1 on 1 basketball game with lots of action. Pick from a variety of characters and go for crazy dunks and stepback threes!',
+    longDescription: 'Basket Bros is an addictive, action-packed basketball game where you play 1 on 1 against opponents with unique styles and abilities. Execute thunderous slam dunks, step-back three-pointers, and block rival shots in fast-paced matches.',
+    src: './games/basketbros/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move Player & Control Dribble' },
+      { key: 'Spacebar', action: 'Jump / Shoot / Dunk / Block' }
+    ],
+    instructions: [
+      'Use movement keys to maneuver your player across the court.',
+      'Hold spacebar to charge your shot or leap high for a massive slam dunk.'
+    ],
+    tips: [
+      'Time your jumps carefully to block opponent layups and secure rebounds.'
+    ],
+    plays: 490000,
+    rating: 4.98,
+    ratingCount: 20100,
+    badge: 'Basketball Action',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2024,
+    thumbnailUrl: './images/basketball.jpg'
+  },
+  {
+    id: 'football-bros',
+    title: 'Football Bros',
+    category: 'arcade',
+    description: 'Online multiplayer football! Bone-crushing hits, long touchdown bombs, and fast-paced pigskin action!',
+    longDescription: 'Football Bros brings high-energy gridiron football to the browser with quick play sessions, deep offensive playbooks, hard-hitting defense, and online multiplayer fun.',
+    src: './games/footballbros/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Run & Evade Defenders' },
+      { key: 'Spacebar', action: 'Pass / Catch / Dive Tackle' }
+    ],
+    instructions: [
+      'Select your offensive or defensive plays and execute precision passes or rushing touchdowns.',
+      'Tackle opposing ball carriers before they cross the goal line.'
+    ],
+    tips: [
+      'Mix up run plays and deep pass bombs to keep the defense guessing.'
+    ],
+    plays: 460000,
+    rating: 4.97,
+    ratingCount: 18500,
+    badge: 'Gridiron Sports',
+    iconName: 'Trophy',
+    accentColor: '#eab308',
+    releaseYear: 2024,
+    thumbnailUrl: './images/football.jpg'
+  },
+  {
+    id: 'kart-bros',
+    title: 'Kart Bros',
+    category: 'arcade',
+    description: 'High-speed multiplayer .io kart racing game! Drift around sharp corners, pick up powerups, and race to the finish line.',
+    longDescription: 'Kart Bros is an exhilarating multiplayer kart racing experience. Select your racer, navigate twisting tracks, master drift boosts, and outmaneuver rivals to claim victory.',
+    src: './games/Kartbros/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Steer Kart & Accelerate' },
+      { key: 'Spacebar / Shift', action: 'Drift Boost / Use Item' }
+    ],
+    instructions: [
+      'Navigate the race track and maintain momentum through hairpin turns.',
+      'Collect items on the track to gain speed boosts and attack opponents.'
+    ],
+    tips: [
+      'Drift around corners to charge mini-turbo boosts for extra straightaway speed.'
+    ],
+    plays: 510000,
+    rating: 4.99,
+    ratingCount: 22100,
+    badge: 'Multiplayer Racing',
+    iconName: 'Zap',
+    accentColor: '#38bdf8',
+    releaseYear: 2024,
+    thumbnailUrl: './images/kart.jpg'
+  },
+  {
+    id: 'soccer-bros-2',
+    title: 'Soccer Bros 2',
+    category: 'arcade',
+    description: 'Intense arcade soccer matches! Dribble past defenders, bend curving free kicks, and score epic goals.',
+    longDescription: 'Soccer Bros 2 is the sequel to the hit arcade soccer game, featuring enhanced physics, responsive controls, special player moves, and thrilling multiplayer matches.',
+    src: './games/soccerbros2/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move Soccer Player' },
+      { key: 'Spacebar', action: 'Kick / Shoot / Slide Tackle' }
+    ],
+    instructions: [
+      'Control your player to intercept the ball, dribble past opponents, and fire shots into the net.',
+      'Defend your goal against rival strikers.'
+    ],
+    tips: [
+      'Use slide tackles defensively to dislodge the ball when opponents threaten your goal.'
+    ],
+    plays: 475000,
+    rating: 4.98,
+    ratingCount: 19400,
+    badge: 'Arcade Soccer',
+    iconName: 'Trophy',
+    accentColor: '#22c55e',
+    releaseYear: 2024,
+    thumbnailUrl: './images/soccer.jpg'
+  },
+  {
     id: 'scarwrit',
     title: 'Scarwrit',
     category: 'skill',
