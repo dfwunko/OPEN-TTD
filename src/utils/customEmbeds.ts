@@ -10,23 +10,20 @@ export const customEmbedManager = {
   getCustomGames(): Game[] {
     try {
       const saved = safeStorage.getItem(CUSTOM_GAMES_KEY);
-      const parsed = saved ? JSON.parse(saved) : null;
-      return Array.isArray(parsed) ? parsed : [];
+      return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
     }
   },
 
   saveCustomGames(games: Game[]): void {
-    if (Array.isArray(games)) {
-      safeStorage.setItem(CUSTOM_GAMES_KEY, JSON.stringify(games));
-    }
+    safeStorage.setItem(CUSTOM_GAMES_KEY, JSON.stringify(games));
   },
 
   archiveDeletedGame(game: Game): void {
     try {
       const archived = this.getArchivedDeletedGames();
-      const filtered = archived.filter((g) => g && g.id !== game.id);
+      const filtered = archived.filter((g) => g.id !== game.id);
       safeStorage.setItem(DELETED_GAMES_KEY, JSON.stringify([game, ...filtered]));
     } catch (e) {
       console.warn('Failed to archive deleted game:', e);
@@ -36,8 +33,7 @@ export const customEmbedManager = {
   getArchivedDeletedGames(): Game[] {
     try {
       const saved = safeStorage.getItem(DELETED_GAMES_KEY);
-      const parsed = saved ? JSON.parse(saved) : null;
-      return Array.isArray(parsed) ? parsed : [];
+      return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
     }
@@ -46,8 +42,7 @@ export const customEmbedManager = {
   getRecoverableBackupGames(): Game[] {
     try {
       const saved = safeStorage.getItem(BACKUP_SNAPSHOT_KEY);
-      const parsed = saved ? JSON.parse(saved) : null;
-      return Array.isArray(parsed) ? parsed : [];
+      return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
     }
