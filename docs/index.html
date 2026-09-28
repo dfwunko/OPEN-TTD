@@ -60,13 +60,41 @@
           }
         }
 
+        // Fallback for GitHub Pages root deployments
+        window.__attemptAssetFallback = function() {
+          if (window.__fallbackAttempted) return;
+          window.__fallbackAttempted = true;
+
+          var existing = document.getElementById('nova-fatal-error');
+          if (existing) existing.remove();
+
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = './assets/index.css';
+          document.head.appendChild(link);
+
+          var script = document.createElement('script');
+          script.type = 'module';
+          script.crossOrigin = '';
+          script.src = './assets/index.js';
+          document.body.appendChild(script);
+        };
+
         window.addEventListener('error', function(event) {
           var msg = event.message;
           var src = event.filename;
           var line = event.lineno;
           if (event.target && event.target.tagName === 'SCRIPT') {
-            msg = 'Failed to load script resource: ' + (event.target.src || event.target.href || 'unknown script');
-            src = event.target.src;
+            var scriptSrc = event.target.src || event.target.href || '';
+            // If raw TypeScript dev script failed on static GitHub Pages hosting, fallback to compiled production bundle
+            if (scriptSrc.indexOf('main.tsx') !== -1) {
+              if (window.__attemptAssetFallback) {
+                window.__attemptAssetFallback();
+                return;
+              }
+            }
+            msg = 'Failed to load script resource: ' + (scriptSrc || 'unknown script');
+            src = scriptSrc;
           }
           showInitError(msg, src, line);
         }, true);
