@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Craft • Unblocked</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      background: #111827;
+      border-bottom: 1px solid #1f2937;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+    .stats {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      background: #1e293b;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      border: 1px solid #334155;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-top {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-top:hover {
+      background: #334155;
+      color: #fff;
+    }
+    .btn-live {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .btn-live:hover {
+      background: #0369a1;
+    }
+
+    /* Layout */
+    .app-main {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Canvas / Crafting Area */
+    #craft-workspace {
+      flex: 1;
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, #111827 0%, #06090f 100%);
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    .workspace-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #475569;
+      pointer-events: none;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Sidebar / Inventory */
+    .sidebar {
+      width: 290px;
+      background: #0f172a;
+      border-left: 1px solid #1e293b;
+      display: flex;
+      flex-direction: column;
+      z-index: 5;
+    }
+    .search-box {
+      padding: 0.75rem;
+      border-bottom: 1px solid #1e293b;
+    }
+    .search-input {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: #38bdf8;
+    }
+    .elements-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 0.4rem;
+    }
+
+    /* Element Token */
+    .element-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      transition: all 0.15s ease;
+      touch-action: none;
+    }
+    .element-chip:hover {
+      background: #334155;
+      border-color: #64748b;
+      transform: translateY(-1px);
+    }
+    .element-chip:active {
+      transform: scale(0.96);
+    }
+    .element-chip.new-item {
+      animation: popDiscover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-color: #38bdf8;
+      background: #0369a1;
+    }
+    @keyframes popDiscover {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* On-canvas draggable token */
+    .canvas-item {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #1e293b;
+      border: 1.5px solid #475569;
+      color: #fff;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: grab;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    .canvas-item:active {
+      cursor: grabbing;
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+      border-color: #38bdf8;
+    }
+    .canvas-item.combining {
+      animation: pulseCombine 0.3s ease-in-out;
+    }
+    @keyframes pulseCombine {
+      0% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.2); filter: brightness(2); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+
+    /* Notifications */
+    .discovery-toast {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0284c7;
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.5);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 100;
+    }
+    .discovery-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span>✨</span>
+      <span>Infinite Craft</span>
+    </div>
+    <div class="stats" id="counter-stats">Discovered: 4 elements</div>
+    <div class="header-actions">
+      <button class="btn-top" id="btn-clear-canvas" title="Clear all placed items on table">Clear Board</button>
+      <button class="btn-top" id="btn-reset" title="Reset all discoveries back to original 4">Reset All</button>
+      <button class="btn-top btn-live" id="btn-switch-live" title="Switch to live Neal.fun version">Live Server</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div id="craft-workspace">
+      <div class="workspace-hint" id="workspace-hint">
+        <p style="font-size: 1.3rem; margin-bottom: 0.5rem;">🧪</p>
+        <p><strong>Click or drag elements</strong> from the right sidebar onto the board.</p>
+        <p style="font-size: 0.82rem; opacity: 0.8; margin-top: 0.3rem;">Drag an element directly onto another element to synthesize new discoveries!</p>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="search-box">
+        <input type="text" id="search-input" class="search-input" placeholder="Search elements...">
+      </div>
+      <div class="elements-list" id="elements-list"></div>
+    </aside>
+
+    <div class="discovery-toast" id="toast">New Discovery!</div>
+  </main>
+
+  <script>
+    (function() {
+      // Base starter elements
+      const STARTERS = [
+        { name: 'Water', emoji: '💧' },
+        { name: 'Fire', emoji: '🔥' },
+        { name: 'Wind', emoji: '💨' },
+        { name: 'Earth', emoji: '🌍' }
+      ];
+
+      // Comprehensive offline crafting recipes synthesis engine
+      const RECIPES = {
+        'Fire+Water': { name: 'Steam', emoji: '💨' },
+        'Water+Water': { name: 'Lake', emoji: '🌊' },
+        'Fire+Fire': { name: 'Volcano', emoji: '🌋' },
+        'Earth+Earth': { name: 'Mountain', emoji: '⛰️' },
+        'Wind+Wind': { name: 'Tornado', emoji: '🌪️' },
+        'Earth+Water': { name: 'Mud', emoji: '💩' },
+        'Earth+Fire': { name: 'Lava', emoji: '🌋' },
+        'Earth+Wind': { name: 'Dust', emoji: '🌫️' },
+        'Fire+Wind': { name: 'Smoke', emoji: '💨' },
+        'Water+Wind': { name: 'Wave', emoji: '🌊' },
+
+        // Tier 2
+        'Lava+Water': { name: 'Obsidian', emoji: '💎' },
+        'Lava+Earth': { name: 'Stone', emoji: '🪨' },
+        'Fire+Stone': { name: 'Metal', emoji: '⛓️' },
+        'Water+Lake': { name: 'Ocean', emoji: '🌊' },
+        'Dust+Water': { name: 'Clay', emoji: '🧱' },
+        'Clay+Fire': { name: 'Brick', emoji: '🧱' },
+        'Brick+Brick': { name: 'Wall', emoji: '🧱' },
+        'Wall+Wall': { name: 'House', emoji: '🏠' },
+        'House+House': { name: 'Village', emoji: '🏘️' },
+        'Village+Village': { name: 'City', emoji: '🏙️' },
+        'City+City': { name: 'Metropolis', emoji: '🌆' },
+        'Water+Earth': { name: 'Plant', emoji: '🌱' },
+        'Plant+Plant': { name: 'Tree', emoji: '🌳' },
+        'Tree+Tree': { name: 'Forest', emoji: '🌲' },
+        'Plant+Fire': { name: 'Ash', emoji: '🌋' },
+        'Plant+Water': { name: 'Swamp', emoji: '🐊' },
+        'Energy+Swamp': { name: 'Life', emoji: '🧬' },
+        'Fire+Air': { name: 'Energy', emoji: '⚡' },
+        'Fire+Wind': { name: 'Energy', emoji: '⚡' },
+        'Life+Earth': { name: 'Human', emoji: '🧍' },
+        'Life+Clay': { name: 'Golem', emoji: '🗿' },
+        'Life+Dust': { name: 'Human', emoji: '🧍' },
+        'Life+Metal': { name: 'Robot', emoji: '🤖' },
+        'Robot+Human': { name: 'Cyborg', emoji: '🦾' },
+        'Human+Fire': { name: 'Cook', emoji: '👨‍🍳' },
+        'Human+Metal': { name: 'Tool', emoji: '🔨' },
+        'Human+Tool': { name: 'Engineer', emoji: '👷' },
+        'Human+Earth': { name: 'Farmer', emoji: '🧑‍🌾' },
+        'Human+House': { name: 'Family', emoji: '👨‍👩‍👧' },
+        'Human+Tree': { name: 'Woodsman', emoji: '🪓' },
+        'Wood+Tool': { name: 'Wheel', emoji: '🎡' },
+        'Tree+Tool': { name: 'Wood', emoji: '🪵' },
+        'Wood+Fire': { name: 'Campfire', emoji: '🔥' },
+        'Wheel+Wood': { name: 'Cart', emoji: '🛒' },
+        'Cart+Steam': { name: 'Train', emoji: '🚂' },
+        'Train+Track': { name: 'Railway', emoji: '🛤️' },
+        'Metal+Fire': { name: 'Sword', emoji: '⚔️' },
+        'Sword+Human': { name: 'Warrior', emoji: '🛡️' },
+        'Warrior+Warrior': { name: 'Army', emoji: '🪖' },
+        'Earth+Cloud': { name: 'Rain', emoji: '🌧️' },
+        'Steam+Air': { name: 'Cloud', emoji: '☁️' },
+        'Steam+Wind': { name: 'Cloud', emoji: '☁️' },
+        'Cloud+Water': { name: 'Rain', emoji: '🌧️' },
+        'Rain+Sun': { name: 'Rainbow', emoji: '🌈' },
+        'Fire+Sky': { name: 'Sun', emoji: '☀️' },
+        'Cloud+Wind': { name: 'Sky', emoji: '🌌' },
+        'Sun+Earth': { name: 'Life', emoji: '🧬' },
+        'Life+Ocean': { name: 'Fish', emoji: '🐟' },
+        'Fish+Fish': { name: 'Shark', emoji: '🦈' },
+        'Fish+Earth': { name: 'Lizard', emoji: '🦎' },
+        'Lizard+Fire': { name: 'Dragon', emoji: '🐉' },
+        'Dragon+Warrior': { name: 'Hero', emoji: '🦸' },
+        'Hero+Castle': { name: 'King', emoji: '👑' },
+        'House+Stone': { name: 'Castle', emoji: '🏰' },
+        'Sun+Moon': { name: 'Eclipse', emoji: '🌑' },
+        'Sky+Stone': { name: 'Moon', emoji: '🌙' },
+        'Sky+Fire': { name: 'Star', emoji: '⭐' },
+        'Star+Star': { name: 'Galaxy', emoji: '🌌' },
+        'Galaxy+Galaxy': { name: 'Universe', emoji: '🪐' },
+        'Universe+Life': { name: 'Alien', emoji: '👽' },
+        'Alien+Robot': { name: 'AI', emoji: '🧠' },
+        'AI+Human': { name: 'Future', emoji: '🚀' },
+        'Future+Rocket': { name: 'Space Station', emoji: '🛰️' },
+        'Metal+Energy': { name: 'Rocket', emoji: '🚀' },
+        'Rocket+Moon': { name: 'Astronaut', emoji: '👨‍🚀' }
+      };
+
+      // Load discoveries from localStorage
+      let discoveries = [];
+      try {
+        const saved = localStorage.getItem('nova_infinite_craft_elements');
+        discoveries = saved ? JSON.parse(saved) : [...STARTERS];
+      } catch (e) {
+        discoveries = [...STARTERS];
+      }
+      if (!discoveries || discoveries.length === 0) {
+        discoveries = [...STARTERS];
+      }
+
+      const elementsList = document.getElementById('elements-list');
+      const searchInput = document.getElementById('search-input');
+      const craftWorkspace = document.getElementById('craft-workspace');
+      const counterStats = document.getElementById('counter-stats');
+      const workspaceHint = document.getElementById('workspace-hint');
+      const toast = document.getElementById('toast');
+      const btnClearCanvas = document.getElementById('btn-clear-canvas');
+      const btnReset = document.getElementById('btn-reset');
+      const btnSwitchLive = document.getElementById('btn-switch-live');
+
+      function saveDiscoveries() {
+        localStorage.setItem('nova_infinite_craft_elements', JSON.stringify(discoveries));
+        counterStats.textContent = `Discovered: ${discoveries.length} elements`;
+      }
+
+      function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      }
+
+      function renderSidebar(filter = '') {
+        elementsList.innerHTML = '';
+        const q = filter.trim().toLowerCase();
+        const filtered = discoveries.filter(d => d.name.toLowerCase().includes(q));
+
+        filtered.forEach(item => {
+          const chip = document.createElement('div');
+          chip.className = 'element-chip';
+          chip.innerHTML = `<span>${item.emoji}</span><span>${item.name}</span>`;
+          chip.addEventListener('click', (e) => {
+            // Spawn onto canvas
+            const rect = craftWorkspace.getBoundingClientRect();
+            const x = Math.max(20, Math.min(rect.width - 150, Math.random() * (rect.width - 200) + 50));
+            const y = Math.max(20, Math.min(rect.height - 80, Math.random() * (rect.height - 150) + 50));
+            spawnCanvasItem(item, x, y);
+          });
+          elementsList.appendChild(chip);
+        });
+
+        counterStats.textContent = `Discovered: ${discoveries.length} elements`;
+      }
+
+      function spawnCanvasItem(item, x, y) {
+        if (workspaceHint) workspaceHint.style.display = 'none';
+
+        const el = document.createElement('div');
+        el.className = 'canvas-item';
+        el.dataset.name = item.name;
+        el.dataset.emoji = item.emoji;
+        el.innerHTML = `<span>${item.emoji}</span><span>${item.name}</span>`;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+
+        makeDraggable(el);
+        craftWorkspace.appendChild(el);
+        return el;
+      }
+
+      function makeDraggable(el) {
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let origLeft = 0, origTop = 0;
+
+        const onPointerDown = (e) => {
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          origLeft = parseInt(el.style.left || '0', 10);
+          origTop = parseInt(el.style.top || '0', 10);
+          el.style.zIndex = '100';
+          window.addEventListener('pointermove', onPointerMove);
+          window.addEventListener('pointerup', onPointerUp);
+        };
+
+        const onPointerMove = (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          el.style.left = `${origLeft + dx}px`;
+          el.style.top = `${origTop + dy}px`;
+        };
+
+        const onPointerUp = (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          el.style.zIndex = '2';
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
+
+          // Check overlap with other canvas items
+          checkCombination(el);
+        };
+
+        el.addEventListener('pointerdown', onPointerDown);
+      }
+
+      function checkCombination(droppedEl) {
+        const droppedRect = droppedEl.getBoundingClientRect();
+        const items = Array.from(craftWorkspace.getElementsByClassName('canvas-item'));
+
+        for (let other of items) {
+          if (other === droppedEl) continue;
+          const otherRect = other.getBoundingClientRect();
+
+          const overlap = !(
+            droppedRect.right < otherRect.left ||
+            droppedRect.left > otherRect.right ||
+            droppedRect.bottom < otherRect.top ||
+            droppedRect.top > otherRect.bottom
+          );
+
+          if (overlap) {
+            // Attempt combine
+            combine(droppedEl, other);
+            return;
+          }
+        }
+      }
+
+      function combine(el1, el2) {
+        const name1 = el1.dataset.name;
+        const name2 = el2.dataset.name;
+
+        const key1 = `${name1}+${name2}`;
+        const key2 = `${name2}+${name1}`;
+
+        let result = RECIPES[key1] || RECIPES[key2];
+
+        // Fallback procedural synthesizer for unmapped pairs
+        if (!result) {
+          result = proceduralCombine(name1, name2, el1.dataset.emoji, el2.dataset.emoji);
+        }
+
+        const rect1 = el1.getBoundingClientRect();
+        const wsRect = craftWorkspace.getBoundingClientRect();
+        const midX = rect1.left - wsRect.left;
+        const midY = rect1.top - wsRect.top;
+
+        el1.remove();
+        el2.remove();
+
+        const newItem = spawnCanvasItem(result, midX, midY);
+        newItem.classList.add('combining');
+
+        // Check if newly discovered
+        const alreadyHas = discoveries.some(d => d.name.toLowerCase() === result.name.toLowerCase());
+        if (!alreadyHas) {
+          discoveries.unshift(result);
+          saveDiscoveries();
+          renderSidebar(searchInput.value);
+          showToast(`🎉 New Discovery: ${result.emoji} ${result.name}!`);
+        }
+      }
+
+      function proceduralCombine(n1, n2, e1, e2) {
+        const clean1 = n1.replace(/[^a-zA-Z]/g, '');
+        const clean2 = n2.replace(/[^a-zA-Z]/g, '');
+        const combined = `${clean1} ${clean2}`;
+        return {
+          name: combined,
+          emoji: e1 || '✨'
+        };
+      }
+
+      // Sidebar search
+      searchInput.addEventListener('input', (e) => {
+        renderSidebar(e.target.value);
+      });
+
+      // Clear Canvas
+      btnClearCanvas.addEventListener('click', () => {
+        const items = craftWorkspace.querySelectorAll('.canvas-item');
+        items.forEach(i => i.remove());
+        if (workspaceHint) workspaceHint.style.display = 'block';
+      });
+
+      // Reset All
+      btnReset.addEventListener('click', () => {
+        if (confirm('Reset your discoveries back to the 4 base elements (Water, Fire, Wind, Earth)?')) {
+          discoveries = [...STARTERS];
+          saveDiscoveries();
+          renderSidebar();
+          const items = craftWorkspace.querySelectorAll('.canvas-item');
+          items.forEach(i => i.remove());
+          if (workspaceHint) workspaceHint.style.display = 'block';
+        }
+      });
+
+      // Switch to Neal.fun live version
+      btnSwitchLive.addEventListener('click', () => {
+        window.location.href = 'https://neal.fun/infinite-craft/';
+      });
+
+      // Initialize
+      renderSidebar();
+    })();
+  </script>
+</body>
+</html>

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "tsx server.ts",
-    "build": "vite build && touch dist/.nojekyll && cp dist/.nojekyll .nojekyll && cp dist/index.html dist/404.html && cp dist/index.html 404.html && rm -rf docs && cp -r dist docs && mkdir -p assets && cp -r dist/assets/* assets/",
+    "build": "vite build && touch dist/.nojekyll && cp dist/.nojekyll .nojekyll && cp dist/index.html dist/404.html && cp dist/index.html 404.html && rm -rf docs && cp -r dist docs && mkdir -p assets && cp -r dist/assets/* assets/ && mkdir -p images && cp -r public/images/* images/ && mkdir -p games && cp -r public/games/* games/",
     "preview": "vite preview",
     "clean": "rm -rf dist docs server.js",
     "lint": "tsc --noEmit"

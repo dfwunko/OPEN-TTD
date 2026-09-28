@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Hope • Retro Platformer Survival</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #080c14;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace, system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            touch-action: none;
+        }
+        #game-container {
+            position: relative;
+            width: 100vw;
+            max-width: 960px;
+            height: 100vh;
+            max-height: 540px;
+            box-shadow: 0 0 40px rgba(14, 165, 233, 0.25);
+            border: 2px solid rgba(14, 165, 233, 0.4);
+            background: #04060a;
+            display: flex;
+            flex-direction: column;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #090d16 0%, #030508 100%);
+            image-rendering: pixelated;
+        }
+        .hud-overlay {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+        }
+        .stat-badge {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 8px 16px;
+            border-radius: 8px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .screen-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(4, 6, 10, 0.92);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+            padding: 24px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+        p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 500px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(2, 132, 199, 0.6);
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        }
+        .controls-hint {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .key {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #cbd5e1;
+        }
+        .mobile-controls {
+            position: absolute;
+            bottom: 16px;
+            left: 20px;
+            right: 20px;
+            display: none;
+            justify-content: space-between;
+            pointer-events: auto;
+        }
+        .m-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(56, 189, 248, 0.5);
+            color: #38bdf8;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        @media (max-width: 768px) {
+            .mobile-controls { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div class="hud-overlay">
+            <div class="stat-badge">
+                <span>⭐ HOPE: <strong id="score-val" style="color: #38bdf8;">0</strong></span>
+                <span>|</span>
+                <span>🏆 LEVEL: <strong id="level-val" style="color: #4ade80;">1</strong></span>
+            </div>
+            <div class="stat-badge">
+                <span>❤️ HP: <strong id="health-val" style="color: #f43f5e;">3/3</strong></span>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="960" height="540"></canvas>
+
+        <div id="start-screen" class="screen-overlay">
+            <h1>Pixel Hope</h1>
+            <p>Descend into the corrupted digital grid. Collect glowing Hope Orbs, dodge glitch entities, and restore light to the pixel core!</p>
+            <button class="btn" onclick="startGame()">Start Mission</button>
+            <div class="controls-hint">
+                <div><span class="key">A</span> <span class="key">D</span> Move</div>
+                <div><span class="key">W</span> / <span class="key">Space</span> Jump</div>
+                <div><span class="key">S</span> Fast Fall</div>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="screen-overlay" style="display: none;">
+            <h1 style="color: #f43f5e; text-shadow: 0 0 20px rgba(244, 63, 94, 0.6);">Signal Lost</h1>
+            <p>Your hope faded in the glitch abyss. Final Score: <span id="final-score" style="color: #38bdf8; font-weight: bold;">0</span></p>
+            <button class="btn" onclick="startGame()">Try Again</button>
+        </div>
+
+        <div class="mobile-controls">
+            <div style="display: flex; gap: 12px;">
+                <div class="m-btn" id="btn-left">←</div>
+                <div class="m-btn" id="btn-right">→</div>
+            </div>
+            <div class="m-btn" id="btn-jump">↑</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let gameState = 'START'; // START, PLAYING, GAMEOVER
+        let score = 0;
+        let level = 1;
+        let health = 3;
+
+        // Player
+        const player = {
+            x: 100,
+            y: 300,
+            w: 24,
+            h: 32,
+            vx: 0,
+            vy: 0,
+            speed: 4,
+            jumpForce: -11,
+            gravity: 0.5,
+            grounded: false,
+            facing: 1
+        };
+
+        let keys = { left: false, right: false, jump: false, down: false };
+
+        // Game Entities
+        let platforms = [];
+        let orbs = [];
+        let enemies = [];
+        let particles = [];
+        let exitPortal = null;
+
+        function initLevel() {
+            platforms = [
+                { x: 0, y: 500, w: 960, h: 40, type: 'ground' },
+                { x: 150, y: 390, w: 180, h: 20, type: 'platform' },
+                { x: 400, y: 300, w: 200, h: 20, type: 'platform' },
+                { x: 680, y: 210, w: 200, h: 20, type: 'platform' },
+                { x: 250, y: 170, w: 160, h: 20, type: 'platform' },
+                { x: 50, y: 260, w: 120, h: 20, type: 'platform' }
+            ];
+
+            orbs = [
+                { x: 220, y: 340, radius: 8, collected: false },
+                { x: 480, y: 250, radius: 8, collected: false },
+                { x: 770, y: 160, radius: 8, collected: false },
+                { x: 300, y: 120, radius: 8, collected: false },
+                { x: 100, y: 210, radius: 8, collected: false }
+            ];
+
+            enemies = [
+                { x: 420, y: 268, w: 24, h: 24, vx: 2, minX: 400, maxX: 580 },
+                { x: 700, y: 178, w: 24, h: 24, vx: -1.5, minX: 680, maxX: 860 }
+            ];
+
+            exitPortal = { x: 860, y: 140, w: 32, h: 48, active: false };
+            player.x = 50;
+            player.y = 400;
+            player.vx = 0;
+            player.vy = 0;
+        }
+
+        function startGame() {
+            score = 0;
+            level = 1;
+            health = 3;
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-over-screen').style.display = 'none';
+            initLevel();
+            gameState = 'PLAYING';
+        }
+
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('game-over-screen').style.display = 'flex';
+        }
+
+        // Input Listeners
+        window.addEventListener('keydown', e => {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
+            if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') {
+                if (player.grounded) {
+                    player.vy = player.jumpForce;
+                    player.grounded = false;
+                    spawnParticles(player.x + 12, player.y + 32, '#38bdf8', 6);
+                }
+                keys.jump = true;
+            }
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
+        });
+
+        window.addEventListener('keyup', e => {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
+            if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.jump = false;
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
+        });
+
+        // Mobile touch controls
+        function setupTouch(id, keyName) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('touchstart', e => { e.preventDefault(); keys[keyName] = true; if(keyName === 'jump' && player.grounded) { player.vy = player.jumpForce; player.grounded = false; } });
+            el.addEventListener('touchend', e => { e.preventDefault(); keys[keyName] = false; });
+        }
+        setupTouch('btn-left', 'left');
+        setupTouch('btn-right', 'right');
+        setupTouch('btn-jump', 'jump');
+
+        function spawnParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x, y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    life: 30,
+                    color
+                });
+            }
+        }
+
+        function update() {
+            if (gameState !== 'PLAYING') return;
+
+            // Horizontal movement
+            if (keys.left) {
+                player.vx = -player.speed;
+                player.facing = -1;
+            } else if (keys.right) {
+                player.vx = player.speed;
+                player.facing = 1;
+            } else {
+                player.vx *= 0.8;
+            }
+
+            player.vy += player.gravity;
+            if (keys.down) player.vy += 0.8;
+
+            player.x += player.vx;
+            // Screen bounds
+            if (player.x < 0) player.x = 0;
+            if (player.x > canvas.width - player.w) player.x = canvas.width - player.w;
+
+            // Platform collision X
+            player.grounded = false;
+            player.y += player.vy;
+
+            // Platform collision Y
+            for (let p of platforms) {
+                if (
+                    player.x + player.w > p.x &&
+                    player.x < p.x + p.w &&
+                    player.y + player.h >= p.y &&
+                    player.y + player.h <= p.y + p.h + 10 &&
+                    player.vy >= 0
+                ) {
+                    player.y = p.y - player.h;
+                    player.vy = 0;
+                    player.grounded = true;
+                }
+            }
+
+            // Bottom pit
+            if (player.y > canvas.height) {
+                health--;
+                if (health <= 0) {
+                    gameOver();
+                } else {
+                    player.x = 50;
+                    player.y = 300;
+                    player.vy = 0;
+                }
+            }
+
+            // Orbs collection
+            for (let o of orbs) {
+                if (!o.collected) {
+                    let dx = (player.x + player.w/2) - o.x;
+                    let dy = (player.y + player.h/2) - o.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < o.radius + 16) {
+                        o.collected = true;
+                        score += 100;
+                        spawnParticles(o.x, o.y, '#38bdf8', 10);
+                        // Check if all collected
+                        if (orbs.every(item => item.collected)) {
+                            exitPortal.active = true;
+                        }
+                    }
+                }
+            }
+
+            // Enemies update
+            for (let en of enemies) {
+                en.x += en.vx;
+                if (en.x < en.minX || en.x > en.maxX) en.vx *= -1;
+
+                // Player collision
+                if (
+                    player.x + player.w > en.x &&
+                    player.x < en.x + en.w &&
+                    player.y + player.h > en.y &&
+                    player.y < en.y + en.h
+                ) {
+                    if (player.vy > 0 && player.y + player.h - player.vy <= en.y + 8) {
+                        // Stomp enemy
+                        enemies = enemies.filter(e => e !== en);
+                        player.vy = -8;
+                        score += 250;
+                        spawnParticles(en.x + 12, en.y + 12, '#f43f5e', 12);
+                    } else {
+                        // Take damage
+                        health--;
+                        spawnParticles(player.x + 12, player.y + 16, '#f43f5e', 10);
+                        player.vy = -6;
+                        player.vx = player.facing * -5;
+                        if (health <= 0) {
+                            gameOver();
+                        }
+                    }
+                }
+            }
+
+            // Exit portal check
+            if (exitPortal.active) {
+                if (
+                    player.x + player.w > exitPortal.x &&
+                    player.x < exitPortal.x + exitPortal.w &&
+                    player.y + player.h > exitPortal.y &&
+                    player.y < exitPortal.y + exitPortal.h
+                ) {
+                    level++;
+                    score += 500;
+                    initLevel();
+                }
+            }
+
+            // Particles update
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let pt = particles[i];
+                pt.x += pt.vx;
+                pt.y += pt.vy;
+                pt.life--;
+                if (pt.life <= 0) particles.splice(i, 1);
+            }
+
+            // Update DOM HUD
+            document.getElementById('score-val').innerText = score;
+            document.getElementById('level-val').innerText = level;
+            document.getElementById('health-val').innerText = health + '/3';
+        }
+
+        function draw() {
+            ctx.fillStyle = '#04060a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Grid Background lines
+            ctx.strokeStyle = 'rgba(14, 165, 233, 0.05)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 40) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 40) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+
+            // Draw Platforms
+            for (let p of platforms) {
+                ctx.fillStyle = p.type === 'ground' ? '#1e293b' : '#334155';
+                ctx.fillRect(p.x, p.y, p.w, p.h);
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillRect(p.x, p.y, p.w, 3);
+            }
+
+            // Draw Orbs
+            for (let o of orbs) {
+                if (!o.collected) {
+                    ctx.save();
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = '#38bdf8';
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.beginPath();
+                    ctx.arc(o.x, o.y, o.radius + Math.sin(Date.now() / 200) * 2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            // Draw Exit Portal
+            if (exitPortal) {
+                ctx.save();
+                ctx.shadowBlur = exitPortal.active ? 20 : 5;
+                ctx.shadowColor = exitPortal.active ? '#4ade80' : '#64748b';
+                ctx.fillStyle = exitPortal.active ? '#4ade80' : '#334155';
+                ctx.fillRect(exitPortal.x, exitPortal.y, exitPortal.w, exitPortal.h);
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(exitPortal.x, exitPortal.y, exitPortal.w, exitPortal.h);
+                ctx.restore();
+            }
+
+            // Draw Enemies
+            for (let en of enemies) {
+                ctx.fillStyle = '#f43f5e';
+                ctx.fillRect(en.x, en.y, en.w, en.h);
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(en.x + 4, en.y + 6, 4, 4);
+                ctx.fillRect(en.x + 14, en.y + 6, 4, 4);
+            }
+
+            // Draw Player
+            ctx.save();
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#38bdf8';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            // Visor / eyes
+            ctx.fillStyle = '#fff';
+            let eyeOffset = player.facing === 1 ? 14 : 4;
+            ctx.fillRect(player.x + eyeOffset, player.y + 8, 6, 4);
+            ctx.restore();
+
+            // Draw Particles
+            for (let pt of particles) {
+                ctx.fillStyle = pt.color;
+                ctx.fillRect(pt.x, pt.y, 3, 3);
+            }
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>

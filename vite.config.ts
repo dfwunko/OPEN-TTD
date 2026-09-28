@@ -5,21 +5,28 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(({ command }) => ({
   base: './',
   plugins: [
-    react(),
-    tailwindcss(),
     {
-      name: 'production-bundle-flag',
+      name: 'html-entry-resolver',
+      enforce: 'pre',
       transformIndexHtml(html) {
-        if (command === 'build') {
-          return html.replace(
-            '<!-- %PROD_FLAG% -->',
-            '<script>window.__IS_PROD_BUNDLE__ = true;</script>'
-          );
-        }
-        return html;
+        // If index.html points to the compiled bundle, feed /src/main.tsx to Vite for compilation and dev
+        return html
+          .replace(/<link[^>]*href=["'][^"']*assets\/index[^"']*\.css["'][^>]*>/gi, '')
+          .replace(/<script[^>]*src=["'][^"']*assets\/index[^"']*\.js["'][^>]*><\/script>/gi, '<script type="module" src="/src/main.tsx"></script>');
       },
     },
+    react(),
+    tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]',
+      },
+    },
+  },
   server: {
     port: 3000,
     host: '0.0.0.0',
