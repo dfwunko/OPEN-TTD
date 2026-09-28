@@ -116,35 +116,157 @@ export const GAMES_CATALOG: Game[] = [
     thumbnailUrl: './images/btd4.jpg'
   },
   {
-    id: 'kart-bros',
-    title: 'Kart Bros',
-    category: 'arcade',
-    description: 'High-speed multiplayer 3D kart racing: drift around sharp corners, grab power-ups, and blast past rival drivers!',
-    longDescription: 'Kart Bros is an action-packed 3D WebGL kart racing game from Blue Wizard Digital. Select your driver, step on the gas, power-slide through hairpin turns, and launch rockets and shields to claim 1st place across challenging tracks.',
-    src: './games/kart/index.html',
+    id: 'stardew-valley',
+    title: 'Stardew Valley',
+    category: 'adventure',
+    description: 'Farm life RPG: cultivate crops, raise animals, explore caves, fish, and build relationships in Pelican Town!',
+    longDescription: 'Stardew Valley is an acclaimed open-ended country life RPG. Inherit your grandfather’s old farm plot, master farming, forage seasonal goods, mine valuable ores, defeat cave monsters, and revitalize the community center.',
+    src: './games/stardew-valley/index.html',
     aspectRatio: '16/9',
     controls: [
-      { key: 'WASD / Arrow Keys', action: 'Steer / Accelerate / Reverse' },
-      { key: 'Spacebar / Shift', action: 'Drift / Power-slide' },
-      { key: 'E / Ctrl', action: 'Use Power-up item' }
+      { key: 'WASD / Arrow Keys', action: 'Move Character' },
+      { key: 'Left Click / C', action: 'Use Tool / Action' },
+      { key: 'Right Click / X', action: 'Interact / Check / Eat' },
+      { key: 'Escape / E / Tab', action: 'Inventory / Menu' }
     ],
     instructions: [
-      'Use WASD or Arrow Keys to steer and accelerate your kart.',
-      'Hold Drift through turns to charge your mini-turbo boost.',
-      'Collect item boxes along the track to acquire offensive and defensive power-ups.'
+      'Clear your farm overgrown with weeds and rocks, till the soil, plant seeds, and water them daily.',
+      'Forage around Pelican Town and visit Pierre’s general store to purchase seasonal seeds and supplies.'
     ],
     tips: [
-      'Release your drift right as your tires spark blue/orange for an explosive speed burst.',
-      'Hold defensive items behind your kart to block incoming projectile attacks.'
+      'Upgrade your watering can and pickaxe at the Blacksmith early for massive energy efficiency.',
+      'Check the daily TV weather forecast and luck channel before heading into the mines!'
     ],
-    plays: 850000,
+    plays: 980000,
     rating: 4.99,
-    ratingCount: 31200,
-    badge: 'NEW 3D Racing',
-    iconName: 'Trophy',
-    accentColor: '#38bdf8',
+    ratingCount: 52000,
+    badge: 'COMMUNITY FAVORITE',
+    iconName: 'Sparkles',
+    accentColor: '#10b981',
     releaseYear: 2026,
-    thumbnailUrl: './images/polytrack.jpg'
+    thumbnailUrl: './images/nova_craft.jpg'
+  },
+  {
+    id: 'dice-a-million',
+    title: 'Dice a Million',
+    category: 'skill',
+    description: 'Addictive dice-rolling roguelike: roll combinations, purchase high-stakes modifiers, and score a million points!',
+    longDescription: 'Dice a Million is a high-tempo dice building roguelite where every roll brings strategic decisions. Stack multiplier bonuses, trigger chain reactions, and push your luck to reach astronomical scores.',
+    src: './games/dice-a-million/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Roll / Select Dice / Buy Upgrades' },
+      { key: 'Spacebar', action: 'Quick Roll' }
+    ],
+    instructions: [
+      'Roll dice to generate base scores and trigger matching dice combinations.',
+      'Buy modifier cards and upgrade dice faces between rounds to scale your scoring multiplier.'
+    ],
+    tips: [
+      'Prioritize global multipliers over flat point additions in later rounds.',
+      'Keep your dice pool focused on synergistic face values.'
+    ],
+    plays: 520000,
+    rating: 4.96,
+    ratingCount: 18400,
+    badge: 'NEW ROGUELIKE',
+    iconName: 'Zap',
+    accentColor: '#f59e0b',
+    releaseYear: 2026,
+    thumbnailUrl: './images/balatro.jpg'
+  },
+  {
+    id: 'btd5',
+    title: 'Bloons TD 5',
+    category: 'arcade',
+    description: 'Epic tower defense: build ninja monkeys, super monkeys, banana farms, and activate special agent abilities!',
+    longDescription: 'Bloons TD 5 delivers unmatched tower defense action. Deploy 21 powerful towers with activated abilities and 2 upgrade paths, pop camo and regrow bloons, and conquer multiple game modes.',
+    src: './games/btd5/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Select / Place / Upgrade Towers' },
+      { key: 'Spacebar', action: 'Start Wave / Fast Forward' },
+      { key: 'Number Keys (1-9)', action: 'Tower Quick-Select' }
+    ],
+    instructions: [
+      'Position monkey defense towers along the track to stop invading bloons.',
+      'Upgrade your towers along specialized paths to gain active abilities and devastating popping power.'
+    ],
+    tips: [
+      'Pair Ninja Monkeys with 4-2 Monkey Apprentices for early camo and lead popping coverage.',
+      'Build Banana Farms early to fund powerful Super Monkeys in late rounds.'
+    ],
+    plays: 890000,
+    rating: 4.98,
+    ratingCount: 39500,
+    badge: 'LEGENDARY TOWER DEFENSE',
+    iconName: 'Flame',
+    accentColor: '#3b82f6',
+    releaseYear: 2024,
+    thumbnailUrl: './images/btd4.jpg'
+  },
+  {
+    id: 'binding-of-isaac',
+    title: 'The Binding of Isaac: Wrath of the Lamb',
+    category: 'action',
+    description: 'Iconic dungeon crawler roguelike: shoot tears, uncover bizarre passive items, and battle through basement depths!',
+    longDescription: 'The Binding of Isaac: Wrath of the Lamb is a legendary randomly generated action RPG shooter with heavy roguelike elements. Follow Isaac on his journey to escape the basement, finding strange treasures that change his form and grant superhuman abilities.',
+    src: './games/binding-of-isaac/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD', action: 'Move Isaac' },
+      { key: 'Arrow Keys', action: 'Shoot Tears (Up/Down/Left/Right)' },
+      { key: 'Spacebar', action: 'Use Active Item' },
+      { key: 'E / Shift', action: 'Drop Bomb' },
+      { key: 'Q', action: 'Use Card / Pill' }
+    ],
+    instructions: [
+      'Navigate through procedurally generated basement rooms while dodging enemies and hazards.',
+      'Collect coins, bombs, keys, and item pedestals from Treasure and Boss rooms to empower your tears.'
+    ],
+    tips: [
+      'Blow up tinted rocks with bombs to find soul hearts and treasure chests.',
+      'Learn enemy movement and tear patterns to preserve red heart health for Devil Deals!'
+    ],
+    plays: 870000,
+    rating: 4.99,
+    ratingCount: 44100,
+    badge: 'ROGUELIKE CLASSIC',
+    iconName: 'Skull',
+    accentColor: '#e11d48',
+    releaseYear: 2026,
+    thumbnailUrl: './images/scarwrit.png'
+  },
+  {
+    id: 'plague-inc',
+    title: 'Plague Inc',
+    category: 'strategy',
+    description: 'Global strategy simulation: evolve your custom pathogen, adapt to global research, and outmaneuver humanity’s defenses!',
+    longDescription: 'Plague Inc is a gripping simulation game where you guide an evolving pathogen through complex global dynamics. Upgrade transmission vectors, mutate lethal symptoms, and adapt to worldwide countermeasures.',
+    src: './games/plague-inc/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Pop DNA Bubbles / Select Countries / Mutate Traits' },
+      { key: 'Spacebar', action: 'Pause / Resume Simulation' },
+      { key: '1 / 2 / 3', action: 'Simulation Speed (Normal, Fast, Super Fast)' }
+    ],
+    instructions: [
+      'Select your starting country and evolve transmission traits (air, water, bird, insect) to spread.',
+      'Pop red and orange DNA bubbles on the world map to earn mutation DNA points.',
+      'Evolve symptom branches and drug resistances as world governments research a cure.'
+    ],
+    tips: [
+      'Maintain high infectivity and low severity in early stages so countries don’t close airports and harbors.',
+      'Invest in cold and heat resistance to ensure rapid transmission across polar and tropical zones.'
+    ],
+    plays: 740000,
+    rating: 4.97,
+    ratingCount: 29800,
+    badge: 'GLOBAL STRATEGY',
+    iconName: 'Shield',
+    accentColor: '#10b981',
+    releaseYear: 2026,
+    thumbnailUrl: './images/clash_of_crowns.jpg'
   },
   {
     id: 'pixel-hoops',

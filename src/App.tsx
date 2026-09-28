@@ -26,7 +26,8 @@ import {
   Layers,
   Undo2,
   X,
-  Plus
+  Plus,
+  AlertTriangle
 } from 'lucide-react';
 
 interface ToastInfo {
@@ -86,6 +87,27 @@ export default function App() {
     }, 6000);
     return () => clearTimeout(timer);
   }, [toast]);
+
+  // Network connection status
+  const [isOffline, setIsOffline] = useState(() => (typeof navigator !== 'undefined' ? !navigator.onLine : false));
+
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOffline(false);
+      showToast('Connection restored. Online mirrors and assets ready.');
+    };
+    const handleOffline = () => {
+      setIsOffline(true);
+      showToast('You are offline. Remote game embeds may not connect.');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [showToast]);
 
   // Save favorites & cloak configuration
   useEffect(() => {
@@ -297,6 +319,29 @@ export default function App() {
           hotkey={panicKey}
           onRestore={() => setIsCloakActive(false)}
         />
+      )}
+
+      {/* Offline Alert Banner */}
+      {isOffline && (
+        <aside
+          role="alert"
+          aria-live="assertive"
+          className="bg-amber-500/15 border-b border-amber-500/30 px-4 py-2.5 text-xs text-amber-200 flex items-center justify-between gap-4 font-mono z-50 sticky top-0 backdrop-blur-md"
+        >
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+            <span>
+              <strong className="font-semibold text-amber-300">Offline Warning:</strong> Your device lost its internet connection. Remote game mirrors may fail to load until reconnected.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/30 font-semibold shrink-0 cursor-pointer transition-colors"
+          >
+            Retry Connection
+          </button>
+        </aside>
       )}
 
       {/* Main Header */}

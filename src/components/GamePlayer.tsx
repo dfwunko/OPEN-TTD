@@ -15,7 +15,8 @@ import {
   Check,
   Play,
   ChevronDown,
-  Monitor
+  Monitor,
+  AlertTriangle
 } from 'lucide-react';
 import { Game } from '../types/game';
 import { safeStorage } from '../utils/storage';
@@ -60,6 +61,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   const [copiedLink, setCopiedLink] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [iframeError, setIframeError] = useState(false);
 
   // Screen Wake Lock to prevent display sleep in fullscreen
   const requestWakeLock = useCallback(async () => {
@@ -104,6 +106,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
 
   // Sync aspect ratio when game changes
   useEffect(() => {
+    setIframeError(false);
     if (game.aspectRatio === '1/1') setAspectRatio('1/1');
     else if (game.aspectRatio === '4/3') setAspectRatio('4/3');
     else setAspectRatio('16/9');
@@ -467,38 +470,88 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
               : 'h-[640px]'
           }`}
         >
-          <iframe
-            ref={iframeRef}
-            id="game-iframe"
-            title={game.iframeTitle || game.title}
-            src={game.customHtml ? undefined : resolveAssetUrl(game.src)}
-            srcDoc={game.customHtml}
-            scrolling="no"
-            className="force-focus block border-0"
-            style={{
-              width: activeFullscreen
-                ? (fullscreenFit === 'fit'
-                    ? (game.aspectRatio === '4/3' ? 'min(calc(100vh * 4 / 3), 100vw)' : game.aspectRatio === '1/1' ? 'min(100vh, 100vw)' : 'min(calc(100vh * 16 / 9), 100vw)')
-                    : '100%')
-                : (game.iframeStyle?.width || '100%'),
-              height: activeFullscreen
-                ? (fullscreenFit === 'fit'
-                    ? (game.aspectRatio === '4/3' ? 'min(calc(100vw * 3 / 4), 100vh)' : game.aspectRatio === '1/1' ? 'min(100vh, 100vw)' : 'min(calc(100vw * 9 / 16), 100vh)')
-                    : '100%')
-                : (game.iframeStyle?.height || '100%'),
-              border: 0,
-              ...(game.iframeStyle || {})
-            }}
-            loading="eager"
-            {...({ importance: 'high' } as any)}
-            allowFullScreen
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            data-lang="en"
-            data-hj-allow-iframe="true"
-            sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
-            allow="autoplay; payment; fullscreen *; microphone; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-read; clipboard-write; accelerometer; gyroscope; keyboard-map; encrypted-media *; picture-in-picture *; web-share *"
-          />
+          {iframeError ? (
+            <div className="w-full h-full min-h-[380px] bg-[#07090e] flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/25 flex items-center justify-center text-rose-400 mb-4">
+                <AlertTriangle className="w-7 h-7" />
+              </div>
+              <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 font-semibold border border-rose-500/20 mb-2">
+                Embed Load Failed
+              </span>
+              <h2 className="text-xl font-bold text-white mb-2">
+                Unable to Load {game.title}
+              </h2>
+              <p className="text-sm text-neutral-400 max-w-md mb-6 leading-relaxed">
+                The game frame could not be loaded. This typically happens if the remote mirror is blocked by your network or an ad-blocker, or if the connection timed out.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIframeError(false);
+                    if (iframeRef.current) {
+                      iframeRef.current.src = game.customHtml ? 'about:blank' : resolveAssetUrl(game.src);
+                    }
+                  }}
+                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Retry Loading</span>
+                </button>
+                {!game.customHtml && (
+                  <button
+                    type="button"
+                    onClick={() => window.open(resolveAssetUrl(game.src), '_blank', 'noopener,noreferrer')}
+                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-medium text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open in New Tab</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800 font-medium text-xs transition-colors cursor-pointer"
+                >
+                  Back to Lobby
+                </button>
+              </div>
+            </div>
+          ) : (
+            <iframe
+              ref={iframeRef}
+              id="game-iframe"
+              title={game.iframeTitle || game.title}
+              src={game.customHtml ? undefined : resolveAssetUrl(game.src)}
+              srcDoc={game.customHtml}
+              scrolling="no"
+              className="force-focus block border-0"
+              style={{
+                width: activeFullscreen
+                  ? (fullscreenFit === 'fit'
+                      ? (game.aspectRatio === '4/3' ? 'min(calc(100vh * 4 / 3), 100vw)' : game.aspectRatio === '1/1' ? 'min(100vh, 100vw)' : 'min(calc(100vh * 16 / 9), 100vw)')
+                      : '100%')
+                  : (game.iframeStyle?.width || '100%'),
+                height: activeFullscreen
+                  ? (fullscreenFit === 'fit'
+                      ? (game.aspectRatio === '4/3' ? 'min(calc(100vw * 3 / 4), 100vh)' : game.aspectRatio === '1/1' ? 'min(100vh, 100vw)' : 'min(calc(100vw * 9 / 16), 100vh)')
+                      : '100%')
+                  : (game.iframeStyle?.height || '100%'),
+                border: 0,
+                ...(game.iframeStyle || {})
+              }}
+              loading="eager"
+              onError={() => setIframeError(true)}
+              {...({ importance: 'high' } as any)}
+              allowFullScreen
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
+              data-lang="en"
+              data-hj-allow-iframe="true"
+              sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+              allow="autoplay; payment; fullscreen *; microphone; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-read; clipboard-write; accelerometer; gyroscope; keyboard-map; encrypted-media *; picture-in-picture *; web-share *"
+            />
+          )}
         </div>
 
         {/* Sleek Minimalist Player Toolbar (Displayed when NOT in fullscreen) */}

@@ -29,8 +29,10 @@ const CATEGORIES: { id: GameCategory; label: string }[] = [
   { id: 'favorites', label: 'Favorites' },
   { id: 'arcade', label: 'Arcade' },
   { id: 'action', label: 'Action' },
+  { id: 'adventure', label: 'Adventure' },
+  { id: 'strategy', label: 'Strategy' },
   { id: 'puzzle', label: 'Puzzle' },
-  { id: 'skill', label: 'Skill & Strategy' },
+  { id: 'skill', label: 'Skill' },
   { id: 'retro', label: 'Retro' },
   { id: 'custom', label: 'Custom Sandbox' }
 ];

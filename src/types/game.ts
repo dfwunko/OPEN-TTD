@@ -5,6 +5,8 @@ export type GameCategory =
   | 'action'
   | 'puzzle'
   | 'skill'
+  | 'adventure'
+  | 'strategy'
   | 'retro'
   | 'driving'
   | 'custom';
