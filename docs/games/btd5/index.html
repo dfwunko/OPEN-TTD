@@ -1,41 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bloons Tower Defense 5</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bloons Tower Defense 5</title>
     <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       body, html {
-        margin: 0;
-        padding: 0;
         width: 100%;
         height: 100%;
         overflow: hidden;
         background: #000;
-      }
-      ruffle-player {
-        width: 100%;
-        height: 100%;
-        display: block;
-      }
-      #player-container {
-        width: 100%;
-        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+      #player, ruffle-player {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
     </style>
     <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 </head>
 <body>
-    <div id="player-container">
-      <embed 
-          src="https://cdn.jsdelivr.net/gh/thugaliciousbruh/newfuckassfilestorage@main/swf/btd5.swf"
-          width="100%"
-          height="100%"
-          style="width: 100%; height: 100%;"
-      />
-    </div>
+    <div id="player"></div>
+    <script>
+      window.RufflePlayer = window.RufflePlayer || {};
+      window.RufflePlayer.config = {
+        autoplay: "on",
+        unmuteOverlay: "hidden",
+        letterbox: "on"
+      };
+
+      window.addEventListener("DOMContentLoaded", () => {
+        try {
+          const ruffle = window.RufflePlayer.newest();
+          const player = ruffle.createPlayer();
+          const container = document.getElementById("player");
+          container.appendChild(player);
+          player.style.width = "100%";
+          player.style.height = "100%";
+          player.load({
+            url: "https://cdn.jsdelivr.net/gh/thugaliciousbruh/newfuckassfilestorage@main/swf/btd5.swf",
+            allowScriptAccess: true
+          });
+        } catch(e) {
+          console.error("Ruffle init error:", e);
+          document.getElementById("player").innerHTML = '<embed src="https://cdn.jsdelivr.net/gh/thugaliciousbruh/newfuckassfilestorage@main/swf/btd5.swf" width="100%" height="100%" />';
+        }
+      });
+    </script>
 </body>
 </html>
