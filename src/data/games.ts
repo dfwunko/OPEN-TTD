@@ -2,6 +2,120 @@ import { Game } from '../types/game';
 
 export const GAMES_CATALOG: Game[] = [
   {
+    id: 'balatro',
+    title: 'Balatro',
+    category: 'skill',
+    description: 'Poker-inspired roguelite deckbuilder: combine valid poker hands with unique Joker cards to trigger explosive scoring synergies!',
+    longDescription: 'Balatro is a hypnotic poker-inspired roguelite deck builder where you play illegal poker hands, discover game-changing jokers, and trigger adrenaline-fueled combos to beat escalating blinds.',
+    src: './games/balatro/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Select Cards / Play Hand / Discard' }
+    ],
+    instructions: [
+      'Select up to 5 cards to form valid poker hands (Pairs, Flushes, Straights, Full Houses, etc.).',
+      'Purchase Joker cards between rounds to multiply your chip multipliers and build game-breaking synergy combos.'
+    ],
+    tips: [
+      'Focus on upgrading specific hand types in the shop to reliably score high chips.',
+      'Order your Jokers strategically: place additive mult Jokers before multiplicative mult Jokers!'
+    ],
+    plays: 920000,
+    rating: 4.99,
+    ratingCount: 41200,
+    badge: 'VIRAL ROGUELITE',
+    iconName: 'Sparkles',
+    accentColor: '#e11d48',
+    releaseYear: 2026,
+    thumbnailUrl: './images/scarwrit.png'
+  },
+  {
+    id: 'brotato',
+    title: 'Brotato',
+    category: 'action',
+    description: 'Top-down arena roguelite shooter: play a potato wielding up to 6 weapons at once to survive relentless alien waves!',
+    longDescription: 'Brotato is a top-down arena shooter roguelite where you play a potato wielding up to 6 weapons at once to fight off waves of aliens. Choose from a variety of traits and items to create unique builds and survive until help arrives.',
+    src: './games/brotato/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move Brotato' },
+      { key: 'Mouse Left Click', action: 'Aim & Manual Fire (Auto-fire enabled by default)' }
+    ],
+    instructions: [
+      'Navigate Brotato around the arena while weapons auto-aim and fire at approaching enemies.',
+      'Collect materials dropped by fallen aliens to buy weapons and upgrade stats in the shop between waves.'
+    ],
+    tips: [
+      'Synergize weapon sets (e.g., 6 Primitive or 6 Elemental weapons) to unlock massive set bonuses.',
+      'Invest early in Life Steal or HP Regeneration for sustainable wave survival.'
+    ],
+    plays: 880000,
+    rating: 4.99,
+    ratingCount: 38500,
+    badge: 'SURVIVOR ARENA',
+    iconName: 'Zap',
+    accentColor: '#eab308',
+    releaseYear: 2026,
+    thumbnailUrl: './images/cyber_survivor.jpg'
+  },
+  {
+    id: 'thats-not-my-neighbor',
+    title: "That's Not My Neighbor",
+    category: 'puzzle',
+    description: 'Psychological doorman investigation game: inspect IDs, verify tenant permits, and catch shapeshifting doppelgangers!',
+    longDescription: 'That\'s Not My Neighbor is a tense doorman investigation game set in 1955. As the building\'s doorman, verify apartment tenants, examine entry authorization papers, check for physical anomalies, and report malicious doppelgangers to the D.D.D. defense department.',
+    src: './games/thats-not-my-neighbor/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Interact with Door, Intercom, Papers & Buttons' }
+    ],
+    instructions: [
+      'Examine the entry request papers, cross-reference the tenant list, and call apartment units to verify residents.',
+      'If details match, press the green button to open the door. If anomalies or doppelgangers are detected, sound the alarm!'
+    ],
+    tips: [
+      'Carefully inspect facial features, clothes, ID numbers, and expiration dates for tiny subtle discrepancies.',
+      'Always call the tenant\'s apartment over the intercom to check if someone else answers!'
+    ],
+    plays: 790000,
+    rating: 4.98,
+    ratingCount: 31000,
+    badge: 'DOPPELGANGER THRILLER',
+    iconName: 'Shield',
+    accentColor: '#dc2626',
+    releaseYear: 2026,
+    thumbnailUrl: './images/clash_of_crowns.jpg'
+  },
+  {
+    id: 'btd4',
+    title: 'Bloons TD 4',
+    category: 'arcade',
+    description: 'Classic tower defense: place monkey towers, upgrade dart launchers, deploy super monkeys, and pop every bloon wave!',
+    longDescription: 'Bloons TD 4 is the legendary tower defense strategy game. Position dart monkeys, tack shooters, mortar cannons, and super monkeys along winding tracks to defend against red, blue, ceramic, and MOAB bloons.',
+    src: './games/btd4/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Select / Place / Upgrade Towers' },
+      { key: 'Spacebar', action: 'Start Wave / Fast Forward' }
+    ],
+    instructions: [
+      'Place defensive towers along the path to pop invading bloons before they reach the end.',
+      'Earn cash from popped bloons to upgrade existing towers and unlock special monkey abilities.'
+    ],
+    tips: [
+      'Place Tack Shooters at tight track bends for maximum coverage.',
+      'Build Camo-detecting towers before wave 24 to handle Camo Bloons.'
+    ],
+    plays: 650000,
+    rating: 4.97,
+    ratingCount: 22400,
+    badge: 'CLASSIC TOWER DEFENSE',
+    iconName: 'Flame',
+    accentColor: '#3b82f6',
+    releaseYear: 2024,
+    thumbnailUrl: './images/polytrack.jpg'
+  },
+  {
     id: 'kart-bros',
     title: 'Kart Bros',
     category: 'arcade',
@@ -31,6 +145,38 @@ export const GAMES_CATALOG: Game[] = [
     accentColor: '#38bdf8',
     releaseYear: 2026,
     thumbnailUrl: './images/polytrack.jpg'
+  },
+  {
+    id: 'pixel-hoops',
+    title: 'PixelHoops',
+    category: 'arcade',
+    description: 'Retro arcade basketball: campaign mode, shootaround, custom player builds, and 1v1 action with classic pixel art aesthetics.',
+    longDescription: 'PixelHoops is a retro arcade basketball game featuring campaign mode, shootaround practice, customizable player builds, glossary, and smooth arcade hoops action.',
+    src: './games/pixelhoops/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Dribble' },
+      { key: 'J', action: 'Skill Move / Crossover' },
+      { key: 'K', action: 'Shoot / Jump Shot' },
+      { key: 'H', action: 'Post Up' }
+    ],
+    instructions: [
+      'Use WASD or Arrow Keys to navigate the court.',
+      'Press K to shoot and time your green release for perfect swishes.',
+      'Use J for dribble moves and ankle breakers.'
+    ],
+    tips: [
+      'Master green releases for maximum shooting accuracy.',
+      'Use skill moves to shake defenders before pulling up for jumpers.'
+    ],
+    plays: 720000,
+    rating: 4.99,
+    ratingCount: 34100,
+    badge: 'New Retro Arcade',
+    iconName: 'Trophy',
+    accentColor: '#f5a623',
+    releaseYear: 2026,
+    thumbnailUrl: './images/basketbros.jpg'
   },
   {
     id: 'basket-bros',
