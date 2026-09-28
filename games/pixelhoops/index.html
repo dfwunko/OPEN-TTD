@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PixelHoops</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden; background: #0a0a12;
+      font-family: 'Press Start 2P', monospace;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    canvas {
+      display: block; width: 100%; height: 100%;
+      background: linear-gradient(180deg, #121225 0%, #070710 100%);
+    }
+    #ui {
+      position: absolute; inset: 0; pointer-events: none;
+      display: flex; flex-direction: column; justify-content: space-between; padding: 20px;
+      color: #fff; text-shadow: 2px 2px 0 #000;
+    }
+    .top-bar { display: flex; justify-content: space-between; align-items: flex-start; }
+    .panel {
+      background: rgba(26, 26, 46, 0.85); border: 3px solid #3a3a5c; border-radius: 6px;
+      padding: 10px 16px; font-size: 11px; letter-spacing: 1px;
+    }
+    .title { color: #f5a623; font-size: 14px; margin-bottom: 4px; }
+    #boot {
+      position: absolute; inset: 0; z-index: 50; background: #05050c;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; cursor: pointer; text-align: center;
+    }
+    #boot h1 { color: #f5a623; font-size: clamp(36px, 6vw, 64px); text-shadow: 4px 4px 0 #7a3b00; }
+    #boot h2 { color: #3a86ff; font-size: 12px; letter-spacing: 4px; }
+    #boot .press {
+      margin-top: 28px; color: #fff; font-size: 11px; letter-spacing: 2px;
+      padding: 14px 24px; border: 3px solid rgba(255,255,255,0.4);
+      background: rgba(10,10,20,0.8); animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse { 50% { border-color: #f5a623; color: #f5a623; } }
+    .hint {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 9px; color: rgba(255,255,255,0.7); background: rgba(10,10,20,0.7);
+      border: 2px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 8px 14px;
+      text-align: center; letter-spacing: 1px;
+    }
+    .hint b { color: #f5a623; }
+  </style>
+</head>
+<body>
+  <div id="boot">
+    <h1>PixelHoops</h1>
+    <h2>ARCADE BASKETBALL</h2>
+    <div class="press">CLICK OR TAP TO START</div>
+  </div>
+
+  <canvas id="game"></canvas>
+
+  <div id="ui">
+    <div class="top-bar">
+      <div class="panel">
+        <div class="title">PIXELHOOPS</div>
+        <div>SCORE: <span id="score-val">0</span></div>
+        <div>FG: <span id="makes-val">0</span>/<span id="attempts-val">0</span></div>
+      </div>
+      <div class="panel" style="text-align: right;">
+        <div class="title">STREAK</div>
+        <div id="streak-val" style="color: #4cd964;">0</div>
+      </div>
+    </div>
+    <div class="hint">
+      <b>SPACEBAR / CLICK & HOLD</b> CHARGE SHOT &nbsp;&middot;&nbsp; <b>RELEASE IN GREEN</b> SWISH!
+    </div>
+  </div>
+
+  <script>
+    const boot = document.getElementById('boot');
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreVal = document.getElementById('score-val');
+    const makesVal = document.getElementById('makes-val');
+    const attemptsVal = document.getElementById('attempts-val');
+    const streakVal = document.getElementById('streak-val');
+
+    let gameStarted = false;
+    let score = 0, makes = 0, attempts = 0, streak = 0;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Audio context for sound effects
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+    function playTone(freq, type, duration, vol=0.1) {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    // Game state
+    const hoop = { x: 0, y: 0, radius: 45 };
+    const ball = {
+      x: 0, y: 0, vx: 0, vy: 0, radius: 18,
+      isHolding: true, isFlying: false, power: 0, aiming: false
+    };
+
+    function resetBall() {
+      ball.x = canvas.width * 0.25;
+      ball.y = canvas.height * 0.75;
+      ball.vx = 0;
+      ball.vy = 0;
+      ball.isHolding = true;
+      ball.isFlying = false;
+      ball.power = 0;
+      ball.aiming = false;
+    }
+
+    boot.addEventListener('click', () => {
+      initAudio();
+      gameStarted = true;
+      boot.style.display = 'none';
+      resetBall();
+    });
+
+    // Input handlers
+    function startAim() {
+      if (!gameStarted || !ball.isHolding) return;
+      ball.aiming = true;
+      ball.power = 0;
+    }
+
+    function releaseAim() {
+      if (!gameStarted || !ball.isHolding || !ball.aiming) return;
+      ball.aiming = false;
+      ball.isHolding = false;
+      ball.isFlying = true;
+
+      attempts++;
+      attemptsVal.textContent = attempts;
+
+      const targetX = hoop.x;
+      const targetY = hoop.y;
+      const dx = targetX - ball.x;
+      const dy = targetY - ball.y;
+      
+      const speed = 14 + ball.power * 10;
+      const angle = Math.atan2(dy, dx) - (0.35 * (1 - ball.power));
+      
+      ball.vx = Math.cos(angle) * speed;
+      ball.vy = Math.sin(angle) * speed;
+
+      playTone(300 + ball.power * 300, 'triangle', 0.2);
+    }
+
+    window.addEventListener('mousedown', startAim);
+    window.addEventListener('mouseup', releaseAim);
+    window.addEventListener('touchstart', (e) => { startAim(); });
+    window.addEventListener('touchend', (e) => { releaseAim(); });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!ball.aiming && ball.isHolding) startAim();
+      }
+    });
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (ball.aiming) releaseAim();
+      }
+    });
+
+    let scoreAnimTimer = 0;
+
+    function update(dt) {
+      if (!gameStarted) return;
+
+      hoop.x = canvas.width * 0.78;
+      hoop.y = canvas.height * 0.38;
+
+      if (ball.aiming) {
+        ball.power = (ball.power + dt * 1.8) % 1;
+      }
+
+      if (ball.isFlying) {
+        ball.vy += 0.55; // gravity
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        const distToHoop = Math.hypot(ball.x - hoop.x, ball.y - hoop.y);
+        if (!ball.scored && distToHoop < hoop.radius && ball.vy > 0 && ball.y < hoop.y + 10) {
+          ball.scored = true;
+          makes++;
+          score += 2;
+          streak++;
+          makesVal.textContent = makes;
+          scoreVal.textContent = score;
+          streakVal.textContent = streak;
+          scoreAnimTimer = 1.0;
+          playTone(587.33, 'sine', 0.15);
+          setTimeout(() => playTone(880, 'sine', 0.25), 120);
+        }
+
+        if (ball.y > canvas.height + 60 || ball.x > canvas.width + 65 || ball.x < -50) {
+          if (!ball.scored) {
+            streak = 0;
+            streakVal.textContent = streak;
+            playTone(150, 'sawtooth', 0.2, 0.15);
+          }
+          ball.scored = false;
+          resetBall();
+        }
+      }
+
+      if (scoreAnimTimer > 0) {
+        scoreAnimTimer -= dt;
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#16162c';
+      ctx.fillRect(0, canvas.height * 0.65, canvas.width, canvas.height * 0.35);
+      
+      ctx.strokeStyle = '#2a2a48';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(hoop.x, hoop.y + 120, 280, Math.PI, 0, false);
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(hoop.x + 35, hoop.y - 85, 14, 130);
+      ctx.fillStyle = '#e63946';
+      ctx.fillRect(hoop.x + 35, hoop.y - 15, 14, 30);
+
+      ctx.strokeStyle = '#ff5e3a';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(hoop.x - 35, hoop.y);
+      ctx.lineTo(hoop.x + 35, hoop.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(hoop.x - 32, hoop.y); ctx.lineTo(hoop.x - 18, hoop.y + 55);
+      ctx.moveTo(hoop.x + 32, hoop.y); ctx.lineTo(hoop.x + 18, hoop.y + 55);
+      ctx.moveTo(hoop.x - 15, hoop.y); ctx.lineTo(hoop.x - 10, hoop.y + 55);
+      ctx.moveTo(hoop.x + 15, hoop.y); ctx.lineTo(hoop.x + 10, hoop.y + 55);
+      ctx.stroke();
+
+      ctx.fillStyle = '#f97316';
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#000';
+      ctx.stroke();
+
+      ctx.strokeStyle = '#000';
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0.2, Math.PI - 0.2, false);
+      ctx.moveTo(ball.x - ball.radius, ball.y);
+      ctx.lineTo(ball.x + ball.radius, ball.y);
+      ctx.stroke();
+
+      if (ball.aiming && ball.isHolding) {
+        const barW = 80, barH = 14;
+        const bx = ball.x - barW / 2;
+        const by = ball.y - 50;
+
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(bx - 2, by - 2, barW + 4, barH + 4);
+        ctx.fillStyle = '#333';
+        ctx.fillRect(bx, by, barW, barH);
+
+        ctx.fillStyle = '#22d34a';
+        ctx.fillRect(bx + barW * 0.65, by, barW * 0.2, barH);
+
+        const fillW = barW * ball.power;
+        ctx.fillStyle = ball.power >= 0.65 && ball.power <= 0.85 ? '#22d34a' : '#f5a623';
+        ctx.fillRect(bx, by, fillW, barH);
+
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(bx, by, barW, barH);
+      }
+
+      if (scoreAnimTimer > 0) {
+        ctx.save();
+        ctx.font = 'bold 24px "Press Start 2P", monospace';
+        ctx.fillStyle = '#22d34a';
+        ctx.textAlign = 'center';
+        ctx.shadowColor = '#000';
+        ctx.shadowBlur = 8;
+        ctx.fillText('SWISH! +2', hoop.x, hoop.y - 50 - (1 - scoreAnimTimer) * 40);
+        ctx.restore();
+      }
+    }
+
+    let lastTime = performance.now();
+    function loop(time) {
+      const dt = (time - lastTime) / 1000;
+      lastTime = time;
+      update(dt);
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
