@@ -46,7 +46,8 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
       const saved = safeStorage.getItem('nova_arcade_favorites');
-      return saved ? JSON.parse(saved) : ['eaglercraft-1-8'];
+      const parsed = saved ? JSON.parse(saved) : null;
+      return Array.isArray(parsed) ? parsed : ['eaglercraft-1-8'];
     } catch {
       return ['eaglercraft-1-8'];
     }
@@ -135,7 +136,8 @@ export default function App() {
 
   // Combine built-in games and custom games
   const allGames = useMemo(() => {
-    return [...customGames, ...GAMES_CATALOG];
+    const safeCustom = Array.isArray(customGames) ? customGames : [];
+    return [...safeCustom, ...GAMES_CATALOG];
   }, [customGames]);
 
   // Update URL hash when active game changes
