@@ -27,7 +27,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Sparkles',
     accentColor: '#e11d48',
     releaseYear: 2026,
-    thumbnailUrl: './images/scarwrit.png'
+    thumbnailUrl: './images/balatro.jpg'
   },
   {
     id: 'brotato',
@@ -56,7 +56,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Zap',
     accentColor: '#eab308',
     releaseYear: 2026,
-    thumbnailUrl: './images/cyber_survivor.jpg'
+    thumbnailUrl: './images/brotato.jpg'
   },
   {
     id: 'thats-not-my-neighbor',
@@ -84,7 +84,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Shield',
     accentColor: '#dc2626',
     releaseYear: 2026,
-    thumbnailUrl: './images/clash_of_crowns.jpg'
+    thumbnailUrl: './images/neighbor.jpg'
   },
   {
     id: 'btd4',
@@ -113,7 +113,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Flame',
     accentColor: '#3b82f6',
     releaseYear: 2024,
-    thumbnailUrl: './images/polytrack.jpg'
+    thumbnailUrl: './images/btd4.jpg'
   },
   {
     id: 'kart-bros',
@@ -176,7 +176,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Trophy',
     accentColor: '#f5a623',
     releaseYear: 2026,
-    thumbnailUrl: './images/basketbros.jpg'
+    thumbnailUrl: './images/pixelhoops.jpg'
   },
   {
     id: 'basket-bros',

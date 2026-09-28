@@ -4,20 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#06080e" />
+    <!-- %PROD_FLAG% -->
     <script>
-      // Self-heal GitHub Pages base path when accessed without a trailing slash
       (function() {
         var p = window.location.pathname;
-        if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
-          window.location.replace(p + '/' + window.location.search + window.location.hash);
+
+        // If this file is already the compiled production build (dist/ or docs/), never redirect
+        if (window.__IS_PROD_BUNDLE__) {
+          if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
+            window.location.replace(p + '/' + window.location.search + window.location.hash);
+          }
           return;
         }
 
-        // If raw unbundled index.html is served directly by GitHub Pages (e.g. main branch / root folder)
-        // seamlessly forward to /docs/ where the compiled production bundle is pre-built
-        if (window.location.hostname.endsWith('github.io')) {
-          var isRawSource = document.querySelector('script[src*="main.tsx"]');
-          if (isRawSource && !p.includes('/docs')) {
+        // Detect if loaded on static hosting (such as GitHub Pages or file: protocol)
+        // where uncompiled /src/main.tsx is not handled by a Vite development server
+        var isDevHost = ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
+                        window.location.hostname.endsWith('.run.app') ||
+                        window.location.port === '3000';
+
+        if (!isDevHost) {
+          // Redirect immediately to /docs/ where the compiled production distribution lives
+          if (!p.includes('/docs')) {
             var target = p.endsWith('/') ? p + 'docs/' : p + '/docs/';
             window.location.replace(target + window.location.search + window.location.hash);
           }
