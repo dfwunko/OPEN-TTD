@@ -1,39 +1,38 @@
 import React from 'react';
+import { GameCategory, CloakPreset } from '../types/game';
 import {
-  Gamepad2,
   Search,
-  Shield,
   Code2,
-  Bookmark,
+  Shield,
   SlidersHorizontal,
+  Bookmark,
   X
 } from 'lucide-react';
-import { GameCategory } from '../types/game';
 
 interface HeaderProps {
   currentCategory: GameCategory;
-  onSelectCategory: (cat: GameCategory) => void;
+  onSelectCategory: (category: GameCategory) => void;
   searchQuery: string;
-  onSearchChange: (q: string) => void;
+  onSearchChange: (query: string) => void;
   onOpenCustomModal: () => void;
   onOpenSettings: () => void;
   onTriggerCloak: () => void;
   onGoHome: () => void;
-  isHome: boolean;
+  isHome?: boolean;
   favoritesCount: number;
   customGamesCount: number;
   panicKey: string;
 }
 
 const CATEGORIES: { id: GameCategory; label: string }[] = [
-  { id: 'all', label: 'All Games' },
-  { id: 'retro', label: 'Retro & Voxel' },
-  { id: 'action', label: 'Action' },
-  { id: 'puzzle', label: 'Puzzle & Troll' },
-  { id: 'skill', label: 'Survival & Skill' },
-  { id: 'arcade', label: 'Tycoon & Arcade' },
+  { id: 'all', label: 'All Catalog' },
   { id: 'favorites', label: 'Favorites' },
-  { id: 'custom', label: 'Custom Embeds' }
+  { id: 'arcade', label: 'Arcade' },
+  { id: 'action', label: 'Action' },
+  { id: 'puzzle', label: 'Puzzle' },
+  { id: 'skill', label: 'Skill & Strategy' },
+  { id: 'retro', label: 'Retro' },
+  { id: 'custom', label: 'Custom Sandbox' }
 ];
 
 export const Header: React.FC<HeaderProps> = ({
@@ -66,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Search bar */}
-          <div className="flex-1 max-w-sm hidden md:block">
+          <div className="flex-1 max-w-md hidden md:block">
             <div className="relative">
               <Search className="w-3.5 h-3.5 text-neutral-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
@@ -91,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Action controls */}
+          {/* Right actions */}
           <div className="flex items-center gap-2 text-xs">
             <button
               onClick={onOpenCustomModal}
@@ -149,12 +148,9 @@ export const Header: React.FC<HeaderProps> = ({
         >
           {CATEGORIES.map((cat) => {
             const isActive = currentCategory === cat.id;
-            let countLabel = '';
-            if (cat.id === 'favorites' && favoritesCount > 0) {
-              countLabel = ` (${favoritesCount})`;
-            } else if (cat.id === 'custom' && customGamesCount > 0) {
-              countLabel = ` (${customGamesCount})`;
-            }
+            let badgeCount: number | null = null;
+            if (cat.id === 'favorites' && favoritesCount > 0) badgeCount = favoritesCount;
+            if (cat.id === 'custom' && customGamesCount > 0) badgeCount = customGamesCount;
 
             return (
               <button
@@ -171,7 +167,7 @@ export const Header: React.FC<HeaderProps> = ({
                 )}
                 <span>
                   {cat.label}
-                  {countLabel}
+                  {badgeCount !== null && ` (${badgeCount})`}
                 </span>
               </button>
             );

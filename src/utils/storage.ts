@@ -1,50 +1,33 @@
-// Safe storage helper that protects against SecurityError / QuotaExceededError in restricted browser environments
-const memoryFallback = new Map<string, string>();
-
+/**
+ * Safe LocalStorage wrapper to handle incognito mode / disabled storage gracefully
+ */
 export const safeStorage = {
-  getItem: (key: string): string | null => {
+  getItem(key: string): string | null {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        return window.localStorage.getItem(key);
-      }
+      return localStorage.getItem(key);
     } catch {
-      // Fallback to memory
+      return null;
     }
-    return memoryFallback.get(key) ?? null;
   },
-
-  setItem: (key: string, value: string): void => {
+  setItem(key: string, value: string): void {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.setItem(key, value);
-        return;
-      }
-    } catch {
-      // Fallback to memory
+      localStorage.setItem(key, value);
+    } catch (e) {
+      console.warn('LocalStorage unavailable:', e);
     }
-    memoryFallback.set(key, value);
   },
-
-  removeItem: (key: string): void => {
+  removeItem(key: string): void {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.removeItem(key);
-        return;
-      }
-    } catch {
-      // Fallback to memory
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.warn('LocalStorage unavailable:', e);
     }
-    memoryFallback.delete(key);
   },
-
-  clear: (): void => {
+  clear(): void {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.clear();
-      }
-    } catch {
-      // Fallback to memory
+      localStorage.clear();
+    } catch (e) {
+      console.warn('LocalStorage unavailable:', e);
     }
-    memoryFallback.clear();
   }
 };

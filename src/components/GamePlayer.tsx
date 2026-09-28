@@ -41,7 +41,7 @@ export const GamePlayer: React.FC<GamePlayerProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wakeLockRef = useRef<any>(null);
-  const hudTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hudTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isCssFullscreen, setIsCssFullscreen] = useState(false);

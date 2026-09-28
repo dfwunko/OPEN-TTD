@@ -1,23 +1,14 @@
 import React from 'react';
-import {
-  X,
-  SlidersHorizontal,
-  ShieldAlert,
-  Trash2,
-  KeyRound,
-  RotateCcw,
-  Sparkles,
-  Layers
-} from 'lucide-react';
 import { CloakPreset } from '../types/game';
+import { X, Shield, Trash2, RotateCcw, AlertTriangle } from 'lucide-react';
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   preset: CloakPreset;
-  onChangePreset: (p: CloakPreset) => void;
+  onChangePreset: (preset: CloakPreset) => void;
   panicKey: string;
-  onChangePanicKey: (k: string) => void;
+  onChangePanicKey: (key: string) => void;
   onClearData: () => void;
   onRestorePresets: () => void;
   onOpenCustomEmbedsModal: () => void;
@@ -34,174 +25,110 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onChangePanicKey,
   onClearData,
   onRestorePresets,
-  onOpenCustomEmbedsModal,
   recoverableCount,
   onRecoverEmbeds
 }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-[#0a0a0a] border border-neutral-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#0c0c0c] border border-neutral-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl space-y-6 p-6">
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-neutral-800 shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-neutral-900 text-white border border-neutral-800">
-              <SlidersHorizontal className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-lg text-white">Arcade Preferences</h3>
-              <p className="text-xs text-neutral-400">Cloak presets, shortcuts & embed recovery</p>
-            </div>
+        <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
+          <div className="flex items-center gap-2">
+            <Shield className="w-5 h-5 text-neutral-300" />
+            <h2 className="text-base font-bold text-white">Preferences & Panic Cloak</h2>
           </div>
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-5 space-y-5 text-xs overflow-y-auto">
-          {/* Cloak Preset */}
-          <div>
-            <label className="block font-semibold text-neutral-200 mb-2 flex items-center gap-1.5">
-              <ShieldAlert className="w-4 h-4 text-rose-400" />
-              <span>Panic Disguise Preset</span>
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { id: 'classroom', label: 'Classroom' },
-                { id: 'drive', label: 'Drive' },
-                { id: 'wikipedia', label: 'Wikipedia' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => onChangePreset(item.id as CloakPreset)}
-                  className={`py-2 px-3 rounded-lg font-semibold text-center border transition-colors cursor-pointer ${
-                    preset === item.id
-                      ? 'bg-white text-black border-white font-bold shadow-sm'
-                      : 'bg-neutral-900 text-neutral-300 border-neutral-800 hover:border-neutral-700 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-1.5 text-[11px] text-neutral-500">
-              Select which realistic school interface to display when panic cloak is engaged.
-            </p>
-          </div>
-
-          {/* Panic Key Shortcut */}
-          <div>
-            <label className="block font-semibold text-neutral-200 mb-2 flex items-center gap-1.5">
-              <KeyRound className="w-4 h-4 text-white" />
-              <span>Panic Shortcut Key</span>
-            </label>
-            <div className="flex gap-2">
-              {[']', '\\', '`', 'Escape'].map((k) => (
-                <button
-                  key={k}
-                  onClick={() => onChangePanicKey(k)}
-                  className={`py-1.5 px-3 rounded-lg font-mono text-xs font-bold border transition-colors cursor-pointer ${
-                    panicKey === k
-                      ? 'bg-rose-600 text-white border-rose-500'
-                      : 'bg-neutral-900 text-neutral-300 border-neutral-800 hover:border-neutral-700 hover:text-white'
-                  }`}
-                >
-                  {k}
-                </button>
-              ))}
-            </div>
-            <p className="mt-1.5 text-[11px] text-neutral-500">
-              Press this key at any time to instantly trigger or exit stealth mode.
-            </p>
-          </div>
-
-          {/* Custom Embeds Recovery & Backup */}
-          <div className="pt-3 border-t border-neutral-800 space-y-2.5">
-            <div className="flex items-center gap-1.5 font-semibold text-neutral-200">
-              <Layers className="w-4 h-4 text-white" />
-              <span>Custom Embeds & Recovery</span>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2">
+        {/* Cloak Disguise Settings */}
+        <div className="space-y-4">
+          <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-400 font-semibold">
+            Stealth Disguise Preset
+          </h3>
+          <div className="grid grid-cols-2 gap-2.5">
+            {[
+              { id: 'google', name: 'Google Search', desc: 'Disguises tab as Google' },
+              { id: 'classroom', name: 'Google Classroom', desc: 'Disguises tab as Classroom' },
+              { id: 'drive', name: 'Google Drive', desc: 'Disguises tab as Drive' },
+              { id: 'wikipedia', name: 'Wikipedia', desc: 'Disguises tab as Wikipedia' }
+            ].map((p) => (
               <button
-                type="button"
-                onClick={() => {
-                  onRestorePresets();
-                  onClose();
-                }}
-                className="w-full py-2 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 flex items-center justify-between font-semibold transition-colors cursor-pointer"
+                key={p.id}
+                onClick={() => onChangePreset(p.id as CloakPreset)}
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                  preset === p.id
+                    ? 'bg-neutral-800 border-neutral-600 text-white'
+                    : 'bg-neutral-900/60 border-neutral-800 text-neutral-400 hover:border-neutral-700 hover:text-neutral-200'
+                }`}
               >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-white" />
-                  <span>Restore Default Embed Presets</span>
-                </div>
-                <span className="text-[10px] bg-neutral-800 px-1.5 py-0.5 rounded text-neutral-300 font-mono">4 Games</span>
+                <div className="font-bold text-xs">{p.name}</div>
+                <div className="text-[11px] opacity-70 mt-0.5">{p.desc}</div>
               </button>
-
-              {recoverableCount > 0 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onRecoverEmbeds();
-                    onClose();
-                  }}
-                  className="w-full py-2 px-3 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-between font-semibold transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <RotateCcw className="w-4 h-4 text-amber-400" />
-                    <span>Recover Deleted / Backed-up Embeds</span>
-                  </div>
-                  <span className="text-[10px] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-200 font-mono">{recoverableCount} Saved</span>
-                </button>
-              )}
-
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenCustomEmbedsModal();
-                }}
-                className="w-full py-2 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 flex items-center justify-between font-semibold transition-colors cursor-pointer"
-              >
-                <span>Backup, Export & Import Embeds</span>
-                <span className="text-[10px] text-neutral-500 font-mono">JSON</span>
-              </button>
-            </div>
-            <p className="text-[11px] text-neutral-500">
-              Recover lost custom HTML games or restore classic 2048, Snake & Flappy Bird.
-            </p>
+            ))}
           </div>
 
-          {/* Reset data */}
-          <div className="pt-3 border-t border-neutral-800 flex items-center justify-between">
+          {/* Panic Hotkey */}
+          <div className="flex items-center justify-between pt-2 border-t border-neutral-850">
             <div>
-              <div className="font-semibold text-neutral-300">Reset Local Records</div>
-              <div className="text-[11px] text-neutral-500">Clears favorites & bookmarks (keeps safety backup)</div>
+              <div className="text-xs font-semibold text-neutral-200">Panic Toggle Hotkey</div>
+              <div className="text-[11px] text-neutral-400">Pressing this key instantly toggles stealth mode</div>
             </div>
+            <input
+              type="text"
+              maxLength={1}
+              value={panicKey}
+              onChange={(e) => onChangePanicKey(e.target.value.toLowerCase() || ']')}
+              className="w-12 h-9 bg-neutral-900 border border-neutral-800 rounded-lg text-center font-mono font-bold text-sm text-white focus:outline-none focus:border-neutral-500"
+            />
+          </div>
+        </div>
+
+        {/* System & Reset Options */}
+        <div className="pt-4 border-t border-neutral-800 space-y-3">
+          <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-400 font-semibold">
+            Data & Recovery
+          </h3>
+          <div className="flex flex-wrap gap-2 text-xs">
             <button
-              onClick={() => {
-                if (confirm('Are you sure you want to clear your local records? A safety snapshot will be kept so you can recover your custom embeds.')) {
-                  onClearData();
-                }
-              }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-950/40 text-red-400 hover:bg-red-900/60 border border-red-900/60 text-xs font-semibold cursor-pointer transition-colors"
+              onClick={onRestorePresets}
+              className="px-3 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-200 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Trash2 className="w-3.5 h-3.5" />
-              <span>Clear Data</span>
+              <RotateCcw className="w-3.5 h-3.5 text-neutral-400" />
+              <span>Restore Presets</span>
+            </button>
+
+            {recoverableCount > 0 && (
+              <button
+                onClick={onRecoverEmbeds}
+                className="px-3 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                <span>Recover Archived ({recoverableCount})</span>
+              </button>
+            )}
+
+            <button
+              onClick={onClearData}
+              className="px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ml-auto"
+            >
+              <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+              <span>Clear Saved Data</span>
             </button>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-neutral-950 border-t border-neutral-800 flex justify-end shrink-0">
+        <div className="pt-2 text-right">
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-white hover:bg-neutral-200 text-black transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-white hover:bg-neutral-200 text-black font-bold text-xs cursor-pointer transition-colors"
           >
             Done
           </button>

@@ -1,15 +1,15 @@
 export type GameCategory =
   | 'all'
-  | 'arcade'
-  | 'retro'
-  | 'puzzle'
-  | 'action'
-  | 'driving'
-  | 'skill'
   | 'favorites'
+  | 'arcade'
+  | 'action'
+  | 'puzzle'
+  | 'skill'
+  | 'retro'
+  | 'driving'
   | 'custom';
 
-export interface GameControlItem {
+export interface GameControl {
   key: string;
   action: string;
 }
@@ -17,12 +17,12 @@ export interface GameControlItem {
 export interface Game {
   id: string;
   title: string;
-  category: 'arcade' | 'retro' | 'puzzle' | 'action' | 'driving' | 'skill';
+  category: GameCategory;
   description: string;
   longDescription: string;
-  src: string; // iframe URL or path
-  aspectRatio?: '16/9' | '4/3' | '1/1' | '16/10' | 'auto';
-  controls: GameControlItem[];
+  src: string;
+  aspectRatio?: '16/9' | '4/3' | '1/1';
+  controls: GameControl[];
   instructions: string[];
   tips: string[];
   plays: number;
@@ -33,16 +33,17 @@ export interface Game {
   accentColor: string;
   releaseYear: number;
   thumbnailUrl?: string;
-  customHtml?: string;
   isCustom?: boolean;
-  iframeStyle?: React.CSSProperties;
+  rawHtml?: string;
+  customHtml?: string;
   iframeTitle?: string;
+  iframeStyle?: Record<string, any>;
 }
 
-export type CloakPreset = 'classroom' | 'drive' | 'docs' | 'wikipedia' | 'canvas';
+export type CloakPreset = 'google' | 'classroom' | 'drive' | 'docs' | 'wikipedia';
 
 export interface CloakConfig {
-  enabled: boolean;
   preset: CloakPreset;
-  hotkey: string; // e.g. "]" or "~"
+  title: string;
+  faviconUrl: string;
 }
