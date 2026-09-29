@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <base href="https://cdn.jsdelivr.net/gh/shayderrr/portsv4@ded90cd5eba24f3387a4b04c678ddf53caaa3a45/deadseat/">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+		<title>The Deadseat</title>
+		<style>
+			#canvas, body, html { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; }
+			body { color: #fff; background-color: #000; overflow: hidden; touch-action: none; display: flex; align-items: center; justify-content: center; }
+			#canvas { display: block; width: 100%; height: 100%; }
+			#canvas:focus { outline: 0; }
+			#status, #status-progress, #status-splash { position: absolute; left: 0; right: 0; }
+			#status, #status-splash { top: 0; bottom: 0; }
+			#status { background-color: #12131a; display: flex; flex-direction: column; justify-content: center; align-items: center; visibility: hidden; z-index: 50; }
+			#status-splash { max-height: 80%; max-width: 80%; margin: auto; object-fit: contain; }
+			#status-notice, #status-progress { display: none; }
+			#status-progress { bottom: 10%; width: 50%; max-width: 320px; margin: 0 auto; height: 12px; }
+			#status-notice { background-color: #5b3943; border-radius: .5rem; border: 1px solid #9b3943; color: #e0e0e0; font-family: system-ui, sans-serif; line-height: 1.3; margin: 0 2rem; overflow: hidden; padding: 1rem; text-align: center; z-index: 51; }
+			#loading-text { color: #f43f5e; font-family: system-ui, sans-serif; font-weight: 700; font-size: 24px; text-align: center; margin-bottom: 12px; }
+		</style>
+	</head>
+	<body>
+		<script src="loader.js"></script>
+		<canvas id="canvas"> Your browser does not support the canvas tag. </canvas>
+
+		<noscript> Your browser does not support JavaScript. </noscript>
+
+		<div id="status">
+			<div id="loading-text">LOADING THE DEADSEAT...</div>
+			<img id="status-splash" src="index.png" alt="" />
+			<progress id="status-progress"></progress>
+			<div id="status-notice"></div>
+		</div>
+
+		<script src="index.js"></script>
+		<script>
+			const GODOT_CONFIG = {
+				args: [],
+				canvasResizePolicy: 2,
+				ensureCrossOriginIsolationHeaders: false,
+				executable: "index",
+				experimentalVK: false,
+				fileSizes: { "index.pck": 182225248, "index.wasm": 35376909 },
+				focusCanvas: true,
+				gdextensionLibs: []
+			};
+			const GODOT_THREADS_ENABLED = false;
+			const engine = new Engine(GODOT_CONFIG);
+			window.godotrunfunction = function() {
+				const statusOverlay = document.getElementById("status");
+				const statusProgress = document.getElementById("status-progress");
+				const statusNotice = document.getElementById("status-notice");
+				let initializing = true;
+				let statusMode = "";
+
+				function setStatusMode(mode) {
+					if (statusMode === mode || !initializing) return;
+					if (mode === "hidden") {
+						statusOverlay.style.display = "none";
+						initializing = false;
+						return;
+					}
+					statusOverlay.style.visibility = "visible";
+					statusProgress.style.display = mode === "progress" ? "block" : "none";
+					statusNotice.style.display = mode === "notice" ? "block" : "none";
+					statusMode = mode;
+				}
+
+				function setStatusNotice(text) {
+					while (statusNotice.lastChild) {
+						statusNotice.removeChild(statusNotice.lastChild);
+					}
+					const lines = text.split("\n");
+					lines.forEach(line => {
+						statusNotice.appendChild(document.createTextNode(line));
+						statusNotice.appendChild(document.createElement("br"));
+					});
+				}
+
+				function displayFailureNotice(err) {
+					console.error(err);
+					if (err instanceof Error) {
+						setStatusNotice(err.message);
+					} else if (typeof err === "string") {
+						setStatusNotice(err);
+					} else {
+						setStatusNotice("An unknown error occurred");
+					}
+					setStatusMode("notice");
+					initializing = false;
+				}
+
+				setStatusMode("progress");
+				engine.startGame({
+					onProgress: function(current, total) {
+						if (current > 0 && total > 0) {
+							statusProgress.value = current;
+							statusProgress.max = total;
+						} else {
+							statusProgress.removeAttribute("value");
+							statusProgress.removeAttribute("max");
+						}
+					}
+				}).then(() => {
+					setStatusMode("hidden");
+				}, displayFailureNotice);
+			};
+
+			if (typeof window.godotrunfunction === "function") {
+				window.godotrunfunction();
+			}
+		</script>
+	</body>
+</html>

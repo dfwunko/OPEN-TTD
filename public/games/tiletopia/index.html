@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/tiletopia/">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Tiletopia</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #181425; }
+    #unity-container { width: 100%; height: 100%; position: absolute; inset: 0; }
+    #unity-canvas { width: 100% !important; height: 100% !important; display: block; }
+  </style>
+</head>
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+        <div id="unity-warning"></div>
+    </div>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var warningBanner = document.querySelector("#unity-warning");
+      function unityShowBanner(msg, type) {}
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Builds.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Builds.data.unityweb",
+        frameworkUrl: buildUrl + "/Builds.framework.js.unityweb",
+        codeUrl: buildUrl + "/Builds.wasm.unityweb",
+        streamingAssetsUrl: "https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/tiletopia/StreamingAssets",
+        companyName: "BitCake",
+        productName: "Tiletopia",
+        productVersion: "1.2.6.3",
+        showBanner: unityShowBanner
+      };
+      if (loadingBar) loadingBar.style.display = "block";
+      var myGameInstance = null;
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, progress => {
+          if (progressBarFull) progressBarFull.style.width = 100 * progress + "%";
+        }).then(unityInstance => {
+          if (loadingBar) loadingBar.style.display = "none";
+          myGameInstance = unityInstance;
+        }).catch(message => {
+          console.warn("Tiletopia notice:", message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+</body>
+</html>

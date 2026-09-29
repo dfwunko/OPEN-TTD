@@ -144,7 +144,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Sparkles',
     accentColor: '#10b981',
     releaseYear: 2026,
-    thumbnailUrl: './images/nova_craft.jpg'
+    thumbnailUrl: './images/stardew_valley.jpg'
   },
   {
     id: 'dice-a-million',
@@ -173,7 +173,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Zap',
     accentColor: '#f59e0b',
     releaseYear: 2026,
-    thumbnailUrl: './images/balatro.jpg'
+    thumbnailUrl: './images/dice_a_million.jpg'
   },
   {
     id: 'btd5',
@@ -203,7 +203,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Flame',
     accentColor: '#3b82f6',
     releaseYear: 2024,
-    thumbnailUrl: './images/btd4.jpg'
+    thumbnailUrl: './images/btd5.jpg'
   },
   {
     id: 'binding-of-isaac',
@@ -235,7 +235,7 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Skull',
     accentColor: '#e11d48',
     releaseYear: 2026,
-    thumbnailUrl: './images/scarwrit.png'
+    thumbnailUrl: './images/binding_of_isaac.jpg'
   },
   {
     id: 'plague-inc',
@@ -266,7 +266,243 @@ export const GAMES_CATALOG: Game[] = [
     iconName: 'Shield',
     accentColor: '#10b981',
     releaseYear: 2026,
+    thumbnailUrl: './images/plague_inc.jpg'
+  },
+  {
+    id: 'the-deadseat',
+    title: 'The Deadseat',
+    category: 'action',
+    description: 'Atmospheric psychological horror game: uncover unsettling secrets in an eerie high-stakes survival experience.',
+    longDescription: 'The Deadseat is an intense psychological 3D horror mystery powered by the Godot WebAssembly engine. Navigate tense environments, manage crucial decisions under pressure, and survive the unknown.',
+    src: './games/the-deadseat/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Look' },
+      { key: 'Mouse Left Click', action: 'Interact / Inspect' },
+      { key: 'Spacebar', action: 'Action / Select' }
+    ],
+    instructions: [
+      'Observe clues in your surroundings and interact with key objects.',
+      'Maintain calm and make calculated choices to avoid dangerous hazards.'
+    ],
+    tips: [
+      'Pay close attention to audio cues and subtle visual anomalies.',
+      'Inspect items carefully for hidden codes and passwords.'
+    ],
+    plays: 460000,
+    rating: 4.97,
+    ratingCount: 16500,
+    badge: 'GODOT 3D HORROR',
+    iconName: 'Skull',
+    accentColor: '#f43f5e',
+    releaseYear: 2026,
+    thumbnailUrl: './images/the_deadseat.jpg'
+  },
+  {
+    id: 'clover-pit',
+    title: 'CloverPit',
+    category: 'arcade',
+    description: 'High-octane casino dungeon crawler: spin neon reels, unlock jackpot power-ups, and beat escalating pit bosses!',
+    longDescription: 'CloverPit is an adrenaline-fueled casino roguelite built on the Unity engine. Spin mystical slots, match four-leaf clovers, trigger explosive coin bursts, and survive ruthless odds.',
+    src: './games/clover-pit/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Spin / Bet / Select Upgrades' },
+      { key: 'Spacebar', action: 'Quick Spin / Confirm' }
+    ],
+    instructions: [
+      'Pull the lever to spin the clover slot reels and earn chips.',
+      'Purchase artifact upgrades and lucky charm items between rounds to maximize scoring multipliers.'
+    ],
+    tips: [
+      'Stack clover multipliers early to afford high-tier jackpot charms.',
+      'Balance risk and reward when taking high-stakes pit wagers.'
+    ],
+    plays: 580000,
+    rating: 4.98,
+    ratingCount: 22100,
+    badge: 'CASINO ROGUELITE',
+    iconName: 'Sparkles',
+    accentColor: '#10b981',
+    releaseYear: 2026,
+    thumbnailUrl: './images/clover_pit.jpg'
+  },
+  {
+    id: 'customer-support',
+    title: 'Customer Support',
+    category: 'puzzle',
+    description: 'Chaotic tech support simulator: handle bizarre caller inquiries, troubleshoot tricky computer bugs, and meet daily quotas!',
+    longDescription: 'Customer Support is a witty and humorous simulation game where you manage a frantic IT helpdesk hotline. Answer incoming customer calls, diagnose peculiar issues, search support manuals, and keep customer satisfaction high.',
+    src: './games/customer-support/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Answer Phone / Click UI / Select Solutions' },
+      { key: 'Keyboard', action: 'Type Support Commands' }
+    ],
+    instructions: [
+      'Answer ringing phones promptly to avoid customer frustration.',
+      'Reference the employee handbook to diagnose and provide accurate troubleshooting steps.'
+    ],
+    tips: [
+      'Read caller problem statements thoroughly to spot misleading details.',
+      'Handle multiple tickets quickly to earn customer satisfaction bonus stars.'
+    ],
+    plays: 490000,
+    rating: 4.96,
+    ratingCount: 17800,
+    badge: 'SIMULATION',
+    iconName: 'Zap',
+    accentColor: '#38bdf8',
+    releaseYear: 2026,
+    thumbnailUrl: './images/cyber_survivor.jpg'
+  },
+  {
+    id: 'terraria',
+    title: 'Terraria (Terrarium)',
+    category: 'adventure',
+    description: 'Iconic 2D sandbox adventure: dig, fight, explore, and build in an infinite procedurally generated world!',
+    longDescription: 'Terrarium brings the legendary 2D action-adventure sandbox game to your browser via WebAssembly. Delve deep into cavernous subterranean realms, battle ferocious bosses, craft weapons and armor, and build bustling NPC villages.',
+    src: './games/terraria/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Jump' },
+      { key: 'Mouse Left Click', action: 'Mine / Attack / Place' },
+      { key: 'Mouse Right Click', action: 'Interact / Open Chests' },
+      { key: 'Esc / E', action: 'Inventory & Crafting' }
+    ],
+    instructions: [
+      'Chop trees to gather wood, construct a shelter with walls and a door, and craft torches for light.',
+      'Mine underground for copper, iron, silver, and gold to forge stronger tools and armor.'
+    ],
+    tips: [
+      'Build suitable houses with a table, chair, and light source to attract merchant and nurse NPCs.',
+      'Craft a Grappling Hook as soon as you find hooks from skeletons or gems underground!'
+    ],
+    plays: 1250000,
+    rating: 4.99,
+    ratingCount: 68400,
+    badge: 'SANDBOX LEGEND',
+    iconName: 'Flame',
+    accentColor: '#22c55e',
+    releaseYear: 2026,
+    thumbnailUrl: './images/terraria.jpg'
+  },
+  {
+    id: 'tiletopia',
+    title: 'Tiletopia',
+    category: 'puzzle',
+    description: 'Vibrant 3D tile-matching puzzle adventure: connect elemental runes, trigger cascade combos, and solve brain-teasing boards!',
+    longDescription: 'Tiletopia is a polished 3D puzzle match game built on WebGL. Swap, match, and chain vibrant rune tiles across increasingly intricate puzzle grids to clear objectives and earn 3-star ratings.',
+    src: './games/tiletopia/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click / Drag', action: 'Select & Swap Tiles' }
+    ],
+    instructions: [
+      'Match 3 or more identical tiles in a row or column to clear them from the board.',
+      'Create 4-tile lines or T-shapes to form explosive power-up runes.'
+    ],
+    tips: [
+      'Plan moves from the bottom of the board to trigger natural chain reaction cascades.',
+      'Combine two adjacent special power tiles for screen-clearing combos.'
+    ],
+    plays: 510000,
+    rating: 4.95,
+    ratingCount: 15400,
+    badge: 'MATCH 3 PUZZLE',
+    iconName: 'Sparkles',
+    accentColor: '#a855f7',
+    releaseYear: 2026,
     thumbnailUrl: './images/clash_of_crowns.jpg'
+  },
+  {
+    id: 'roulette-hero',
+    title: 'Roulette Hero',
+    category: 'action',
+    description: 'Tense tactical roulette roguelite: spin the chamber, play modifier cards, and outsmart shadowy opponents!',
+    longDescription: 'Roulette Hero is a pulse-pounding strategy roguelite from Free Lives. Confront cunning adversaries across high-stakes duels, manipulate probabilities with inventory items, and survive to become the ultimate champion.',
+    src: './games/roulette-hero/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Select Target / Use Items / Spin Chamber' }
+    ],
+    instructions: [
+      'Track live vs blank rounds remaining in the chamber before taking your shot.',
+      'Deploy tactical items like magnifying glasses, handcuffs, and saws to tilt the odds in your favor.'
+    ],
+    tips: [
+      'Use the magnifying glass when the chamber state is 50/50 to guarantee safe shots.',
+      'Shoot yourself with a known blank to instantly gain an extra turn!'
+    ],
+    plays: 670000,
+    rating: 4.98,
+    ratingCount: 28900,
+    badge: 'TACTICAL DUEL',
+    iconName: 'Shield',
+    accentColor: '#ef4444',
+    releaseYear: 2026,
+    thumbnailUrl: './images/scarwrit.png'
+  },
+  {
+    id: 'peak',
+    title: 'PEAK',
+    category: 'skill',
+    description: 'Physics-based 3D mountaineering expedition: grip ledges, balance stamina, and summit towering alpine peaks!',
+    longDescription: 'PEAK is a gripping low-poly climbing adventure developed by Aggro Crab & Landfall. Scale dizzying cliffs, plan handholds, manage stamina depletion, and reach the highest summit against all odds.',
+    src: './games/peak/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move / Steer Climber' },
+      { key: 'Mouse Left / Right Click', action: 'Left & Right Hand Grip' },
+      { key: 'Spacebar', action: 'Jump / Dynamic Reach' },
+      { key: 'Shift', action: 'Chalk Hands / Rest Stamina' }
+    ],
+    instructions: [
+      'Reach and alternate hand grips between safe rock ledges to ascend the cliff face.',
+      'Keep an eye on your stamina meter and rest on flat footholds before tackling difficult overhangs.'
+    ],
+    tips: [
+      'Always secure at least one firm handhold before reaching for distant grips.',
+      'Use momentum swings on dyno jumps to bypass sheer vertical rock faces.'
+    ],
+    plays: 810000,
+    rating: 4.99,
+    ratingCount: 37200,
+    badge: '3D CLIMBING',
+    iconName: 'Trophy',
+    accentColor: '#84cc16',
+    releaseYear: 2026,
+    thumbnailUrl: './images/peak.jpg'
+  },
+  {
+    id: 'little-alchemy-2',
+    title: 'Little Alchemy 2',
+    category: 'puzzle',
+    description: 'Infinite element discovery: combine Air, Earth, Fire, and Water to craft over 700 items, creatures, and cosmic wonders!',
+    longDescription: 'Little Alchemy 2 is the beloved crafting game where you start with the four basic elements and combine them to create everything from dinosaurs and spaceships to philosophical concepts and galaxies.',
+    src: './games/little-alchemy-2/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Drag & Drop', action: 'Combine Elements on Workspace' },
+      { key: 'Double Click', action: 'Duplicate Element' },
+      { key: 'Search Bar', action: 'Filter Discovered Elements' }
+    ],
+    instructions: [
+      'Drag elements from the right sidebar onto the central workspace and drop them on top of each other to discover new items.',
+      'Tap the broom icon to quickly clean up your workspace.'
+    ],
+    tips: [
+      'Think conceptually: Fire + Water creates Steam, while Earth + Fire makes Lava.',
+      'Check the encyclopedia hints when you get stuck on advanced recipe tiers.'
+    ],
+    plays: 940000,
+    rating: 4.99,
+    ratingCount: 46100,
+    badge: 'CRAFTING CLASSIC',
+    iconName: 'Sparkles',
+    accentColor: '#faa620',
+    releaseYear: 2026,
+    thumbnailUrl: './images/little_alchemy_2.jpg'
   },
   {
     id: 'pixel-hoops',
