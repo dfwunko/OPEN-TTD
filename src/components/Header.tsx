@@ -34,6 +34,7 @@ const CATEGORIES: { id: GameCategory; label: string }[] = [
   { id: 'puzzle', label: 'Puzzle' },
   { id: 'skill', label: 'Skill' },
   { id: 'retro', label: 'Retro' },
+  { id: 'driving', label: 'Driving' },
   { id: 'custom', label: 'Custom Sandbox' }
 ];
 
