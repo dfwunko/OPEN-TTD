@@ -627,6 +627,276 @@ export const GAMES_CATALOG: Game[] = [
     thumbnailUrl: './images/scarwrit.png'
   },
   {
+    id: 'kart-bros',
+    title: 'Kart Bros',
+    category: 'driving',
+    description: 'Chaotic 3D kart racing: drift around winding tracks, grab item boxes, fire turbo boosts, and out-race rival bros to the finish line!',
+    longDescription: 'Kart Bros is a fast-paced 3D kart racing showdown in the spirit of classic party racers. Master drift boosts around hairpin turns, snatch item boxes for speed-ups and projectiles, watch the live minimap, and battle three rival racers across full 3D circuits rendered in real time.',
+    src: './games/kart/index.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'W / Up Arrow', action: 'Accelerate' },
+      { key: 'S / Down Arrow', action: 'Brake / Reverse' },
+      { key: 'A / D or Left / Right Arrows', action: 'Steer Kart' },
+      { key: 'Shift / Spacebar', action: 'Drift (hold for drift boosts)' },
+      { key: 'E / Ctrl', action: 'Use Item' }
+    ],
+    instructions: [
+      'Accelerate into the first corner and start drifting early — chain drifts to charge your boost meter.',
+      'Drive through floating item boxes to grab power-ups, then press E to fire them at racers ahead of you.'
+    ],
+    tips: [
+      'Release a drift on a straightaway for a free burst of speed.',
+      'Watch the minimap to block rival karts attempting to overtake on the inside line!'
+    ],
+    plays: 760000,
+    rating: 4.98,
+    ratingCount: 26400,
+    badge: '3D KART RACING',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2026,
+    thumbnailUrl: './images/kart.jpg'
+  },
+  {
+    id: 'retro-bowl',
+    title: 'Retro Bowl',
+    category: 'retro',
+    description: 'Beloved retro pixel football manager: call the plays, throw touchdown passes, and build a championship dynasty!',
+    longDescription: 'Retro Bowl is the smash-hit pixel-art American football simulator. Quarterback your team down the field with satisfying flick passes, manage rosters, coaching staff, and fan morale, and take your franchise all the way to the Retro Bowl championship.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Retro-Bowl/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse / Touch Drag', action: 'Aim & Throw Passes' },
+      { key: 'Mouse Left Click', action: 'Select Plays, Roster & Staff Management' },
+      { key: 'Keyboard', action: 'Navigate Team Menus' }
+    ],
+    instructions: [
+      'Drag and release to throw passes to your receivers — lead them toward open space.',
+      'Between games, spend coaching credits to re-sign stars, upgrade facilities, and keep fan expectations high.'
+    ],
+    tips: [
+      'Throw short, safe passes on 3rd down rather than forcing deep shots.',
+      'A happy roster wins more games — keep player morale above 80% before the playoffs!'
+    ],
+    plays: 1120000,
+    rating: 4.99,
+    ratingCount: 58200,
+    badge: 'PICN POCKET CLASSIC',
+    iconName: 'Trophy',
+    accentColor: '#22c55e',
+    releaseYear: 2021,
+    thumbnailUrl: './images/retrobowl.jpg'
+  },
+  {
+    id: 'basketball-legends-2020',
+    title: 'Basketball Legends 2020',
+    category: 'arcade',
+    description: 'Arcade hoops superstar showdown: play as basketball legends, throw down mega dunks, and fire off special super shots!',
+    longDescription: 'Basketball Legends 2020 is the classic 1v1 (or 2v2) arcade basketball game featuring larger-than-life legend players. Cross over your defender, rise for emphatic dunks, block shots into the stands, and unleash screen-shaking super shots to swing the game.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Basketball-Legends-2020/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'WASD / Arrow Keys', action: 'Move Player' },
+      { key: 'B / L', action: 'Shoot / Attack / Steal' },
+      { key: 'S / Down Arrow', action: 'Pump Fake / Block (Defense)' },
+      { key: 'V / K', action: 'Super Shot (when meter is full)' }
+    ],
+    instructions: [
+      'Out-position your rival and release your shot at the top of the jump for a perfect release.',
+      'Fill the super shot meter with good play, then unleash it for an unstoppable scoring burst.'
+    ],
+    tips: [
+      'Pump fake to bait defenders into the air, then drive past them for an easy dunk.',
+      'On defense, time your jump blocks — steals are safest right after a pump fake.'
+    ],
+    plays: 690000,
+    rating: 4.97,
+    ratingCount: 25100,
+    badge: '2-PLAYER HOOPS',
+    iconName: 'Trophy',
+    accentColor: '#f97316',
+    releaseYear: 2020,
+    thumbnailUrl: './images/basketball_legends.jpg'
+  },
+  {
+    id: 'football-king',
+    title: 'Football King',
+    category: 'arcade',
+    description: 'Local 2-player soccer mayhem: pick your player and flag, unleash super shots every 5 seconds, and win the World Tournament!',
+    longDescription: 'Football King is a frantic local-multiplayer soccer game by FreezeNova. Choose from 20 unlockable players, customize team flags, and battle in 1v1, 2v2, or co-op 2v2 modes across multiple stadiums — or take on an 8-team tournament to crown the true Football King.',
+    src: 'https://unblocked-games.s3.amazonaws.com/football-king.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Arrow Keys / WASD', action: 'Move & Jump (P1 / P2)' },
+      { key: 'Space / V / K', action: 'Shoot the Ball' },
+      { key: 'B / L', action: 'Super Shot (every 5 seconds)' }
+    ],
+    instructions: [
+      'Choose single-player, 2-player, or tournament mode, then pick your player, flag, stadium, and match settings.',
+      'Jump to head the ball, shoot to score, and save your super shot for a game-changing strike.'
+    ],
+    tips: [
+      'Super shots are most likely to find the net — use them right after kick-off resets.',
+      'Tournament wins earn coins to unlock faster, more skillful players!'
+    ],
+    plays: 545000,
+    rating: 4.96,
+    ratingCount: 18700,
+    badge: '2-PLAYER SOCCER',
+    iconName: 'Trophy',
+    accentColor: '#38bdf8',
+    releaseYear: 2024,
+    thumbnailUrl: './images/football_king.jpg'
+  },
+  {
+    id: 'tennis-masters',
+    title: 'Tennis Masters',
+    category: 'arcade',
+    description: 'Grand Slam tennis action: choose world-class players, smash aces, and battle friends or CPU through full tournaments!',
+    longDescription: 'Tennis Masters is a polished arcade tennis game featuring star players from around the globe. Play quick matches, friendly duels, or full bracket tournaments against the computer or a friend, and dominate the court with powerful serves and unstoppable smashes.',
+    src: 'https://unblocked-games.s3.amazonaws.com/tennis-masters.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'W / A / D', action: 'Move Player 1' },
+      { key: 'X (P1) / V (P1) / L (P2)', action: 'Hit the Ball' },
+      { key: 'Z (P1) / B (P1) / K (P2)', action: 'Smash Shot' },
+      { key: 'Arrow Keys', action: 'Move Player 2' }
+    ],
+    instructions: [
+      'Select your tennis star and mode: Quick Match, Friendly, or Tournament bracket.',
+      'Time your hits as the ball arrives and use smashes to end points with authority.'
+    ],
+    tips: [
+      'Serve fast and aim for the corners to set up easy ace opportunities.',
+      'Anticipate your rival’s positioning — drop shots punish players who camp the baseline.'
+    ],
+    plays: 470000,
+    rating: 4.95,
+    ratingCount: 15900,
+    badge: '2-PLAYER TENNIS',
+    iconName: 'Trophy',
+    accentColor: '#a3e635',
+    releaseYear: 2024,
+    thumbnailUrl: './images/tennis_masters.jpg'
+  },
+  {
+    id: 'golf-bit',
+    title: 'Golf Bit',
+    category: 'skill',
+    description: 'One-tap golf launcher: nail perfect timing in the green zone, smash the ball past buildings and birds, and chase distance records!',
+    longDescription: 'Golf Bit is an addictive timing-based golf launcher from FreezeNova. Strike when the moving indicator hits the green zone for maximum power, then watch your ball rocket across the course, ricochet off obstacles, and travel absurd distances. Upgrade strength, speed, and bounce to send every shot further than the last.',
+    src: 'https://unblocked-games.s3.amazonaws.com/golf-bit.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click / Spacebar', action: 'Swing (time it in the green zone)' }
+    ],
+    instructions: [
+      'Press the moment the indicator crosses the green zone to launch the ball with full power.',
+      'Spend your earnings on Strength, Speed, and Bounce upgrades to break your distance record every run.'
+    ],
+    tips: [
+      'Perfect-timing swings grant bonus power — listen for the rhythm before you tap.',
+      'Bounce upgrades pay off most once your drives start carrying past the buildings!'
+    ],
+    plays: 395000,
+    rating: 4.94,
+    ratingCount: 11600,
+    badge: 'ONE-TAP GOLF',
+    iconName: 'Zap',
+    accentColor: '#10b981',
+    releaseYear: 2024,
+    thumbnailUrl: './images/golf_bit.jpg'
+  },
+  {
+    id: 'polytrack',
+    title: 'PolyTrack',
+    category: 'driving',
+    description: 'Low-poly time-trial racing: blast through checkpoints, hunt milliseconds on the leaderboards, and master 40+ tracks!',
+    longDescription: 'PolyTrack is a blisteringly fast low-poly arcade racer inspired by TrackMania. Race solo against the clock across dozens of handcrafted tracks featuring loops, jumps, and hairpins — every run is measured to the millisecond, and every checkpoint saves your split times.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Polytrack-New/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Arrow Keys / WASD', action: 'Accelerate / Brake / Steer' },
+      { key: 'R', action: 'Restart Track Instantly' },
+      { key: 'Mouse Left Click', action: 'Menu Navigation' }
+    ],
+    instructions: [
+      'Drive through every checkpoint gate in order and cross the finish line as fast as possible.',
+      'Miss a gate or crash? Tap R for an instant restart — perfecting lines is the whole game.'
+    ],
+    tips: [
+      'Brake before corners and accelerate out of them — smooth lines beat raw speed.',
+      'Compare your splits against the record to find exactly where you are losing time.'
+    ],
+    plays: 830000,
+    rating: 4.98,
+    ratingCount: 34800,
+    badge: 'TIME-TRIAL RACING',
+    iconName: 'Flame',
+    accentColor: '#06b6d4',
+    releaseYear: 2024,
+    thumbnailUrl: './images/polytrack.jpg'
+  },
+  {
+    id: 'idle-mining-empire',
+    title: 'Idle Mining Empire',
+    category: 'strategy',
+    description: 'Deep-shaft idle tycoon: dig tunnels, automate elevator shafts, hire managers, and extract a mountain of glittering riches!',
+    longDescription: 'Idle Mining Empire is a satisfying idle tycoon game about building a mining operation from a single shaft into a sprawling underground empire. Assign miners, unlock deeper layers of ore, automate transport with elevators and managers, and watch your profits compound even while you plan your next expansion.',
+    src: 'https://ubghyper.github.io/GameList.github.io/Idle-Mining-Empire/',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Left Click', action: 'Hire Miners / Buy Upgrades / Manage Shafts' }
+    ],
+    instructions: [
+      'Click a tunnel to hire a miner, then invest the earnings into deeper, more valuable shafts.',
+      'Recruit managers to automate each operation so your empire keeps earning around the clock.'
+    ],
+    tips: [
+      'Spread early upgrades across several shafts instead of maxing a single one.',
+      'Manager automation is the key multiplier — prioritize it before long idle sessions!'
+    ],
+    plays: 615000,
+    rating: 4.95,
+    ratingCount: 20800,
+    badge: 'IDLE TYCOON',
+    iconName: 'Pickaxe',
+    accentColor: '#f59e0b',
+    releaseYear: 2024,
+    thumbnailUrl: './images/mining.jpg'
+  },
+  {
+    id: 'nova-craft',
+    title: 'Nova Craft',
+    category: 'puzzle',
+    description: 'Cosmic alchemy sandbox: fuse Water, Fire, Wind, and Earth to discover over 3,000 items, creatures, and concepts!',
+    longDescription: 'Nova Craft is a vast alchemy-crafting game where you play at the dawn of creation. Starting with just four classical elements, combine them to unlock plants, animals, minerals, machines, and abstract concepts — over 3,000 discoveries in total — with a Creativity Box that lets you speed-craft combos at lightning pace.',
+    src: 'https://unblocked-games.s3.amazonaws.com/nova-craft.html',
+    aspectRatio: '16/9',
+    controls: [
+      { key: 'Mouse Drag & Drop', action: 'Combine Elements on the Board' },
+      { key: 'Right Click', action: 'Remove Items from the Board' },
+      { key: 'Search Bar', action: 'Filter & Sort Your Library' }
+    ],
+    instructions: [
+      'Drag one element on top of another to fuse them — some pairs hide multiple possible products, so keep experimenting.',
+      'Drop an element into the Creativity Box, then click library items to rapid-fire test combinations.'
+    ],
+    tips: [
+      'Combine the same pair several times to reveal every hidden product.',
+      'Download your save code from settings before switching browsers — your universe travels with you!'
+    ],
+    plays: 585000,
+    rating: 4.96,
+    ratingCount: 19300,
+    badge: 'ALCHEMY SANDBOX',
+    iconName: 'Sparkles',
+    accentColor: '#8b5cf6',
+    releaseYear: 2024,
+    thumbnailUrl: './images/nova_craft.jpg'
+  },
+  {
     id: 'cyber-survivor',
     title: 'Cyber Survivor',
     category: 'action',
